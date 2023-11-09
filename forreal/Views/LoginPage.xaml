@@ -14,7 +14,7 @@
      Text="Login to continume"
      TextColor="{StaticResource SecondaryColor}" />
                 <Label
-     IsVisible="{Binding  }"
+     IsVisible="{Binding ShowLoginError}"
      Style="{StaticResource error}"
      Text="{Binding LoginErrorMessage}" />
             </StackLayout>
