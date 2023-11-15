@@ -78,7 +78,56 @@ namespace forreal.ViewModels
         public string LoginErrorMessage { get => _loginErrorMessage; set { if (_loginErrorMessage != value) { _loginErrorMessage = value; OnPropertyChange(); } } }
         //האם כפתור התחבר יהיה זמין
         public bool IsButtonEnabled { get { return ValidatePage(); } }
+
         #endregion
+        #region Commands
+        public ICommand LogInCommand { get; protected set; }
+        #endregion
+        public LoginPageViewModel(ForrealService service)
+        {
+            _service = service;
+            UserName = string.Empty;
+            Password = string.Empty;
+
+            LogInCommand = new Command(async () =>
+            {
+                ShowLoginError = false;//הסתרת שגיאת לוגין
+                try
+                {
+                    #region טעינת מסך ביניים
+                    var lvm = new LoadingPageViewModel() { IsBusy = true };
+                    await AppShell.Current.Navigation.PushModalAsync(new LoadingPage(lvm));
+                    #endregion
+                    var user = await _service.LogInAsync(UserName, Password);
+
+                    lvm.IsBusy = false;
+                    await Shell.Current.Navigation.PopModalAsync();
+                    if (!user.Success)
+                    {
+                        ShowLoginError = true;
+                        LoginErrorMessage = user.Message;
+                    }
+                    else
+                    {
+                        await AppShell.Current.DisplayAlert("התחברת", "אישור להתחלת משחק", "אישור");
+                        await SecureStorage.Default.SetAsync("LoggedUser", JsonSerializer.Serialize(user.User));
+                        await AppShell.Current.GoToAsync("Game");
+                    }
+
+
+
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message);
+
+                    await AppShell.Current.Navigation.PopModalAsync();
+                }
+
+
+            });
+        }//work on it brb
         #region פעולות עזר
         private bool ValidateUser()
         {
@@ -95,6 +144,7 @@ namespace forreal.ViewModels
             return ValidateUser() && ValidatePassWord();
         }
         #endregion
+
 
     }
 }
