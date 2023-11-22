@@ -21,7 +21,7 @@
                 <Label
         Text="Welcome to Forreal"
         FontSize="32"
-        Style="{StaticResource welcome}"
+       
         HorizontalOptions="Center" />
 
                 <Label

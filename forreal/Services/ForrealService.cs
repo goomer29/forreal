@@ -14,7 +14,7 @@ namespace forreal.Services
     { 
         readonly HttpClient _httpClient;
         readonly JsonSerializerOptions _serializerOptions;
-        const string URL = @"";
+        const string URL = @"https://localhost:7160/swagger/index.html";
         public ForrealService()
         {
             _httpClient = new HttpClient();
@@ -71,7 +71,7 @@ namespace forreal.Services
             try
             {
                 //האובייקט לשליחה
-                User user = new User() { Email = userName, Password = password };
+                User user = new User() { Username = userName, Password = password };
                 //מבצעת סיריליזציה
                 var jsonContent = JsonSerializer.Serialize(user, _serializerOptions);
                 var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");

@@ -51,7 +51,7 @@
             Placeholder="Enter Password"
             PlaceholderColor="Gray"
             Text="{Binding Password}"
-            TextColor="White" />
+            TextColor="Black" />
                     <Label
             Grid.Row="1"
             IsVisible="{Binding ShowPasswordError}"
@@ -59,15 +59,15 @@
             Text="{Binding PasswordErrorMessage}" />
 
                 </Grid>
+                <Button
+        Margin="0,15"
+        BackgroundColor="{StaticResource SecondaryColor}"
+        Command="{Binding LogInCommand}"
+        FontFamily="OpenSansBold"
+        IsEnabled="{Binding IsButtonEnabled}"
+        Text="Login"
+        TextColor="{StaticResource PrimaryColor}" />
             </StackLayout>
-            <Button
-    Margin="0,15"
-    BackgroundColor="{StaticResource SecondaryColor}"
-    Command="{Binding LogInCommand}"
-    FontFamily="OpenSansBold"
-    IsEnabled="{Binding IsButtonEnabled}"
-    Text="Login"
-    TextColor="{StaticResource PrimaryColor}" />
             <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand">
 
                 <Label
