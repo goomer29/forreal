@@ -82,6 +82,8 @@ namespace forreal.ViewModels
         #endregion
         #region Commands
         public ICommand LogInCommand { get; protected set; }
+        public ICommand ForfotPasswordCommand { get; protected set; }
+        public ICommand SignUpCommand { get; protected set; }
         #endregion
         public LoginPageViewModel(ForrealService service)
         {
@@ -106,6 +108,7 @@ namespace forreal.ViewModels
                     {
                         ShowLoginError = true;
                         LoginErrorMessage = user.Message;
+                        UserName = null; Password=null;
                     }
                     else
                     {

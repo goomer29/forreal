@@ -5,45 +5,46 @@
               xmlns:viewmodels="clr-namespace:forreal.ViewModels"
               x:DataType="viewmodels:LoginPageViewModel"
              Title="LoginPage">
-    <ScrollView>
-        <Grid>
-            <StackLayout Margin="20">
-                <Label
-     FontFamily="OpenSansRegular"
-     FontSize="16"
+    
+        <Grid RowDefinitions="auto,auto,auto,auto" >
+            <StackLayout Grid.Row="0">
+                <Label  FontFamily="OpenSansRegular" FontSize="20"
      Text="Login to continume"
-     TextColor="{StaticResource SecondaryColor}" />
-                <Label
-     IsVisible="{Binding ShowLoginError}"
-     Style="{StaticResource error}"
-     Text="{Binding LoginErrorMessage}" />
+     TextColor="{StaticResource Primary}" />
             </StackLayout>
-            <StackLayout>
+            
+            <StackLayout Grid.Row="1" Margin="10">
+                <Label
+    IsVisible="{Binding ShowLoginError}"
+   
+    Text="{Binding LoginErrorMessage}" 
+            TextColor="Red"/>
+            </StackLayout>
+            <StackLayout Grid.Row="2" >
                 <Label
         FontFamily="OpenSansRegular"
         FontSize="16"
         Text="Username"
-        TextColor="{StaticResource SecondaryColor}" />
-                <Grid Margin="0,5" RowDefinitions="auto,auto">
-                    <Border Style="{StaticResource loginBorder}" />
-                    <Entry
+        TextColor="{StaticResource Primary}" />
+         <Grid Grid.Row="3" Margin="0,5" RowDefinitions="auto,auto">
+                
+              <Entry
             Placeholder="Enter username"
-            Style="{StaticResource loginEntry}"
+            
             Text="{Binding UserName}" />
                     <Label
             Grid.Row="1"
             IsVisible="{Binding ShowUserNameError}"
-            Style="{StaticResource error}"
+            
             Text="{Binding UserErrorMessage}" />
                 </Grid>
-
                 <Label
         FontFamily="OpenSansRegular"
         FontSize="16"
         Text="Password"
-        TextColor="{StaticResource SecondaryColor}" />
+        TextColor="{StaticResource Secondary}" />
                 <Grid Margin="0,5" RowDefinitions="auto,auto">
-                    <Border Style="{StaticResource loginBorder}" />
+                   
                     <Entry
             Margin="5,0"
             BackgroundColor="Transparent"
@@ -55,36 +56,59 @@
                     <Label
             Grid.Row="1"
             IsVisible="{Binding ShowPasswordError}"
-            Style="{StaticResource error}"
+           
             Text="{Binding PasswordErrorMessage}" />
-
                 </Grid>
                 <Button
         Margin="0,15"
-        BackgroundColor="{StaticResource SecondaryColor}"
+        BackgroundColor="{StaticResource Secondary}"
         Command="{Binding LogInCommand}"
         FontFamily="OpenSansBold"
         IsEnabled="{Binding IsButtonEnabled}"
         Text="Login"
-        TextColor="{StaticResource PrimaryColor}" />
+        TextColor="{StaticResource Primary}" />
             </StackLayout>
-            <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand">
+            <StackLayout Grid.Row="3" Orientation="Horizontal" VerticalOptions="FillAndExpand">
 
                 <Label
         FontFamily="OpenSansRegular"
         FontSize="16"
         HorizontalOptions="StartAndExpand"
         Text="Forgot password?"
-        TextColor="{StaticResource SecondaryColor}"
-        VerticalOptions="EndAndExpand" />
+        TextColor="{StaticResource Primary}"
+        VerticalOptions="EndAndExpand" >
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Forgot password?"
+                              TextColor="Blue"
+                             TextDecorations="Underline">
+                                <Span.GestureRecognizers  Command="{Binding ForfotPasswordCommand}">
+                                    
+                               </Span.GestureRecognizers>
+                            </Span>
+                        </FormattedString>
+                       </Label.FormattedText>
+                </Label>
                 <Label
         FontFamily="OpenSansRegular"
         FontSize="16"
         HorizontalOptions="EndAndExpand"
         Text="SignUp"
-        TextColor="{StaticResource SecondaryColor}"
-        VerticalOptions="EndAndExpand" />
+        TextColor="{StaticResource Primary}"
+        VerticalOptions="EndAndExpand" >
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="SingUp"
+                            TextColor="Blue"
+                            TextDecorations="Underline">
+                                <Span.GestureRecognizers  Command="{Binding SignUpCommand}">
+
+                                </Span.GestureRecognizers>
+                            </Span>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
             </StackLayout>
         </Grid>
-    </ScrollView>
+    
 </ContentPage>

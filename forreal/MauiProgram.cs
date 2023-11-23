@@ -1,6 +1,7 @@
 ﻿using forreal.Services;
 using forreal.ViewModels;
 using forreal.Views;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 
 namespace forreal
@@ -23,6 +24,8 @@ namespace forreal
             builder.Services.AddTransient<LoadingPage>();
             builder.Services.AddSingleton<LoginPage>();
             builder.Services.AddSingleton<LoginPageViewModel>();
+            builder.Services.AddSingleton<SignUpPage>();
+            builder.Services.AddSingleton<SignUpPageViewModel>();
 
 #if DEBUG
             builder.Logging.AddDebug();
