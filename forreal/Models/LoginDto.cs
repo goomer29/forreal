@@ -2,18 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-
 using System.Threading.Tasks;
 
 namespace forreal.Models
 {
-    public class User
+    internal class LoginDto
     {
-        public string Email { get; set; }
         public string UserName { get; set; }
         public string UserPswd { get; set; }
-        public Challange[] Challanges { get; set; }
     }
 }

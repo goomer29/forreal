@@ -82,14 +82,14 @@
                             <Span Text="Forgot password?"
                               TextColor="Blue"
                              TextDecorations="Underline">
-                                <Span.GestureRecognizers  Command="{Binding ForfotPasswordCommand}">
+                                <Span.GestureRecognizers  Command="{Binding ForgotPasswordCommand}">
                                     
                                </Span.GestureRecognizers>
                             </Span>
                         </FormattedString>
                        </Label.FormattedText>
                 </Label>
-                <Label
+                <!--<Label
         FontFamily="OpenSansRegular"
         FontSize="16"
         HorizontalOptions="EndAndExpand"
@@ -98,17 +98,26 @@
         VerticalOptions="EndAndExpand" >
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span Text="SingUp"
+                           <Span Text="SignUp"
                             TextColor="Blue"
                             TextDecorations="Underline">
-                                <Span.GestureRecognizers  Command="{Binding SignUpCommand}">
-
-                                </Span.GestureRecognizers>
+                                <Span.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SignUpCommand}" CommandParameter="https://learn.microsoft.com/dotnet/maui/">
+                                </TapGestureRecognizer>
+                            </Span.GestureRecognizers>
                             </Span>
                         </FormattedString>
                     </Label.FormattedText>
-                </Label>
-            </StackLayout>
+                </Label>-->
+            <Button BackgroundColor="White"
+       HorizontalOptions="EndAndExpand"
+       Text="SingUp"   
+        TextColor="Blue"
+         Command="{Binding SignUpCommand}"
+         VerticalOptions="EndAndExpand">
+               
+            </Button>
+        </StackLayout>
         </Grid>
     
 </ContentPage>

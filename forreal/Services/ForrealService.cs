@@ -14,7 +14,7 @@ namespace forreal.Services
     { 
         readonly HttpClient _httpClient;
         readonly JsonSerializerOptions _serializerOptions;
-        const string URL = @"https://qskdd82d-7160.euw.devtunnels.ms/swagger/index.html";
+        const string URL = @"https://qskdd82d-7160.euw.devtunnels.ms/ForrealApi/";
         public ForrealService()
         {
             _httpClient = new HttpClient();
@@ -71,7 +71,7 @@ namespace forreal.Services
             try
             {
                 //האובייקט לשליחה
-                User user = new User() { Username = userName, Password = password };
+               var user = new LoginDto() { UserName = userName, UserPswd = password };
                 //מבצעת סיריליזציה
                 var jsonContent = JsonSerializer.Serialize(user, _serializerOptions);
                 var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");

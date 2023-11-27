@@ -5,10 +5,29 @@
              x:DataType="viewmodels:SignUpPageViewModel"
              x:Class="forreal.Views.SignUpPage"
              Title="SignUpPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <Grid RowDefinitions="auto,auto,auto,auto">
+        <StackLayout Grid.Row="0">
+            <Label  FontFamily="OpenSansRegular" FontSize="20"
+               Text="Sign Up!">
+            </Label>
+        </StackLayout>
+        <StackLayout Grid.Row="1" Margin="10">
+          <Label
+             IsVisible="{Binding ShowLoginError}"  
+             Text="{Binding LoginErrorMessage}" 
+             TextColor="Red"/>
+        </StackLayout>
+        <StackLayout Grid.Row="2">
+         <Label FontFamily="OpenSansRegular"
+            FontSize="16"
+           Text="Username"
+           TextColor="{StaticResource Primary}" />
+            <Grid Grid.Row="3" Margin="0,5" RowDefinitions="auto,auto">
+                
+            </Grid>
+        </StackLayout>
+
+
+    </Grid>
+        
 </ContentPage>

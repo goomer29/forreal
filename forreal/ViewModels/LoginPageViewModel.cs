@@ -82,7 +82,7 @@ namespace forreal.ViewModels
         #endregion
         #region Commands
         public ICommand LogInCommand { get; protected set; }
-        public ICommand ForfotPasswordCommand { get; protected set; }
+        public ICommand ForgotPasswordCommand { get; protected set; }
         public ICommand SignUpCommand { get; protected set; }
         #endregion
         public LoginPageViewModel(ForrealService service)
@@ -129,6 +129,14 @@ namespace forreal.ViewModels
                 }
 
 
+            });
+            ForgotPasswordCommand = new Command(async () =>
+            {
+                await AppShell.Current.GoToAsync("ForgotPassword");
+            });
+            SignUpCommand= new Command(async () =>
+            {
+                await AppShell.Current.GoToAsync("SignUp");
             });
         }//work on it brb
         #region פעולות עזר

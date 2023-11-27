@@ -5,10 +5,16 @@
               xmlns:viewmodels="clr-namespace:forreal.ViewModels"
                 x:DataType="viewmodels:LoadingPageViewModel"
              Title="LoadingPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+    <VerticalStackLayout Margin="250">
+        <ActivityIndicator
+            HeightRequest="100"
+            IsRunning="{Binding IsBusy}"
+            VerticalOptions="CenterAndExpand"
+            WidthRequest="100"
+            ZIndex="-1" />
+        <Label
+            HorizontalOptions="Center"
+            Text="did you know? ילד כותב בתוך דלי is a polindrom!"
+            VerticalOptions="Center" />
     </VerticalStackLayout>
 </ContentPage>
