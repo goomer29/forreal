@@ -18,16 +18,49 @@
              TextColor="Red"/>
         </StackLayout>
         <StackLayout Grid.Row="2">
-         <Label FontFamily="OpenSansRegular"
+            <Label FontFamily="OpenSansRegular"
             FontSize="16"
            Text="Username"
            TextColor="{StaticResource Primary}" />
             <Grid Grid.Row="3" Margin="0,5" RowDefinitions="auto,auto">
-                
+                <Entry
+           Placeholder="Enter username"
+            Text="{Binding UserName}" />
+                <Label
+            Grid.Row="1"
+            IsVisible="{Binding ShowUserNameError}"
+            Text="{Binding UserErrorMessage}" />
             </Grid>
+            <Label
+FontFamily="OpenSansRegular"
+FontSize="16"
+Text="Password"
+TextColor="{StaticResource Secondary}" />
+            <Grid Margin="0,5" RowDefinitions="auto,auto">
+
+                <Entry
+    Margin="5,0"
+    BackgroundColor="Transparent"
+    IsPassword="True"
+    Placeholder="Enter Password"
+    PlaceholderColor="Gray"
+    Text="{Binding Password}"
+    TextColor="Black" />
+                <Label
+    Grid.Row="1"
+    IsVisible="{Binding ShowPasswordError}"
+   
+    Text="{Binding PasswordErrorMessage}" />
+            </Grid>
+            <Button
+                Margin="0,15"
+                BackgroundColor="{StaticResource Secondary}"
+            Command="{Binding SignInCommand}"
+            FontFamily="OpenSansBold"
+            IsEnabled="{Binding IsButtonEnabled}"
+            Text="Signup"
+            TextColor="{StaticResource Primary}" />
         </StackLayout>
-
-
     </Grid>
         
 </ContentPage>
