@@ -12,9 +12,9 @@
             </Label>
         </StackLayout>
         <StackLayout Grid.Row="1" Margin="10">
-          <Label
-             IsVisible="{Binding ShowLoginError}"  
-             Text="{Binding LoginErrorMessage}" 
+            <Label
+             IsVisible="{Binding ShowSignUpError}"  
+             Text="{Binding SignUpErrorMessage}" 
              TextColor="Red"/>
         </StackLayout>
         <StackLayout Grid.Row="2">
@@ -31,11 +31,10 @@
             IsVisible="{Binding ShowUserNameError}"
             Text="{Binding UserErrorMessage}" />
             </Grid>
-            <Label
-FontFamily="OpenSansRegular"
-FontSize="16"
+            <Label FontFamily="OpenSansRegular"
+ FontSize="16"
 Text="Password"
-TextColor="{StaticResource Secondary}" />
+TextColor="{StaticResource Primary}" />
             <Grid Margin="0,5" RowDefinitions="auto,auto">
 
                 <Entry
@@ -52,6 +51,41 @@ TextColor="{StaticResource Secondary}" />
    
     Text="{Binding PasswordErrorMessage}" />
             </Grid>
+            <Label FontFamily="OpenSansRegular"
+ FontSize="16"
+Text="Re-enter password"
+TextColor="{StaticResource Primary}" />
+            <Grid Margin="0,5" RowDefinitions="auto,auto">
+                <Entry
+    Margin="5,0"
+    BackgroundColor="Transparent"
+    IsPassword="True"
+    Placeholder="Re-Enter Password"
+    PlaceholderColor="Gray"
+    Text="{Binding RePassword}"
+    TextColor="Black" />
+                <Label
+    Grid.Row="1"
+    IsVisible="{Binding ShowRePasswordError}"
+    Text="{Binding RePasswordErrorMessage}" />
+            </Grid>
+            <Label FontFamily="OpenSansRegular"
+ FontSize="16"
+Text="Email"
+TextColor="{StaticResource Primary}" />
+            <Grid Margin="0,5" RowDefinitions="auto,auto">
+                <Entry
+        Margin="5,0"
+        BackgroundColor="Transparent"
+        Placeholder="Re-Enter Password"
+        PlaceholderColor="Gray"
+        Text="{Binding Email}"
+        TextColor="Black" />
+                <Label
+        Grid.Row="1"
+        IsVisible="{Binding ShowEmailError}"
+        Text="{Binding EmailErrorMessage}" />
+            </Grid>
             <Button
                 Margin="0,15"
                 BackgroundColor="{StaticResource Secondary}"
@@ -61,6 +95,14 @@ TextColor="{StaticResource Secondary}" />
             Text="Signup"
             TextColor="{StaticResource Primary}" />
         </StackLayout>
+        <StackLayout Grid.Row="3" Orientation="Horizontal" VerticalOptions="FillAndExpand">
+            <Button BackgroundColor="White"
+    HorizontalOptions="EndAndExpand"
+    Text="Login"   
+    TextColor="Blue"
+    Command="{Binding LogInCommand}"
+    VerticalOptions="EndAndExpand">
+            </Button>
+        </StackLayout>
     </Grid>
-        
 </ContentPage>

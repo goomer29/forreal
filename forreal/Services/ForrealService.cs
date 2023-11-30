@@ -11,7 +11,7 @@ using System.Net;
 namespace forreal.Services
 {
     public class ForrealService
-    { 
+    {
         readonly HttpClient _httpClient;
         readonly JsonSerializerOptions _serializerOptions;
         const string URL = @"https://qskdd82d-7160.euw.devtunnels.ms/ForrealApi/";
@@ -71,7 +71,7 @@ namespace forreal.Services
             try
             {
                 //האובייקט לשליחה
-               var user = new LoginDto() { UserName = userName, UserPswd = password };
+                var user = new LoginDto() { UserName = userName, UserPswd = password };
                 //מבצעת סיריליזציה
                 var jsonContent = JsonSerializer.Serialize(user, _serializerOptions);
                 var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
@@ -99,6 +99,38 @@ namespace forreal.Services
             catch (Exception ex) { Console.WriteLine(ex.Message); }
             return new UserDto() { Success = false, User = null, Message = ErrorMessages.INVALID_LOGIN };
 
+        }
+        #endregion
+        //""
+        #region SignUpAsync
+        public async Task<UserDto> SignUpAsync(string userName, string password, string email)
+        {
+            try
+            {
+                //האובייקט לשליחה
+                var user = new SignUpDto() { UserName = userName, UserPswd = password, Email = email };
+                //מבצעת סיריליזציה
+                var jsonContent = JsonSerializer.Serialize(user, _serializerOptions);
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync($"{URL}SignUp", content);
+                switch (response.StatusCode)
+                {
+                    case (HttpStatusCode.OK):
+                        {
+                            jsonContent = await response.Content.ReadAsStringAsync();
+                            User u = JsonSerializer.Deserialize<User>(jsonContent, _serializerOptions);
+                            await Task.Delay(2000);
+                            return new UserDto() { Success = true, Message = string.Empty, User = u };
+                        }
+                    case (HttpStatusCode.Unauthorized):
+                        {
+                            return new UserDto() { Success = false, User = null, Message = ErrorMessages.INVALID_SIGNUP};
+                        }
+
+                }
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            return new UserDto() { Success = false, User = null, Message = ErrorMessages.INVALID_SIGNUP };
         }
         #endregion
     }
