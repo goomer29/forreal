@@ -26,6 +26,8 @@ namespace forreal
             builder.Services.AddSingleton<LoginPageViewModel>();
             builder.Services.AddSingleton<SignUpPage>();
             builder.Services.AddSingleton<SignUpPageViewModel>();
+            builder.Services.AddSingleton <HomePage>();
+            builder.Services.AddSingleton<HomePageViewModel>();
 
 #if DEBUG
             builder.Logging.AddDebug();

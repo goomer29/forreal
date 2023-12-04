@@ -9,6 +9,7 @@ namespace forreal
             InitializeComponent();
             Routing.RegisterRoute("Login", typeof(LoginPage));
             Routing.RegisterRoute("SignUp", typeof(SignUpPage));
+            Routing.RegisterRoute("HomePage", typeof(HomePage));
         }
     }
 }

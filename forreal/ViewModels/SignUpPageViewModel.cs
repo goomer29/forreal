@@ -182,7 +182,7 @@ namespace forreal.ViewModels
                     }
                     else
                     {
-                        await AppShell.Current.DisplayAlert("נרשמת", "אישור להתחלת משחק", "אישור");
+                        await AppShell.Current.DisplayAlert("You signed up!", "Click cancel to start", "cancel");
                         await SecureStorage.Default.SetAsync("SignedUser", JsonSerializer.Serialize(user.User));
                         await AppShell.Current.GoToAsync("HomePage");
                     }
