@@ -4,8 +4,8 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:forreal"
-    xmlns:views="clr-namespace:forreal.Views"
-     x:DataType="local:AppShell"
+    xmlns:viewmodels="clr-namespace:forreal.ViewModels"
+     x:DataType="viewmodels:AppShellViewModel"
     Shell.FlyoutBehavior="Flyout">
 
     
