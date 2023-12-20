@@ -1,6 +1,6 @@
 ﻿using forreal.ViewModels;
 
-namespace forreal
+namespace forreal.Views
 {
     public partial class MainPage : ContentPage
     {

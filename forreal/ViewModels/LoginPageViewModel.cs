@@ -103,6 +103,7 @@ namespace forreal.ViewModels
                     var user = await _service.LogInAsync(UserName, Password);
 
                     lvm.IsBusy = false;
+                    
                     await Shell.Current.Navigation.PopModalAsync();
                     if (!user.Success)
                     {
@@ -114,7 +115,8 @@ namespace forreal.ViewModels
                     {
                         await AppShell.Current.DisplayAlert("Succceful logged in!", "Enter cancel to start", "cancel");
                         await SecureStorage.Default.SetAsync("LoggedUser", JsonSerializer.Serialize(user.User));
-                        await AppShell.Current.GoToAsync("HomePage");
+                        ((App)(Application.Current)).ShowFlyouts = true;
+                        await AppShell.Current.GoToAsync("//HomePage");
                     }
 
 

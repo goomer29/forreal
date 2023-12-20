@@ -5,14 +5,14 @@ namespace forreal
 {
     public partial class AppShell : Shell
     {
-        public AppShell()
+        public AppShell(AppShellViewModel vm)
         {
-            this.BindingContext = new AppShellViewModel();
+            this.BindingContext =vm;
             InitializeComponent();
-            Routing.RegisterRoute("MainPage", typeof(MainPage));
+           
             Routing.RegisterRoute("Login", typeof(LoginPage));
-            Routing.RegisterRoute("SignUp", typeof(SignUpPage));
-            Routing.RegisterRoute("HomePage", typeof(HomePage));
+         
+           
         }
     }
 }
