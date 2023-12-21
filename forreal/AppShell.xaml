@@ -11,9 +11,10 @@
 
     
     <FlyoutItem  FlyoutDisplayOptions="AsMultipleItems" >
-        <ShellContent
         
-    Title="Home Screen"
+        <ShellContent     
+    Title="MainPage"
+    IsVisible="{Binding AntiVisible}"
     ContentTemplate="{DataTemplate views:MainPage}"
     Route="MainPage" />
         <ShellContent 
@@ -24,7 +25,7 @@
         <ShellContent
       IsVisible="{Binding Visible}"
      Title="Profile"
-     ContentTemplate="{DataTemplate views:SignUpPage}"
+     ContentTemplate="{DataTemplate views:MainPage}"
      Route="SignUp"/>
 
     </FlyoutItem>

@@ -8,11 +8,13 @@ namespace forreal
         public AppShell(AppShellViewModel vm)
         {
             this.BindingContext =vm;
+
             InitializeComponent();
            
             Routing.RegisterRoute("Login", typeof(LoginPage));
-         
-           
+            Routing.RegisterRoute("SignUp", typeof(SignUpPage));
+
+
         }
     }
 }

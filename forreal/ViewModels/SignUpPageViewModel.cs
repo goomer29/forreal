@@ -184,7 +184,8 @@ namespace forreal.ViewModels
                     {
                         await AppShell.Current.DisplayAlert("You signed up!", "Click cancel to start", "cancel");
                         await SecureStorage.Default.SetAsync("SignedUser", JsonSerializer.Serialize(user.User));
-                        await AppShell.Current.GoToAsync("HomePage");
+                        ((App)(Application.Current)).ShowFlyouts = true;
+                        await AppShell.Current.GoToAsync("//HomePage");
                     }
                 }
                 catch (Exception ex)

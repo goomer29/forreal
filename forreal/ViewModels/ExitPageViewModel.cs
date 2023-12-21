@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace forreal.ViewModels
 {
-    public class HomePageViewModel:ViewModel
+    
+   public class ExitPageViewModel:ViewModel
     {
     }
 }
