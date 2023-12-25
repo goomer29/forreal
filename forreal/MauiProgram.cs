@@ -31,6 +31,9 @@ namespace forreal
             builder.Services.AddSingleton<HomePageViewModel>();
             builder.Services.AddSingleton<ExitPage>();
             builder.Services.AddSingleton<ExitPageViewModel>();
+            builder.Services.AddSingleton<ProfilePage>();
+            builder.Services.AddSingleton<ProfilePageViewModel>();
+
 
 
 #if DEBUG

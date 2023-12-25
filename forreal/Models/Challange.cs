@@ -10,7 +10,6 @@ namespace forreal.Models
     {
         public string ChallangeText { get; set; }
         public int Diffcult { get; set; }
-        public string CreatorNickName { get; set; }
 
     }
 }

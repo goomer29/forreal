@@ -11,23 +11,28 @@
 
     
     <FlyoutItem  FlyoutDisplayOptions="AsMultipleItems" >
-        
+
         <ShellContent     
     Title="MainPage"
     IsVisible="{Binding AntiVisible}"
     ContentTemplate="{DataTemplate views:MainPage}"
     Route="MainPage" />
+        <ShellContent
+ IsVisible="{Binding Visible}"
+Title="Exit"
+ContentTemplate="{DataTemplate views:ExitPage}"
+Route="ExitPage"/>
         <ShellContent 
             IsVisible="{Binding Visible}"
-            Title="Exit"
+            Title="HomePage"
             ContentTemplate="{DataTemplate views:HomePage}"
             Route="HomePage"/>
-        <ShellContent
-      IsVisible="{Binding Visible}"
-     Title="Profile"
-     ContentTemplate="{DataTemplate views:MainPage}"
-     Route="SignUp"/>
-
+        <ShellContent 
+    IsVisible="{Binding Visible}"
+    Title="ProfilePage"
+    ContentTemplate="{DataTemplate views:ProfilePage}"
+    Route="ProfilePage"/>
+        
     </FlyoutItem>
 
 
