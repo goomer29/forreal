@@ -28,6 +28,11 @@ Route="ExitPage"/>
             ContentTemplate="{DataTemplate views:HomePage}"
             Route="HomePage"/>
         <ShellContent 
+IsVisible="{Binding Visible}"
+Title="Search"
+ContentTemplate="{DataTemplate views:SearchPage}"
+Route="SearchPage"/>
+        <ShellContent 
     IsVisible="{Binding Visible}"
     Title="ProfilePage"
     ContentTemplate="{DataTemplate views:ProfilePage}"

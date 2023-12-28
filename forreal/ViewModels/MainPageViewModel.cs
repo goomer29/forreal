@@ -13,6 +13,8 @@ namespace forreal.ViewModels
         public ICommand SignUpCommand { get; protected set; }
         public MainPageViewModel()
         {
+            ((App)(Application.Current)).ShowFlyouts = false;
+            ((App)(Application.Current)).ShowFlyouts2 = true;
             LogInCommand = new Command(async () =>
             {
                 await AppShell.Current.GoToAsync("Login");

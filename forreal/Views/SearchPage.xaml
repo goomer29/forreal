@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="forreal.Views.ExitPage"
              xmlns:viewmodels="clr-namespace:forreal.ViewModels"
-             x:DataType="viewmodels:ExitPageViewModel"
-             Title="ExitPage">
+             x:Class="forreal.Views.SearchPage"
+             x:DataType="viewmodels:SearchPageViewModel"
+             Title="SearchPage">
     <VerticalStackLayout>
         <Label 
-            Text="Are you sure you want to exit?"
+            Text="You dont have friends LOLLLLLL"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Button
-     HorizontalOptions="StartAndExpand"
-     Text="Exit"
-     Command="{Binding ExitCommand}"
-      VerticalOptions="EndAndExpand" />
     </VerticalStackLayout>
 </ContentPage>
