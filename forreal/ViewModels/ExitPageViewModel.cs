@@ -17,7 +17,7 @@ namespace forreal.ViewModels
         {       
             ExitCommand = new Command(async () =>
             {
-                await AppShell.Current.GoToAsync("..");
+                await AppShell.Current.GoToAsync("MainPage");
             });
         }
     }

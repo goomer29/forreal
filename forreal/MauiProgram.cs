@@ -18,6 +18,8 @@ namespace forreal
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+            builder.Services.AddSingleton<ChallangePageViewModel>();
+            builder.Services.AddSingleton<ChallangePage>();
             builder.Services.AddSingleton<SearchPage>();
             builder.Services.AddSingleton<SearchPageViewModel>();
             builder.Services.AddSingleton<AppShellViewModel>();

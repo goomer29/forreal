@@ -10,6 +10,7 @@ namespace forreal.Models
     {
         public string ChallangeText { get; set; }
         public int Diffcult { get; set; }
+        public List<User> Users { get; set; }
 
     }
 }

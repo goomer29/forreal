@@ -13,6 +13,7 @@ namespace forreal
            
             Routing.RegisterRoute("Login", typeof(LoginPage));
             Routing.RegisterRoute("SignUp", typeof(SignUpPage));
+            Routing.RegisterRoute("MainPage", typeof(MainPage));
 
 
         }

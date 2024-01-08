@@ -7,8 +7,13 @@
              Title="HomePage">
     <VerticalStackLayout>
         <Label 
-            Text="Welcome to HomePage"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+     Text="{Binding UserName}"
+     VerticalOptions="Center" 
+     HorizontalOptions="Center" />
+        <ImageButton 
+            Source="challenge_button.png"
+            Command="{Binding ChallangeCommand}"
+            Aspect="Center">
+        </ImageButton>
     </VerticalStackLayout>
 </ContentPage>

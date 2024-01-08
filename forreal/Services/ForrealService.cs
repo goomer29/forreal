@@ -84,6 +84,7 @@ namespace forreal.Services
                             jsonContent = await response.Content.ReadAsStringAsync();
                             User u = JsonSerializer.Deserialize<User>(jsonContent, _serializerOptions);
                             await Task.Delay(2000);
+                            ((App)(Application.Current)).User = u;
                             return new UserDto() { Success = true, Message = string.Empty, User = u };
 
                         }
@@ -101,7 +102,7 @@ namespace forreal.Services
 
         }
         #endregion
-        //""
+        //"Post"
         #region SignUpAsync
         public async Task<UserDto> SignUpAsync(string userName, string password, string email)
         {
