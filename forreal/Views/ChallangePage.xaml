@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="forreal.Views.ChallangePage"
              xmlns:viewModels="clr-namespace:forreal.ViewModels"
-             xmlns:mct="Comm"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
              x:DataType="viewModels:ChallangePageViewModel"
-             Title="ChallangePage">
+            >
     <VerticalStackLayout>
         <Label 
-            Text="Welcome to .NET MAUI!"
+            Text="The challanges of today: "
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
+        <Grid></Grid>
     </VerticalStackLayout>
-</ContentPage>
+</mct:Popup>
