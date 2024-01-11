@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace forreal.Models
 {
@@ -14,6 +15,6 @@ namespace forreal.Models
         public string Email { get; set; }
         public string UserName { get; set; }
         public string UserPswd { get; set; }
-        public List<Challange> Challanges { get; set; }
+        public ObservableCollection<Challange> Challanges { get; set; }
     }
 }

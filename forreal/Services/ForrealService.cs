@@ -121,6 +121,7 @@ namespace forreal.Services
                             jsonContent = await response.Content.ReadAsStringAsync();
                             User u = JsonSerializer.Deserialize<User>(jsonContent, _serializerOptions);
                             await Task.Delay(2000);
+                            ((App)(Application.Current)).User = u;
                             return new UserDto() { Success = true, Message = string.Empty, User = u };
                         }
                     case (HttpStatusCode.Unauthorized):
@@ -134,5 +135,6 @@ namespace forreal.Services
             return new UserDto() { Success = false, User = null, Message = ErrorMessages.INVALID_SIGNUP };
         }
         #endregion
+        
     }
 }
