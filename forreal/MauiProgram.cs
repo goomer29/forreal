@@ -38,6 +38,7 @@ namespace forreal
             builder.Services.AddSingleton<ExitPageViewModel>();
             builder.Services.AddSingleton<ProfilePage>();
             builder.Services.AddSingleton<ProfilePageViewModel>();
+            builder.Services.AddSingleton<ChallangePageViewModel>();
 
             builder.Services.AddTransientPopup<ChallangePage, ChallangePageViewModel>();
 
