@@ -15,6 +15,10 @@ public partial class ChallangePage : Popup
 		Instance = this;
 	}
 
+	public async static Task ClosePopup()
+	{
+        await Instance.CloseAsync();
+    }
 	public async static Task CloseInstance()
 	{
 		await Instance.CloseAsync();

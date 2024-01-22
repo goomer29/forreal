@@ -12,6 +12,10 @@
             Text="The challanges of today: "
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Grid></Grid>
+        <!--<Picker
+            --><!--ItemsSource="{Binding ChallangeList}"
+            TitleColor="Green"
+            ItemDisplayBinding="{Binding ItemName}">--><!--
+        </Picker>-->
     </VerticalStackLayout>
 </mct:Popup>

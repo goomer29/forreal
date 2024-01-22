@@ -33,7 +33,7 @@ namespace forreal.ViewModels
 
             CloseChallange = new Command(async () =>
             {
-                await ChallangePage.CloseInstance();
+                await ChallangePage.ClosePopup();
             });
         }
     }

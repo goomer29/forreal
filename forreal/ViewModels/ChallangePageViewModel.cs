@@ -15,6 +15,7 @@ namespace forreal.ViewModels
             get => time_remains;
             set { if (time_remains != value) { time_remains = value; OnPropertyChange(); } }
         }
+        public Event Evt {  get; set; } 
         private Event GetEvent()
         {
             return new Event { EventTitle = "Challange", BgColor = "#EB9999", Date = new DateTime(DateTime.Now.Ticks + new TimeSpan(0, 24, 0, 0).Ticks) };
@@ -24,12 +25,18 @@ namespace forreal.ViewModels
         [Obsolete]
         public ChallangePageViewModel()
         {
-            var evt = GetEvent();
+            Evt = GetEvent();
             Device.StartTimer(new TimeSpan(0, 0, 1), () =>
             {
-                    Time_Reamins = evt.Date - DateTime.Now;
-                evt.Timespan = Time_Reamins;
-                return true;
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    Time_Reamins = Evt.Date - DateTime.Now;
+                    Evt.Timespan = Time_Reamins;
+                    
+
+
+
+                }); return true;
             });
 
         }
