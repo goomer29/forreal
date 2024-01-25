@@ -30,15 +30,15 @@ namespace forreal.ViewModels
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    Time_Reamins = Evt.Date - DateTime.Now;
-                    Evt.Timespan = Time_Reamins;
-                    
-
-
-
+                    Time_Reamins = ((App)(Application.Current)).Timeleft;
+                    Evt.Timespan = Evt.Date - DateTime.Now;
+                    ((App)(Application.Current)).Timeleft = Evt.Timespan;
+                    if (((App)(Application.Current)).StartTimer)
+                    {
+                        ((App)(Application.Current)).StartTimer = false;
+                    }
                 }); return true;
-            });
-
+            });         
         }
     }
     public class Event
@@ -47,9 +47,9 @@ namespace forreal.ViewModels
         public string EventTitle { get; set; }
         public TimeSpan Timespan { get; set; }
         public string Days => Timespan.Days.ToString("00");
-        public string Hours => Timespan.Hours.ToString("00");
-        public string Minutes => Timespan.Minutes.ToString("00");
-        public string Seconds => Timespan.Seconds.ToString("00");
+        public string Hours { get => Timespan.Hours.ToString(); }
+        public string Minutes { get => Timespan.Minutes.ToString(); }
+        public string Seconds { get => Timespan.Seconds.ToString(); }
         public string BgColor { get; set; }
     }
 }
