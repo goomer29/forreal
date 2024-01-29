@@ -37,8 +37,11 @@ namespace forreal.ViewModels
                     {
                         ((App)(Application.Current)).StartTimer = false;
                     }
-                }); return true;
-            });         
+                });      
+                return true;
+            });
+            OnPropertyChange(nameof(Time_Reamins));
+            OnPropertyChange(nameof(Evt));
         }
     }
     public class Event

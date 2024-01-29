@@ -126,7 +126,7 @@ namespace forreal.Services
                         }
                     case (HttpStatusCode.Unauthorized):
                         {
-                            return new UserDto() { Success = false, User = null, Message = ErrorMessages.INVALID_SIGNUP};
+                            return new UserDto() { Success = false, User = null, Message = ErrorMessages.INVALID_SIGNUP };
                         }
 
                 }
@@ -135,6 +135,37 @@ namespace forreal.Services
             return new UserDto() { Success = false, User = null, Message = ErrorMessages.INVALID_SIGNUP };
         }
         #endregion
-        
+        //"Get"
+        #region GetChallenge
+        public async Task<ChallangeDto> GetChallange(int difficult)
+        {
+            try
+            {
+                var jsonContent = JsonSerializer.Serialize(difficult, _serializerOptions);
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync($"{URL}GetChallenge", content);
+                switch (response.StatusCode)
+                {
+                    case (HttpStatusCode.OK):
+                        {
+                            jsonContent = await response.Content.ReadAsStringAsync();
+                            Challange ch = JsonSerializer.Deserialize<Challange>(jsonContent, _serializerOptions);
+                            await Task.Delay(2000);
+                            return new ChallangeDto() { Success = true, challange = ch, Message = string.Empty };
+
+                        }
+                    case (HttpStatusCode.Unauthorized):
+                        {
+                            return new ChallangeDto() { Success = false, challange = null, Message = ErrorMessages.INVALID_CHALLANGE };
+
+                        }
+
+                }
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            return new ChallangeDto() { Success = false, challange = null, Message = ErrorMessages.INVALID_CHALLANGE };
+            #endregion
+
+        }
     }
 }

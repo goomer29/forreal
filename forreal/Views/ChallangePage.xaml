@@ -1,61 +1,122 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="forreal.Views.ChallangePage"
-             xmlns:viewModels="clr-namespace:forreal.ViewModels"
-             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
-             x:DataType="viewModels:ChallangePageViewModel"
-            >
+<mct:Popup
+    x:Class="forreal.Views.ChallangePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+    xmlns:viewModels="clr-namespace:forreal.ViewModels"
+    x:DataType="viewModels:ChallangePageViewModel">
     <VerticalStackLayout>
-        <Label Text="{Binding Time_Reamins}"></Label>
+        <Label Text="{Binding Time_Reamins}" />
         <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-            <Grid Margin="30" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Grid
+                Margin="30"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Label Text="EVENTS" FontSize="24" FontAttributes="Bold" TextColor="Black" VerticalOptions="Center"/>
-                <CollectionView  Grid.Row="1" ItemsLayout="VerticalList">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <ContentView>
-                                <Frame HasShadow="True" CornerRadius="15" Margin="0,5" Padding="10" HeightRequest="100" BackgroundColor="{Binding Evt.BgColor}">
-                                    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-                                        <StackLayout Orientation="Horizontal" Spacing="10">
-                                            <BoxView WidthRequest="12" HeightRequest="12" CornerRadius="6" BackgroundColor="Black" VerticalOptions="Center"/>
-                                            <Label Text="{Binding Evt.EventTitle}" FontSize="12" TextColor="#F8F8F8"/>
-                                        </StackLayout>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
 
-                                        <StackLayout Orientation="Horizontal" Grid.Row="1" HorizontalOptions="End" Margin="10" Spacing="15">
-                                            <StackLayout>
-                                                <Label Text="{Binding Evt.Hours}" FontSize="35" FontAttributes="Bold" TextColor="Black" HorizontalOptions="End"/>
-                                                <Label Text="HOURS" FontSize="10" TextColor=" White" Opacity="0.5" HorizontalOptions="End" Margin="0,-5,0,0"/>
-                                            </StackLayout>
-                                            <StackLayout>
-                                                <Label Text="{Binding Evt.Minutes}" FontSize="35" FontAttributes="Bold" TextColor="Black" HorizontalOptions="End"/>
-                                                <Label Text="MINUTES" FontSize="10" TextColor="White" Opacity="0.5" HorizontalOptions="End" Margin="0,-5,0,0"/>
-                                            </StackLayout>
-                                            <StackLayout>
-                                                <Label Text="{Binding Evt.Seconds}" FontSize="35" FontAttributes="Bold" TextColor="Black" HorizontalOptions="End"/>
-                                                <Label Text="SECONDS" FontSize="10" TextColor="White" Opacity="0.5" HorizontalOptions="End" Margin="0,-5,0,0"/>
-                                            </StackLayout>
-                                        </StackLayout>
-                                    </Grid>
-                                </Frame>
-                            </ContentView>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                </Grid.RowDefinitions>
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="24"
+                    Text="EVENTS"
+                    TextColor="Black"
+                    VerticalOptions="Center" />
+
+                <Frame
+                    Grid.Row="1"
+                    Margin="0,5"
+                    Padding="10"
+                    BackgroundColor="{Binding Evt.BgColor}"
+                    CornerRadius="15"
+                    HasShadow="True"
+                    HeightRequest="400">
+                    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <StackLayout Orientation="Horizontal" Spacing="10">
+                            <BoxView
+                                BackgroundColor="Black"
+                                CornerRadius="6"
+                                HeightRequest="12"
+                                VerticalOptions="Center"
+                                WidthRequest="12" />
+                            <Label
+                                FontSize="12"
+                                Text="{Binding Evt.EventTitle}"
+                                TextColor="#F8F8F8" />
+                        </StackLayout>
+
+                        <StackLayout
+                            Grid.Row="1"
+                            Margin="10"
+                            HorizontalOptions="End"
+                            Orientation="Horizontal"
+                            Spacing="15">
+                            <StackLayout>
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="35"
+                                    HorizontalOptions="End"
+                                    Text="{Binding Evt.Hours}"
+                                    TextColor="Black" />
+                                <Label
+                                    Margin="0,-5,0,0"
+                                    FontSize="10"
+                                    HorizontalOptions="End"
+                                    Opacity="0.5"
+                                    Text="HOURS"
+                                    TextColor=" White" />
+                            </StackLayout>
+                            <StackLayout>
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="35"
+                                    HorizontalOptions="End"
+                                    Text="{Binding Evt.Minutes}"
+                                    TextColor="Black" />
+                                <Label
+                                    Margin="0,-5,0,0"
+                                    FontSize="10"
+                                    HorizontalOptions="End"
+                                    Opacity="0.5"
+                                    Text="MINUTES"
+                                    TextColor="White" />
+                            </StackLayout>
+                            <StackLayout>
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="35"
+                                    HorizontalOptions="End"
+                                    Text="{Binding Evt.Seconds}"
+                                    TextColor="Black" />
+                                <Label
+                                    Margin="0,-5,0,0"
+                                    FontSize="10"
+                                    HorizontalOptions="End"
+                                    Opacity="0.5"
+                                    Text="SECONDS"
+                                    TextColor="White" />
+                            </StackLayout>
+                        </StackLayout>
+                    </Grid>
+                </Frame>
+
             </Grid>
         </Grid>
-        <!--<Picker
-            --><!--ItemsSource="{Binding ChallangeList}"
+        <!--
+            <Picker
+        -->
+        <!--
+            ItemsSource="{Binding ChallangeList}"
             TitleColor="Green"
-            ItemDisplayBinding="{Binding ItemName}">--><!--
+            ItemDisplayBinding="{Binding ItemName}">
+        -->
+        <!--
         </Picker>-->
     </VerticalStackLayout>
 </mct:Popup>
