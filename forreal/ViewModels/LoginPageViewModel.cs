@@ -101,7 +101,7 @@ namespace forreal.ViewModels
                     await AppShell.Current.Navigation.PushModalAsync(new LoadingPage(lvm));
                     #endregion
                     var user = await _service.LogInAsync(UserName, Password);
-
+                    
                     lvm.IsBusy = false;
                     
                     await Shell.Current.Navigation.PopModalAsync();

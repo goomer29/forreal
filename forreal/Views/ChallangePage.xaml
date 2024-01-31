@@ -7,7 +7,6 @@
     xmlns:viewModels="clr-namespace:forreal.ViewModels"
     x:DataType="viewModels:ChallangePageViewModel">
     <VerticalStackLayout>
-        <Label Text="{Binding Time_Reamins}" />
         <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <Grid
                 Margin="30"
@@ -21,7 +20,7 @@
                 <Label
                     FontAttributes="Bold"
                     FontSize="24"
-                    Text="EVENTS"
+                    Text="Time Remains of Today's challanges: "
                     TextColor="Black"
                     VerticalOptions="Center" />
 
@@ -29,7 +28,7 @@
                     Grid.Row="1"
                     Margin="0,5"
                     Padding="10"
-                    BackgroundColor="{Binding Evt.BgColor}"
+                    BackgroundColor="{Binding BgColor}"
                     CornerRadius="15"
                     HasShadow="True"
                     HeightRequest="400">
@@ -47,8 +46,8 @@
                                 WidthRequest="12" />
                             <Label
                                 FontSize="12"
-                                Text="{Binding Evt.EventTitle}"
-                                TextColor="#F8F8F8" />
+                                Text="{Binding Title}"
+                                TextColor="White" />
                         </StackLayout>
 
                         <StackLayout
@@ -62,7 +61,7 @@
                                     FontAttributes="Bold"
                                     FontSize="35"
                                     HorizontalOptions="End"
-                                    Text="{Binding Evt.Hours}"
+                                    Text="{Binding Hours}"
                                     TextColor="Black" />
                                 <Label
                                     Margin="0,-5,0,0"
@@ -77,7 +76,7 @@
                                     FontAttributes="Bold"
                                     FontSize="35"
                                     HorizontalOptions="End"
-                                    Text="{Binding Evt.Minutes}"
+                                    Text="{Binding Minutes}"
                                     TextColor="Black" />
                                 <Label
                                     Margin="0,-5,0,0"
@@ -92,7 +91,7 @@
                                     FontAttributes="Bold"
                                     FontSize="35"
                                     HorizontalOptions="End"
-                                    Text="{Binding Evt.Seconds}"
+                                    Text="{Binding Seconds}"
                                     TextColor="Black" />
                                 <Label
                                     Margin="0,-5,0,0"
@@ -105,18 +104,20 @@
                         </StackLayout>
                     </Grid>
                 </Frame>
-
             </Grid>
         </Grid>
-        <!--
-            <Picker
-        -->
-        <!--
-            ItemsSource="{Binding ChallangeList}"
-            TitleColor="Green"
-            ItemDisplayBinding="{Binding ItemName}">
-        -->
-        <!--
-        </Picker>-->
+        <Button BackgroundColor="White"
+HorizontalOptions="EndAndExpand"
+Text="GetChallanges"   
+ TextColor="Blue"
+  Command="{Binding ChallangesCommand}"
+  VerticalOptions="EndAndExpand">
+        </Button>
+        <Picker
+            ItemsSource="{Binding Challanges.ChallangesList}"
+            ItemDisplayBinding="{Binding ChallangeText}"
+            TextColor="Black">
+            
+        </Picker>
     </VerticalStackLayout>
 </mct:Popup>
