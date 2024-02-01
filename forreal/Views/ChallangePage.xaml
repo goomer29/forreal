@@ -114,7 +114,7 @@ Text="GetChallanges"
   VerticalOptions="EndAndExpand">
         </Button>
         <Picker
-            ItemsSource="{Binding Challanges.ChallangesList}"
+            ItemsSource="{Binding Challanges}"
             ItemDisplayBinding="{Binding ChallangeText}"
             TextColor="Black">
             

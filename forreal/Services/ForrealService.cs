@@ -137,18 +137,16 @@ namespace forreal.Services
         #endregion
         //"Get"
         #region GetChallenge
-        public async Task<ChallangeDto> GetChallange(int difficult)
+        public async Task<ChallangeDto> GetChallange(int dif)
         {
             try
             {
-                var jsonContent = JsonSerializer.Serialize(difficult, _serializerOptions);
-                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-                var response = await _httpClient.PostAsync($"{URL}GetChallenge", content);
+                var response = await _httpClient.GetAsync($@"{URL}GetChallenge?difficult={dif}");
                 switch (response.StatusCode)
                 {
                     case (HttpStatusCode.OK):
                         {
-                            jsonContent = await response.Content.ReadAsStringAsync();
+                           var jsonContent = await response.Content.ReadAsStringAsync();
                             Challange ch = JsonSerializer.Deserialize<Challange>(jsonContent, _serializerOptions);
                             await Task.Delay(2000);
                             return new ChallangeDto() { Success = true, challange = ch, Message = string.Empty };

@@ -19,8 +19,7 @@ namespace forreal.ViewModels
         private string seconds;
         private string bgcolor;
         private string title;
-        public Challanges Challanges { get; set; }
-        public List<Challange> ChallangesToday { get; set; }
+        public List<Challange> Challanges{ get; set; }
         #endregion
         #region Proporties
         public TimeSpan Time_Reamins
@@ -94,15 +93,18 @@ namespace forreal.ViewModels
         [Obsolete]
         public ChallangePageViewModel(ForrealService service)
         {
+            Challanges = new List<Challange>();
             _service = service;
-            Challanges = new Challanges();
-            ChallangesCommand
-            for(int i = 1; i < 6; i++)
+            ChallangesCommand = new Command(async () =>
             {
-                var cha = _service.GetChallange(i);
-                var ch = cha.Result;
-                Challanges.ChallangesList.Add(ch.challange);
-            }
+                for (int i = 1; i < 6; i++)
+                {
+                    var ch =await  _service.GetChallange(i);  
+                    if(ch.Success)
+                    Challanges.Add(ch.challange);
+
+                }
+            });
             Evt = GetEvent();
             BgColor = "#EB9999";
             Title = "Time Remains for Today's challenges";

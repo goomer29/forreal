@@ -9,8 +9,8 @@ namespace forreal.Models
 {
     public class Challange
     {
-        public string ChallangeText { get; set; }
-        public int Diffcult { get; set; }
+        public int Difficult { get; set; }
+        public string Text { get; set; }
         public ObservableCollection<User> Users { get; set; }
 
     }
