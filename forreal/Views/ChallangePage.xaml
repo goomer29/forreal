@@ -106,18 +106,10 @@
                 </Frame>
             </Grid>
         </Grid>
-        <Button BackgroundColor="White"
-HorizontalOptions="EndAndExpand"
-Text="GetChallanges"   
- TextColor="Blue"
-  Command="{Binding ChallangesCommand}"
-  VerticalOptions="EndAndExpand">
-        </Button>
         <Picker
             ItemsSource="{Binding Challanges}"
-            ItemDisplayBinding="{Binding ChallangeText}"
+            ItemDisplayBinding="{Binding Text}"
             TextColor="Black">
-            
         </Picker>
     </VerticalStackLayout>
 </mct:Popup>
