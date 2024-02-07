@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net;
+using System.Collections.ObjectModel;
 
 namespace forreal.Services
 {
@@ -137,31 +138,31 @@ namespace forreal.Services
         #endregion
         //"Get"
         #region GetChallenge
-        public async Task<ChallangeDto> GetChallange(int dif)
+        public async Task<ChallangesDto> GetChallange()
         {
             try
             {
-                var response = await _httpClient.GetAsync($@"{URL}GetChallenge?difficult={dif}");
+                var response = await _httpClient.GetAsync($@"{URL}GetChallenge");
                 switch (response.StatusCode)
                 {
                     case (HttpStatusCode.OK):
                         {
                            var jsonContent = await response.Content.ReadAsStringAsync();
-                            Challange ch = JsonSerializer.Deserialize<Challange>(jsonContent, _serializerOptions);
+                            ObservableCollection<Challange> ch = JsonSerializer.Deserialize<ObservableCollection<Challange>>(jsonContent, _serializerOptions);
                             await Task.Delay(2000);
-                            return new ChallangeDto() { Success = true, challange = ch, Message = string.Empty };
+                            return new ChallangesDto() { Success = true, ChallangesList = ch, Message = string.Empty };
 
                         }
                     case (HttpStatusCode.Unauthorized):
                         {
-                            return new ChallangeDto() { Success = false, challange = null, Message = ErrorMessages.INVALID_CHALLANGE };
+                            return new ChallangesDto() { Success = false, ChallangesList = null, Message = ErrorMessages.INVALID_CHALLANGE };
 
                         }
 
                 }
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); }
-            return new ChallangeDto() { Success = false, challange = null, Message = ErrorMessages.INVALID_CHALLANGE };
+            return new ChallangesDto() { Success = false, ChallangesList = null, Message = ErrorMessages.INVALID_CHALLANGE };
             #endregion
 
         }

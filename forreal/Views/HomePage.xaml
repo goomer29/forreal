@@ -15,10 +15,5 @@
             Command="{Binding ChallangeCommand}"
             Aspect="Center">
         </ImageButton>
-        <Picker
-     ItemsSource="{Binding Challanges}"
-     ItemDisplayBinding="{Binding Text}"
-     TextColor="Black">
-        </Picker>
     </VerticalStackLayout>
 </ContentPage>

@@ -3,6 +3,7 @@ using forreal.Models;
 using forreal.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,8 @@ namespace forreal.ViewModels
         private string seconds;
         private string bgcolor;
         private string title;
-        public IList<Challange> Challanges{ get; set; }
+        public ObservableCollection<Challange> Challanges{ get =>HomePageViewModel.statChallanges; }
+        
         #endregion
         #region Proporties
         public TimeSpan Time_Reamins
@@ -86,6 +88,7 @@ namespace forreal.ViewModels
         #endregion
         #region Commands
         public ICommand ChallangesCommand { get; protected set; }
+        public ICommand PickFileCommand { get; protected set; }
         #endregion
         [Obsolete]
         public ChallangePageViewModel()
@@ -109,6 +112,11 @@ namespace forreal.ViewModels
                     Seconds = Time_Reamins.Seconds.ToString();
                 });  
                 return true;
+            });
+
+            PickFileCommand = new Command(async () =>
+            {
+                FileResult result = await FilePicker.Default.PickAsync();
             });
         }
     }

@@ -111,5 +111,6 @@
             ItemDisplayBinding="{Binding Text}"
             TextColor="Black">
         </Picker>
+        
     </VerticalStackLayout>
 </mct:Popup>

@@ -19,6 +19,7 @@ namespace forreal.ViewModels
         private string _userName;//שם משתמש
         public ICommand ChallangeCommand { get; protected set; }
         public ICommand CloseChallange { get; protected set; }
+        public static ObservableCollection<Challange> statChallanges { get; set; }
         public ObservableCollection<Challange> Challanges { get; set;  }
         #region Service component
         private readonly ForrealService _service;
@@ -39,12 +40,17 @@ namespace forreal.ViewModels
             {            
                 try
                 {
-                    for (int i = 1; i < 6; i++)
+                    if(Challanges.Count == 0)
                     {
-                        var ch = await _service.GetChallange(i);
+                        var ch = await _service.GetChallange();
                         if (ch.Success)
-                            Challanges.Add(ch.challange);
-                    }
+                        {
+                            for (int i = 1; i < 6; i++)
+                            {
+                                Challanges.Add(ch.ChallangesList[i]);
+                            }
+                        }
+                    }                   
                 }
                 catch (Exception ex)
                 {
@@ -52,6 +58,7 @@ namespace forreal.ViewModels
                     await AppShell.Current.Navigation.PopModalAsync();
                 }
                 OnPropertyChange();
+                statChallanges = Challanges;
                 await popupService.ShowPopupAsync<ChallangePageViewModel>();
             });
 
