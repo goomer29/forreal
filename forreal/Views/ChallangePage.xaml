@@ -111,6 +111,13 @@
             ItemDisplayBinding="{Binding Text}"
             TextColor="Black">
         </Picker>
-        
+        <Button BackgroundColor="Black"
+HorizontalOptions="EndAndExpand"
+Text="Upload the Challange"   
+ TextColor="White"
+  Command="{Binding PickFileCommand}"
+  VerticalOptions="EndAndExpand">
+
+        </Button>
     </VerticalStackLayout>
 </mct:Popup>

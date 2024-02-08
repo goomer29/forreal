@@ -116,8 +116,12 @@ namespace forreal.ViewModels
 
             PickFileCommand = new Command(async () =>
             {
-                FileResult result = await FilePicker.Default.PickAsync();
+                FileResult result = await FilePicker.Default.PickAsync(new PickOptions
+                {
+                    PickerTitle="please select an image/video",
+                });
             });
+            
         }
     }
     public class Event
