@@ -118,9 +118,18 @@ namespace forreal.ViewModels
             {
                 FileResult result = await FilePicker.Default.PickAsync(new PickOptions
                 {
-                    PickerTitle="please select an image/video",
+                    PickerTitle="please select an image/video"
                 });
+                if (result.FileName.EndsWith("jpg",StringComparison.OrdinalIgnoreCase)|| result.FileName.EndsWith("jpeg", StringComparison.OrdinalIgnoreCase)||result.FileName.EndsWith("png", StringComparison.OrdinalIgnoreCase))
+                {
+                    var stream = await result.OpenReadAsync();
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert("Alert", "Invalid file selected", "Ok");
+                }
             });
+            
             
         }
     }
