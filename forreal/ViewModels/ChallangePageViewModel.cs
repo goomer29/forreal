@@ -120,14 +120,19 @@ namespace forreal.ViewModels
                 {
                     PickerTitle="please select an image/video"
                 });
-                if (result.FileName.EndsWith("jpg",StringComparison.OrdinalIgnoreCase)|| result.FileName.EndsWith("jpeg", StringComparison.OrdinalIgnoreCase)||result.FileName.EndsWith("png", StringComparison.OrdinalIgnoreCase))
+                try
                 {
-                    var stream = await result.OpenReadAsync();
+                    if (result.FileName.EndsWith("jpg", StringComparison.OrdinalIgnoreCase) || result.FileName.EndsWith("jpeg", StringComparison.OrdinalIgnoreCase) || result.FileName.EndsWith("png", StringComparison.OrdinalIgnoreCase))
+                    {
+                        var stream = await result.OpenReadAsync();
+                        var image = ImageSource.FromStream(() => stream);
+                    }
+                    else
+                    {
+                        await Shell.Current.DisplayAlert("Alert", "Invalid file selected", "Ok");
+                    }
                 }
-                else
-                {
-                    await Shell.Current.DisplayAlert("Alert", "Invalid file selected", "Ok");
-                }
+                catch (Exception ex) { Console.WriteLine(ex.Message); }
             });
             
             
