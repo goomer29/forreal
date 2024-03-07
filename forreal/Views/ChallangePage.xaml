@@ -109,6 +109,7 @@
         <Picker
             ItemsSource="{Binding Challanges}"
             ItemDisplayBinding="{Binding Text}"
+            SelectedItem="{Binding ChallangeSelect}"
             TextColor="Black">
         </Picker>
         <Button BackgroundColor="Black"

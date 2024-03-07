@@ -20,6 +20,7 @@ namespace forreal.ViewModels
         private string seconds;
         private string bgcolor;
         private string title;
+        public static Challange challange_select;
         public ObservableCollection<Challange> Challanges{ get =>HomePageViewModel.statChallanges; }
         
         #endregion
@@ -80,6 +81,16 @@ namespace forreal.ViewModels
                 }
             }
         }
+        public Challange ChallangeSelect
+        {
+            get => challange_select; set
+            {
+                if (challange_select != value)
+                {
+                    challange_select = value; OnPropertyChange();
+                }
+            }
+        }
         public Event GetEvent()
         {
             return new Event { EventTitle = "Time Remains for TOday's challenges", BgColor = "#EB9999", Date = new DateTime(DateTime.Now.Ticks + new TimeSpan(0, 24, 0, 0).Ticks) };
@@ -93,6 +104,7 @@ namespace forreal.ViewModels
         [Obsolete]
         public ChallangePageViewModel()
         {
+            ChallangeSelect = null;
             Evt = GetEvent();
             BgColor = "#EB9999";
             Title = "Time Remains for Today's challenges";
@@ -116,6 +128,7 @@ namespace forreal.ViewModels
 
             PickFileCommand = new Command(async () =>
             {
+                Challange ch = ChallangeSelect;
                 FileResult result = await FilePicker.Default.PickAsync(new PickOptions
                 {
                     PickerTitle="please select an image/video"

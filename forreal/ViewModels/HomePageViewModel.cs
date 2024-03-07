@@ -21,6 +21,7 @@ namespace forreal.ViewModels
         public ICommand CloseChallange { get; protected set; }
         public static ObservableCollection<Challange> statChallanges { get; set; }
         public ObservableCollection<Challange> Challanges { get; set;  }
+        public string ChallengeName { get => ChallangePageViewModel.challange_select.Text; }
         #region Service component
         private readonly ForrealService _service;
         #endregion
