@@ -27,7 +27,7 @@
             </Grid.ColumnDefinitions>
             <BoxView Color="Blue"
              Grid.ColumnSpan="2"/>
-            <Label Text="{Binding ChallengeName}"    
+            <Label Text="{Binding ChallengeSubmit.Text}"    
                    Grid.Row="0"
                Grid.ColumnSpan="2"
                HorizontalOptions="Center"

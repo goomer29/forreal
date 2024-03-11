@@ -127,8 +127,8 @@ namespace forreal.ViewModels
             });
 
             PickFileCommand = new Command(async () =>
-            {
-                Challange ch = ChallangeSelect;
+                {
+                challange_select = ChallangeSelect;
                 FileResult result = await FilePicker.Default.PickAsync(new PickOptions
                 {
                     PickerTitle="please select an image/video"

@@ -19,9 +19,10 @@ namespace forreal.ViewModels
         private string _userName;//שם משתמש
         public ICommand ChallangeCommand { get; protected set; }
         public ICommand CloseChallange { get; protected set; }
+        public ICommand PostCommand { get; protected set; }
         public static ObservableCollection<Challange> statChallanges { get; set; }
         public ObservableCollection<Challange> Challanges { get; set;  }
-        public string ChallengeName { get => ChallangePageViewModel.challange_select.Text; }
+        public Challange ChallengeSubmit { get => ChallangePageViewModel.challange_select; }
         #region Service component
         private readonly ForrealService _service;
         #endregion
@@ -38,7 +39,8 @@ namespace forreal.ViewModels
 
             UserName = "Welcome to Homepage " + ((App)Application.Current).User.UserName;
             ChallangeCommand = new Command(async () =>
-            {            
+            {                
+                
                 try
                 {
                     if(Challanges.Count == 0)
@@ -61,6 +63,7 @@ namespace forreal.ViewModels
                 OnPropertyChange();
                 statChallanges = Challanges;
                 await popupService.ShowPopupAsync<ChallangePageViewModel>();
+                OnPropertyChange(nameof(ChallengeSubmit));
             });
 
             CloseChallange = new Command(async () =>
