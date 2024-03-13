@@ -164,11 +164,37 @@ namespace forreal.Services
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); }
             return new ChallangesDto() { Success = false, ChallangesList = null, Message = ErrorMessages.INVALID_CHALLANGE };
-            #endregion
+        }
+        #endregion
         //"Post"
         #region PostChallenge
-           
-        #endregion
+        public async Task<HttpStatusCode> UploadPost(PostDto post,FileResult file = null)
+        {
+            try
+            {
+                var multipartFormContent = new MultipartFormDataContent();
+                if(file != null)
+                {
+                    byte[] bytes;
+                    using(MemoryStream ms = new()) 
+                    {
+                        var stream = await file.OpenReadAsync();
+                        stream.CopyTo(ms);
+                        bytes = ms.ToArray();
+                    }
+                    var content=new ByteArrayContent(bytes);
+                    multipartFormContent.Add(content, "file",file.FileName);
+                }
+                var jsonContent = JsonSerializer.Serialize(post, _serializerOptions);
+                var stringcontent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                multipartFormContent.Add(stringcontent, "post");
+
+                var response = await _httpClient.PostAsync($"{URL}/UploadImage",multipartFormContent);
+                return response.StatusCode;  
+            }
+            catch (Exception) { return HttpStatusCode.BadRequest; }
         }
+        #endregion
+        
     }
 }

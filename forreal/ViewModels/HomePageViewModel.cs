@@ -23,6 +23,7 @@ namespace forreal.ViewModels
         public static ObservableCollection<Challange> statChallanges { get; set; }
         public ObservableCollection<Challange> Challanges { get; set;  }
         public Challange ChallengeSubmit { get => ChallangePageViewModel.challange_select; }
+        public ImageSource ImageSubmit { get => ChallangePageViewModel.image_select; }
         #region Service component
         private readonly ForrealService _service;
         #endregion
@@ -63,7 +64,9 @@ namespace forreal.ViewModels
                 OnPropertyChange();
                 statChallanges = Challanges;
                 await popupService.ShowPopupAsync<ChallangePageViewModel>();
+                OnPropertyChange(nameof(ImageSubmit));
                 OnPropertyChange(nameof(ChallengeSubmit));
+              
             });
 
             CloseChallange = new Command(async () =>

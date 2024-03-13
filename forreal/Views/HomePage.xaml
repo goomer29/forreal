@@ -15,45 +15,51 @@
             Command="{Binding ChallangeCommand}"
             Aspect="Center">
         </ImageButton>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="2*" />
-                <RowDefinition />
-                <RowDefinition Height="100" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <BoxView Color="Blue"
-             Grid.ColumnSpan="2"/>
-            <Label Text="{Binding ChallengeSubmit.Text}"    
-                   Grid.Row="0"
-               Grid.ColumnSpan="2"
-               HorizontalOptions="Center"
-               VerticalOptions="Center" />
-            <BoxView Grid.Row="1"
-            Color="Coral" />
-            <Label Grid.Row="1"
-               Text="Row 1, Column 0"
-               HorizontalOptions="Center"
-               VerticalOptions="Center" />
-            <BoxView Grid.Row="1"
-                 Grid.Column="1"
-                 Color="Purple" />
-            <Label Grid.Row="1"
-               Grid.Column="1"
-               Text="Row1, Column 1"
-               HorizontalOptions="Center"
-               VerticalOptions="Center" />
-            <BoxView Grid.Row="2"
-                 Grid.ColumnSpan="2"
-                 Color="Red" />
-            <Label Grid.Row="2"
-               Grid.ColumnSpan="2"
-               Text="Row 2, Columns 0 and 1"
-               HorizontalOptions="Center"
-               VerticalOptions="Center" />
-        </Grid> 
+        <Border>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*" />
+                    <RowDefinition />
+                    <RowDefinition Height="100" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <BoxView Color="White"
+      Grid.ColumnSpan="2"/>
+                <Label Text="{Binding ChallengeSubmit.Text}"    
+            Grid.Row="0"
+        Grid.ColumnSpan="2"
+        HorizontalOptions="Center"
+        VerticalOptions="Center" />
+                <BoxView Grid.Row="1"
+     Color="Black" 
+      Grid.ColumnSpan="2"/>
+                <Image Grid.Row="1"
+            Grid.ColumnSpan="2"
+               HeightRequest="100"
+                       WidthRequest="100"
+        Source="{Binding ImageSubmit}"
+        HorizontalOptions="Center"
+        VerticalOptions="Center" />
+                <BoxView Grid.Row="2"
+          Grid.Column="0"
+          Color="Red" />
+                <Label Grid.Row="2"
+        Grid.Column="0"
+        Text="No"
+        HorizontalOptions="Center"
+        VerticalOptions="Center" />
+                <BoxView Grid.Row="2"
+          Grid.Column="1"
+          Color="LightGreen" />
+                <Label Grid.Row="2"
+       Grid.Column="1"
+        Text="Yes"
+        HorizontalOptions="Center"
+        VerticalOptions="Center" />
+            </Grid>
+        </Border>
     </VerticalStackLayout>
 </ContentPage>

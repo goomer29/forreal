@@ -21,6 +21,7 @@ namespace forreal.ViewModels
         private string bgcolor;
         private string title;
         public static Challange challange_select;
+        public static ImageSource image_select;
         public ObservableCollection<Challange> Challanges{ get =>HomePageViewModel.statChallanges; }
         
         #endregion
@@ -106,7 +107,7 @@ namespace forreal.ViewModels
         {
             ChallangeSelect = null;
             Evt = GetEvent();
-            BgColor = "#EB9999";
+            BgColor = "#00FF00";
             Title = "Time Remains for Today's challenges";
             Device.StartTimer(new TimeSpan(0, 0, 1), () =>
             {
@@ -139,6 +140,7 @@ namespace forreal.ViewModels
                     {
                         var stream = await result.OpenReadAsync();
                         var image = ImageSource.FromStream(() => stream);
+                            image_select = image;
                     }
                     else
                     {
