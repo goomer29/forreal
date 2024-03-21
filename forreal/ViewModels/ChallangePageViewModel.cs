@@ -23,13 +23,17 @@ namespace forreal.ViewModels
         public static Challange challange_select;
         public static ImageSource image_select;
         public ObservableCollection<Challange> Challanges{ get =>HomePageViewModel.statChallanges; }
-        
+        public event EventHandler SelectedImage;
         #endregion
         #region Proporties
         public TimeSpan Time_Reamins
         {
             get => time_remains;
             set { if (time_remains != value) { time_remains = value; OnPropertyChange(); } }
+        }
+        private void OnSelectedImage()
+        {
+            SelectedImage?.Invoke(this, EventArgs.Empty);
         }
         public Event Evt {  get; set; } 
         public string Hours
@@ -130,10 +134,13 @@ namespace forreal.ViewModels
             PickFileCommand = new Command(async () =>
                 {
                 challange_select = ChallangeSelect;
-                FileResult result = await FilePicker.Default.PickAsync(new PickOptions
-                {
-                    PickerTitle="please select an image/video"
-                });
+                    Device.BeginInvokeOnMainThread(async () =>
+                    {
+                        FileResult result = await FilePicker.Default.PickAsync(new PickOptions
+                        {
+                            PickerTitle = "please select an image/video"
+                        });
+                   
                 try
                 {
                     if (result.FileName.EndsWith("jpg", StringComparison.OrdinalIgnoreCase) || result.FileName.EndsWith("jpeg", StringComparison.OrdinalIgnoreCase) || result.FileName.EndsWith("png", StringComparison.OrdinalIgnoreCase))
@@ -141,6 +148,7 @@ namespace forreal.ViewModels
                         var stream = await result.OpenReadAsync();
                         var image = ImageSource.FromStream(() => stream);
                             image_select = image;
+                              OnSelectedImage();
                     }
                     else
                     {
@@ -149,8 +157,8 @@ namespace forreal.ViewModels
                 }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
             });
-            
-            
+                });
+
         }
     }
     public class Event

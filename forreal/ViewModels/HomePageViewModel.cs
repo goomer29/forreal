@@ -63,16 +63,25 @@ namespace forreal.ViewModels
                 }
                 OnPropertyChange();
                 statChallanges = Challanges;
-                await popupService.ShowPopupAsync<ChallangePageViewModel>();
-                OnPropertyChange(nameof(ImageSubmit));
+                await popupService.ShowPopupAsync<ChallangePageViewModel>(onPresenting: vm => vm.SelectedImage += (s, e) => {
+                    OnPropertyChange(nameof(ChallengeSubmit));
+                    OnPropertyChange(nameof(ImageSubmit));
+                });
+                
+               
                 OnPropertyChange(nameof(ChallengeSubmit));
-              
+                OnPropertyChange(nameof(ImageSubmit));
+
             });
 
             CloseChallange = new Command(async () =>
             {
                 await ChallangePage.ClosePopup();
+                OnPropertyChange(nameof(ChallengeSubmit));
+                OnPropertyChange(nameof(ImageSubmit));
             });
         }
+
+        
     }
 }
