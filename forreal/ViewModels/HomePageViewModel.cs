@@ -17,9 +17,12 @@ namespace forreal.ViewModels
     {
         readonly IPopupService popupService;
         private string _userName;//שם משתמש
+        public static bool _showsubmit;
         public ICommand ChallangeCommand { get; protected set; }
         public ICommand CloseChallange { get; protected set; }
         public ICommand PostCommand { get; protected set; }
+        public ICommand YesCommand { get; protected set; }
+        public ICommand NoCommand { get; protected set; }
         public static ObservableCollection<Challange> statChallanges { get; set; }
         public ObservableCollection<Challange> Challanges { get; set;  }
         public Challange ChallengeSubmit { get => ChallangePageViewModel.challange_select; }
@@ -32,8 +35,14 @@ namespace forreal.ViewModels
             get => _userName;
             set { if (_userName != value) { _userName = value; OnPropertyChange(); } }
         }
+        public bool ShowSubmit
+        {
+            get => _showsubmit;
+            set { if (_showsubmit != value) { _showsubmit = value; OnPropertyChange(); } }
+        }
         public HomePageViewModel(IPopupService _popupService, ForrealService service)
         {
+            ShowSubmit = false;
             Challanges = new ObservableCollection<Challange>();
             _service = service;
             popupService = _popupService;
@@ -64,11 +73,12 @@ namespace forreal.ViewModels
                 OnPropertyChange();
                 statChallanges = Challanges;
                 await popupService.ShowPopupAsync<ChallangePageViewModel>(onPresenting: vm => vm.SelectedImage += (s, e) => {
+                    OnPropertyChange(nameof(ShowSubmit));
                     OnPropertyChange(nameof(ChallengeSubmit));
                     OnPropertyChange(nameof(ImageSubmit));
                 });
-                
-               
+
+                OnPropertyChange(nameof(ShowSubmit));
                 OnPropertyChange(nameof(ChallengeSubmit));
                 OnPropertyChange(nameof(ImageSubmit));
 
@@ -77,8 +87,13 @@ namespace forreal.ViewModels
             CloseChallange = new Command(async () =>
             {
                 await ChallangePage.ClosePopup();
+                OnPropertyChange(nameof(ShowSubmit));
                 OnPropertyChange(nameof(ChallengeSubmit));
                 OnPropertyChange(nameof(ImageSubmit));
+            });
+            NoCommand = new Command(async () => 
+            {
+                ShowSubmit = false;
             });
         }
 

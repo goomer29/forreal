@@ -1,65 +1,75 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="forreal.Views.HomePage"
-              xmlns:viewmodels="clr-namespace:forreal.ViewModels"
-              x:DataType="viewmodels:HomePageViewModel"
-             Title="HomePage">
-    <VerticalStackLayout>
-        <Label 
-     Text="{Binding UserName}"
-     VerticalOptions="Center" 
-     HorizontalOptions="Center" />
-        <ImageButton 
-            Source="challenge_button.png"
-            Command="{Binding ChallangeCommand}"
-            Aspect="Center">
-        </ImageButton>
-        <Border>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="2*" />
-                    <RowDefinition />
-                    <RowDefinition Height="100" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <BoxView Color="White"
-      Grid.ColumnSpan="2"/>
-                <Label Text="{Binding ChallengeSubmit.Text}"    
-            Grid.Row="0"
-        Grid.ColumnSpan="2"
-        HorizontalOptions="Center"
-        VerticalOptions="Center" />
-                <BoxView Grid.Row="1"
-     Color="Black" 
-      Grid.ColumnSpan="2"/>
-                <Image Grid.Row="1"
-            Grid.ColumnSpan="2"
-               HeightRequest="100"
-                       WidthRequest="100"
-        Source="{Binding ImageSubmit}"
-        HorizontalOptions="Center"
-        VerticalOptions="Center" />
-                <BoxView Grid.Row="2"
-          Grid.Column="0"
-          Color="Red" />
-                <Label Grid.Row="2"
-        Grid.Column="0"
-        Text="No"
-        HorizontalOptions="Center"
-        VerticalOptions="Center" />
-                <BoxView Grid.Row="2"
-          Grid.Column="1"
-          Color="LightGreen" />
-                <Label Grid.Row="2"
-       Grid.Column="1"
-        Text="Yes"
-        HorizontalOptions="Center"
-        VerticalOptions="Center" />
-            </Grid>
-        </Border>
-    </VerticalStackLayout>
+<ContentPage
+    x:Class="forreal.Views.HomePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:forreal.ViewModels"
+    Title="HomePage"
+    x:DataType="viewmodels:HomePageViewModel">
+    <ScrollView>
+        <VerticalStackLayout Margin="40,20,20,100">
+            <Label
+          HorizontalOptions="Center"
+          Text="{Binding UserName}"
+          VerticalOptions="Center" />
+            <ImageButton
+          Aspect="Center"
+          Command="{Binding ChallangeCommand}"
+          Source="challenge_button.png" />
+
+            <Label IsVisible="{Binding ShowSubmit}"   
+       Text="Are you sure you want to post it?" >
+            </Label>
+            <Border BackgroundColor="Blue" IsVisible="{Binding ShowSubmit}">
+                <Grid ColumnDefinitions="*,*" RowDefinitions="*,*,*" IsVisible="{Binding ShowSubmit}">
+                    <BoxView Grid.ColumnSpan="2" Color="White"   HeightRequest="30"/>
+                    <Label
+                  Grid.Row="0"
+                  Grid.ColumnSpan="2"
+                  HorizontalOptions="Center"
+                  Text="{Binding ChallengeSubmit.Text}"
+                  VerticalOptions="Center" />
+                    <BoxView
+                  Grid.Row="1"
+                  Grid.ColumnSpan="2"
+                  HeightRequest="300"
+                  Color="Black" />
+                    <Image
+                  Grid.Row="1"
+                  Grid.ColumnSpan="2"
+                  HeightRequest="300"
+                  HorizontalOptions="Center"
+                  Source="{Binding ImageSubmit}"
+                  VerticalOptions="Center"
+                  WidthRequest="300" />
+                    <BoxView
+                  Grid.Row="2"
+                  Grid.Column="0"
+                  HeightRequest="40"
+                  Color="Red" />
+                    <Button
+                  Grid.Row="2"
+                  Grid.Column="0"
+                  HorizontalOptions="Center"
+                  BackgroundColor="Red"
+                  WidthRequest="700"
+                  Command="{Binding NoCommand}"
+                  Text="No"
+                  VerticalOptions="Center" />
+                    <BoxView
+                  Grid.Row="2"
+                  Grid.Column="1"
+                  Color="LightGreen" />
+                    <Button
+                  Grid.Row="2"
+                  Grid.Column="1"
+                  HorizontalOptions="Center"
+                  BackgroundColor="LightGreen"
+                  Command="{Binding YesCommand}"
+                  Text="Yes"
+                  VerticalOptions="Center" />
+                </Grid>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

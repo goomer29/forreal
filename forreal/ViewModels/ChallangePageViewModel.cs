@@ -18,7 +18,7 @@ namespace forreal.ViewModels
         private string hours;
         private string minutes;
         private string seconds;
-        private string bgcolor;
+        private Color bgcolor;
         private string title;
         public static Challange challange_select;
         public static ImageSource image_select;
@@ -66,7 +66,7 @@ namespace forreal.ViewModels
                 }
             }
         }
-        public string BgColor
+        public Color BgColor
         {
             get => bgcolor; set
             {
@@ -98,7 +98,7 @@ namespace forreal.ViewModels
         }
         public Event GetEvent()
         {
-            return new Event { EventTitle = "Time Remains for TOday's challenges", BgColor = "#EB9999", Date = new DateTime(DateTime.Now.Ticks + new TimeSpan(0, 24, 0, 0).Ticks) };
+            return new Event { EventTitle = "Time Remains for TOday's challenges", BgColor = Color.FromRgb(38, 127, 0) , Date = new DateTime(DateTime.Now.Ticks + new TimeSpan(0, 24, 0, 0).Ticks) };
             
         }
         #endregion
@@ -111,7 +111,7 @@ namespace forreal.ViewModels
         {
             ChallangeSelect = null;
             Evt = GetEvent();
-            BgColor = "#00FF00";
+            BgColor = Color.FromRgb(38, 127, 0);
             Title = "Time Remains for Today's challenges";
             Device.StartTimer(new TimeSpan(0, 0, 1), () =>
             {
@@ -145,6 +145,7 @@ namespace forreal.ViewModels
                 {
                     if (result.FileName.EndsWith("jpg", StringComparison.OrdinalIgnoreCase) || result.FileName.EndsWith("jpeg", StringComparison.OrdinalIgnoreCase) || result.FileName.EndsWith("png", StringComparison.OrdinalIgnoreCase))
                     {
+                        HomePageViewModel._showsubmit = true; 
                         var stream = await result.OpenReadAsync();
                         var image = ImageSource.FromStream(() => stream);
                             image_select = image;
@@ -170,6 +171,6 @@ namespace forreal.ViewModels
         public string Hours { get => Timespan.Hours.ToString(); }
         public string Minutes { get => Timespan.Minutes.ToString(); }
         public string Seconds { get => Timespan.Seconds.ToString(); }
-        public string BgColor { get; set; }
+        public Color BgColor { get; set; }
     }
 }
