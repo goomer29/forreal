@@ -189,7 +189,7 @@ namespace forreal.Services
                 var stringcontent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
                 multipartFormContent.Add(stringcontent, "post");
 
-                var response = await _httpClient.PostAsync($"{URL}/UploadImage",multipartFormContent);
+                var response = await _httpClient.PostAsync($"{URL}UploadImage",multipartFormContent);
                 return response.StatusCode;  
             }
             catch (Exception) { return HttpStatusCode.BadRequest; }

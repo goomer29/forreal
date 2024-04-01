@@ -10,6 +10,7 @@ using CommunityToolkit.Maui.Core;
 using forreal.Services;
 using forreal.Models;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace forreal.ViewModels
 {
@@ -27,6 +28,7 @@ namespace forreal.ViewModels
         public ObservableCollection<Challange> Challanges { get; set;  }
         public Challange ChallengeSubmit { get => ChallangePageViewModel.challange_select; }
         public ImageSource ImageSubmit { get => ChallangePageViewModel.image_select; }
+        public FileResult FileSubmit { get=>ChallangePageViewModel.file_select; }
         #region Service component
         private readonly ForrealService _service;
         #endregion
@@ -76,11 +78,13 @@ namespace forreal.ViewModels
                     OnPropertyChange(nameof(ShowSubmit));
                     OnPropertyChange(nameof(ChallengeSubmit));
                     OnPropertyChange(nameof(ImageSubmit));
+                    OnPropertyChange(nameof(FileSubmit));
                 });
 
                 OnPropertyChange(nameof(ShowSubmit));
                 OnPropertyChange(nameof(ChallengeSubmit));
                 OnPropertyChange(nameof(ImageSubmit));
+                OnPropertyChange(nameof(FileSubmit));
 
             });
 
@@ -90,13 +94,33 @@ namespace forreal.ViewModels
                 OnPropertyChange(nameof(ShowSubmit));
                 OnPropertyChange(nameof(ChallengeSubmit));
                 OnPropertyChange(nameof(ImageSubmit));
+                OnPropertyChange(nameof(FileSubmit));
             });
             NoCommand = new Command(async () => 
             {
                 ShowSubmit = false;
             });
-        }
-
-        
+            YesCommand = new Command(async () =>
+            {
+                try
+                {
+                    string username = ((App)Application.Current).User.UserName;
+                    string challangename = ChallengeSubmit.Text;
+                    PostDto post = new PostDto();
+                    post.username = username; post.challengename = challangename;
+                    var file = FileSubmit;
+                    var response = await _service.UploadPost(post, file);
+                    if (response == System.Net.HttpStatusCode.OK)
+                    {
+                        await AppShell.Current.DisplayAlert("All done!", "the post has submitted", "cancel");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    await AppShell.Current.Navigation.PopModalAsync();
+                }
+            });
+        }     
     }
 }

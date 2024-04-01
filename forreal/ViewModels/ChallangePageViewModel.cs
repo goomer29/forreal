@@ -22,6 +22,7 @@ namespace forreal.ViewModels
         private string title;
         public static Challange challange_select;
         public static ImageSource image_select;
+        public static FileResult file_select;
         public ObservableCollection<Challange> Challanges{ get =>HomePageViewModel.statChallanges; }
         public event EventHandler SelectedImage;
         #endregion
@@ -138,6 +139,7 @@ namespace forreal.ViewModels
                     {
                         FileResult result = await FilePicker.Default.PickAsync(new PickOptions
                         {
+                             FileTypes = FilePickerFileType.Images,
                             PickerTitle = "please select an image/video"
                         });
                    
@@ -149,6 +151,7 @@ namespace forreal.ViewModels
                         var stream = await result.OpenReadAsync();
                         var image = ImageSource.FromStream(() => stream);
                             image_select = image;
+                            file_select = result;
                               OnSelectedImage();
                     }
                     else

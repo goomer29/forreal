@@ -20,7 +20,7 @@
             <Label IsVisible="{Binding ShowSubmit}"   
        Text="Are you sure you want to post it?" >
             </Label>
-            <Border BackgroundColor="Blue" IsVisible="{Binding ShowSubmit}">
+            <Border BackgroundColor="Blue" IsVisible="{Binding ShowSubmit}" WidthRequest="900">
                 <Grid ColumnDefinitions="*,*" RowDefinitions="*,*,*" IsVisible="{Binding ShowSubmit}">
                     <BoxView Grid.ColumnSpan="2" Color="White"   HeightRequest="30"/>
                     <Label
@@ -32,7 +32,7 @@
                     <BoxView
                   Grid.Row="1"
                   Grid.ColumnSpan="2"
-                  HeightRequest="300"
+                  HeightRequest="300"                      
                   Color="Black" />
                     <Image
                   Grid.Row="1"
@@ -41,7 +41,8 @@
                   HorizontalOptions="Center"
                   Source="{Binding ImageSubmit}"
                   VerticalOptions="Center"
-                  WidthRequest="300" />
+                  WidthRequest="900"/>
+                    
                     <BoxView
                   Grid.Row="2"
                   Grid.Column="0"
@@ -52,7 +53,7 @@
                   Grid.Column="0"
                   HorizontalOptions="Center"
                   BackgroundColor="Red"
-                  WidthRequest="700"
+                  WidthRequest="650"
                   Command="{Binding NoCommand}"
                   Text="No"
                   VerticalOptions="Center" />
@@ -67,6 +68,7 @@
                   BackgroundColor="LightGreen"
                   Command="{Binding YesCommand}"
                   Text="Yes"
+                  WidthRequest="450"
                   VerticalOptions="Center" />
                 </Grid>
             </Border>
