@@ -195,6 +195,34 @@ namespace forreal.Services
             catch (Exception) { return HttpStatusCode.BadRequest; }
         }
         #endregion
-        
-    }
+        //"Get"
+        #region GetAllUsers
+        public async Task<UsersDto> GetAllUsers()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($@"{URL}GetAllUsers");
+                switch (response.StatusCode)
+                {
+                    case (HttpStatusCode.OK):
+                        {
+                            var jsonContent = await response.Content.ReadAsStringAsync();
+                            ObservableCollection<User> users = JsonSerializer.Deserialize<ObservableCollection<User>>(jsonContent, _serializerOptions);
+                            await Task.Delay(2000);
+                            return new UsersDto() { Success = true, UsersList = users, Message = string.Empty };
+
+                        }
+                    case (HttpStatusCode.Unauthorized):
+                        {
+                            return new UsersDto() { Success = false, UsersList = null, Message = "there is a problem" };
+
+                        }
+
+                }
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            return new UsersDto() { Success = false, UsersList = null, Message = "was an exception" };
+        }
+            #endregion
+        }
 }

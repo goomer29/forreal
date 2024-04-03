@@ -114,6 +114,7 @@ namespace forreal.ViewModels
                     {
                         await AppShell.Current.DisplayAlert("All done!", "the post has submitted", "cancel");
                     }
+                    ShowSubmit = false;
                 }
                 catch (Exception ex)
                 {

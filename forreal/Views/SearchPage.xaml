@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:forreal.ViewModels"
+             xmlns:model="clr-namespace:forreal.Models"
              x:Class="forreal.Views.SearchPage"
              x:DataType="viewmodels:SearchPageViewModel"
              Title="SearchPage">
@@ -10,5 +11,14 @@
             Text="You dont have friends LOLLLLLL"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
+        <CollectionView ItemsSource="{Binding Users}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:User">
+                    <StackLayout>
+                        <Label Text="{Binding UserName}"></Label>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </VerticalStackLayout>
 </ContentPage>

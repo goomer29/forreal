@@ -8,7 +8,7 @@ using System.Windows.Input;
 using forreal.Views;
 using forreal.Models;
 using System.Text.Json;
-
+using System.Collections.ObjectModel;
 
 namespace forreal.ViewModels
 {
@@ -24,6 +24,8 @@ namespace forreal.ViewModels
         private string _passwordErrorMessage;//תאור שגיאת סיסמה
         private bool _showLoginError;//האם להציג שגיאת התחברות
         private string _loginErrorMessage;//תאור שגיאת התחברות
+
+        public static ObservableCollection<User> Users { get; set; }
         #endregion
         #region Service component
         private readonly ForrealService _service;
@@ -117,11 +119,19 @@ namespace forreal.ViewModels
                         await SecureStorage.Default.SetAsync("LoggedUser", JsonSerializer.Serialize(user.User));
                         ((App)(Application.Current)).ShowFlyouts = true;
                         ((App)(Application.Current)).ShowFlyouts2 = false;
+                        #region Gets all users for search friends
+                        var allusers = await _service.GetAllUsers();
+                        Users = allusers.UsersList;
+                        foreach(User u  in Users)
+                        {
+                            if(u.UserName == ((App)(Application.Current)).User.UserName)
+                            {
+                                Users.Remove(u);
+                            }
+                        }
+                        #endregion
                         await AppShell.Current.GoToAsync("//HomePage");
                     }
-
-
-
                 }
                 catch (Exception ex)
                 {
