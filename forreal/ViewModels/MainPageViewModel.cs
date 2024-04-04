@@ -1,5 +1,7 @@
-﻿using System;
+﻿using forreal.Models;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +11,7 @@ namespace forreal.ViewModels
 {
     public class MainPageViewModel: ViewModel
     {
+        public static ObservableCollection<User> Users { get; set; }
         public ICommand LogInCommand { get; protected set; }
         public ICommand SignUpCommand { get; protected set; }
         public MainPageViewModel()

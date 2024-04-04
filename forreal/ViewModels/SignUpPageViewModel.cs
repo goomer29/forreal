@@ -8,6 +8,7 @@ using forreal.Models;
 using forreal.Views;
 using System.Windows.Input;
 using System.Text.Json;
+using System.Collections.ObjectModel;
 
 namespace forreal.ViewModels
 {
@@ -186,6 +187,20 @@ namespace forreal.ViewModels
                         await SecureStorage.Default.SetAsync("SignedUser", JsonSerializer.Serialize(user.User));
                         ((App)(Application.Current)).ShowFlyouts = true;
                         ((App)(Application.Current)).ShowFlyouts2 = false;
+                        #region Gets all users for search friends
+                        var allusers = await _service.GetAllUsers();
+                        var userim = allusers.UsersList;
+                        ObservableCollection<User> users = new ObservableCollection<User>();
+                        for (int i = 0; i < userim.Count; i++)
+                        {
+                            if (userim[i].UserName != ((App)(Application.Current)).User.UserName)
+                            {
+                                users.Add(userim[i]);
+                            }
+
+                        }
+                        MainPageViewModel.Users = users;
+                        #endregion
                         await AppShell.Current.GoToAsync("//HomePage");
                     }
                 }

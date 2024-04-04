@@ -9,6 +9,7 @@ using forreal.Views;
 using forreal.Models;
 using System.Text.Json;
 using System.Collections.ObjectModel;
+using Microsoft.Maui.Layouts;
 
 namespace forreal.ViewModels
 {
@@ -25,7 +26,6 @@ namespace forreal.ViewModels
         private bool _showLoginError;//האם להציג שגיאת התחברות
         private string _loginErrorMessage;//תאור שגיאת התחברות
 
-        public static ObservableCollection<User> Users { get; set; }
         #endregion
         #region Service component
         private readonly ForrealService _service;
@@ -95,23 +95,23 @@ namespace forreal.ViewModels
 
             LogInCommand = new Command(async () =>
             {
-                ShowLoginError = false;//הסתרת שגיאת לוגין
-                try
-                {
-                    #region טעינת מסך ביניים
-                    var lvm = new LoadingPageViewModel() { IsBusy = true };
-                    await AppShell.Current.Navigation.PushModalAsync(new LoadingPage(lvm));
-                    #endregion
-                    var user = await _service.LogInAsync(UserName, Password);
-                    
-                    lvm.IsBusy = false;
-                    
-                    await Shell.Current.Navigation.PopModalAsync();
+            ShowLoginError = false;//הסתרת שגיאת לוגין
+            try
+            {
+                #region טעינת מסך ביניים
+                var lvm = new LoadingPageViewModel() { IsBusy = true };
+                await AppShell.Current.Navigation.PushModalAsync(new LoadingPage(lvm));
+                #endregion
+                var user = await _service.LogInAsync(UserName, Password);
+
+                lvm.IsBusy = false;
+
+                await Shell.Current.Navigation.PopModalAsync();
                     if (!user.Success)
                     {
                         ShowLoginError = true;
                         LoginErrorMessage = user.Message;
-                        UserName = null; Password=null;
+                        UserName = null; Password = null;
                     }
                     else
                     {
@@ -121,14 +121,17 @@ namespace forreal.ViewModels
                         ((App)(Application.Current)).ShowFlyouts2 = false;
                         #region Gets all users for search friends
                         var allusers = await _service.GetAllUsers();
-                        Users = allusers.UsersList;
-                        foreach(User u  in Users)
+                        var userim = allusers.UsersList;
+                        ObservableCollection<User> users = new ObservableCollection<User>();
+                        for (int i=0; i<userim.Count; i++) 
                         {
-                            if(u.UserName == ((App)(Application.Current)).User.UserName)
+                            if (userim[i].UserName != ((App)(Application.Current)).User.UserName)
                             {
-                                Users.Remove(u);
+                                users.Add(userim[i]);
                             }
+                            
                         }
+                        MainPageViewModel.Users = users;
                         #endregion
                         await AppShell.Current.GoToAsync("//HomePage");
                     }
