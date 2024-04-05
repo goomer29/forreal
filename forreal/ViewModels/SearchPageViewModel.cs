@@ -30,9 +30,16 @@ namespace forreal.ViewModels
         #endregion
         public SearchPageViewModel(ForrealService service)
         {
+            _service = service;
             SelectCommand = new Command(async () =>
             {
-                
+                string myuser= ((App)Application.Current).User.UserName;
+                string otheruser = UserSelect.UserName;
+                var response=await _service.FriendRequest(myuser, otheruser);
+                if (response == System.Net.HttpStatusCode.OK)
+                {
+                    await AppShell.Current.DisplayAlert("The Friend Request Submitted!", "wait to the other user to submit your request", "cancel");
+                }
             });
         }
     }

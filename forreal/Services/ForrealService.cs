@@ -148,7 +148,7 @@ namespace forreal.Services
                 {
                     case (HttpStatusCode.OK):
                         {
-                           var jsonContent = await response.Content.ReadAsStringAsync();
+                            var jsonContent = await response.Content.ReadAsStringAsync();
                             ObservableCollection<Challange> ch = JsonSerializer.Deserialize<ObservableCollection<Challange>>(jsonContent, _serializerOptions);
                             await Task.Delay(2000);
                             return new ChallangesDto() { Success = true, ChallangesList = ch, Message = string.Empty };
@@ -168,29 +168,29 @@ namespace forreal.Services
         #endregion
         //"Post"
         #region PostChallenge
-        public async Task<HttpStatusCode> UploadPost(PostDto post,FileResult file = null)
+        public async Task<HttpStatusCode> UploadPost(PostDto post, FileResult file = null)
         {
             try
             {
                 var multipartFormContent = new MultipartFormDataContent();
-                if(file != null)
+                if (file != null)
                 {
                     byte[] bytes;
-                    using(MemoryStream ms = new()) 
+                    using (MemoryStream ms = new())
                     {
                         var stream = await file.OpenReadAsync();
                         stream.CopyTo(ms);
                         bytes = ms.ToArray();
                     }
-                    var content=new ByteArrayContent(bytes);
-                    multipartFormContent.Add(content, "file",file.FileName);
+                    var content = new ByteArrayContent(bytes);
+                    multipartFormContent.Add(content, "file", file.FileName);
                 }
                 var jsonContent = JsonSerializer.Serialize(post, _serializerOptions);
                 var stringcontent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
                 multipartFormContent.Add(stringcontent, "post");
 
-                var response = await _httpClient.PostAsync($"{URL}UploadImage",multipartFormContent);
-                return response.StatusCode;  
+                var response = await _httpClient.PostAsync($"{URL}UploadImage", multipartFormContent);
+                return response.StatusCode;
             }
             catch (Exception) { return HttpStatusCode.BadRequest; }
         }
@@ -223,6 +223,23 @@ namespace forreal.Services
             catch (Exception ex) { Console.WriteLine(ex.Message); }
             return new UsersDto() { Success = false, UsersList = null, Message = "was an exception" };
         }
-            #endregion
+        #endregion
+        //"Post"
+        #region FriendRequest user1-the asker, user 2-the reciver
+        public async Task<HttpStatusCode> FriendRequest(string user1, string user2)
+        {
+            try
+            {
+                var friend = new FriendDto { username1 = user1, username2 = user2 };
+                var jsonContent = JsonSerializer.Serialize(friend, _serializerOptions);
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync($"{URL}FriendRequest", content);
+                return response.StatusCode;
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            return HttpStatusCode.BadRequest;
+        
         }
+        #endregion
+    }
 }
