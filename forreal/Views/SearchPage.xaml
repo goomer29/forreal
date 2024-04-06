@@ -11,7 +11,7 @@
             Text="You dont have friends LOLLLLLL"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <CollectionView ItemsSource="{Binding Users}" SelectionMode="Single"
+        <CollectionView ItemsSource="{Binding RedUsers}" SelectionMode="Single" BackgroundColor="IndianRed"
                         SelectionChangedCommand="{Binding SelectCommand}"
                         SelectedItem="{Binding UserSelect}">
             <CollectionView.ItemTemplate>

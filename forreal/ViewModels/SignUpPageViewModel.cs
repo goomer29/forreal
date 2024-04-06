@@ -187,7 +187,7 @@ namespace forreal.ViewModels
                         await SecureStorage.Default.SetAsync("SignedUser", JsonSerializer.Serialize(user.User));
                         ((App)(Application.Current)).ShowFlyouts = true;
                         ((App)(Application.Current)).ShowFlyouts2 = false;
-                        #region Gets all users for search friends
+                        #region Gets all users and info for search friends
                         var allusers = await _service.GetAllUsers();
                         var userim = allusers.UsersList;
                         ObservableCollection<User> users = new ObservableCollection<User>();
@@ -199,7 +199,11 @@ namespace forreal.ViewModels
                             }
 
                         }
-                        MainPageViewModel.Users = users;
+                        MainPageViewModel.AllUsers = users;
+                        var wantedusers = await _service.GetWantedFriends(((App)(Application.Current)).User.UserName);
+                        MainPageViewModel.WantedUsers = wantedusers.UsersList;
+                        var requestusers = await _service.GetWRequestFriends(((App)(Application.Current)).User.UserName);
+                        MainPageViewModel.RequestUsers = requestusers.UsersList;
                         #endregion
                         await AppShell.Current.GoToAsync("//HomePage");
                     }

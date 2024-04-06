@@ -11,7 +11,9 @@ namespace forreal.ViewModels
 {
     public class MainPageViewModel: ViewModel
     {
-        public static ObservableCollection<User> Users { get; set; }
+        public static ObservableCollection<User> AllUsers { get; set; }
+        public static ObservableCollection<User>WantedUsers { get; set; }
+        public static ObservableCollection<User> RequestUsers { get; set; }
         public ICommand LogInCommand { get; protected set; }
         public ICommand SignUpCommand { get; protected set; }
         public MainPageViewModel()

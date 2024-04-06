@@ -225,6 +225,68 @@ namespace forreal.Services
         }
         #endregion
         //"Post"
+        #region Get Wanted friends
+        public async Task<UsersDto> GetWantedFriends(string username) 
+        {
+            try
+            {
+                var jsonContent = JsonSerializer.Serialize(username, _serializerOptions);
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync($"{URL}GetWantedFriends", content);
+                switch (response.StatusCode)
+                {
+                    case (HttpStatusCode.OK):
+                        {
+                            jsonContent = await response.Content.ReadAsStringAsync();
+                            var users = JsonSerializer.Deserialize<ObservableCollection<User>>(jsonContent, _serializerOptions);
+                            await Task.Delay(2000);
+                            return new UsersDto() { Success = true, UsersList = users, Message = string.Empty };
+
+                        }
+                    case (HttpStatusCode.Unauthorized):
+                        {
+                            return new UsersDto() { Success = false, UsersList = null, Message = "there is a problem" };
+
+                        }
+
+                }
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            return new UsersDto() { Success = false, UsersList = null, Message = "was an exception" };
+        }
+        #endregion
+        //"Get"
+        #region Get Requested freinds
+        public async Task<UsersDto> GetWRequestFriends(string username)
+        {
+            try
+            {
+                var jsonContent = JsonSerializer.Serialize(username, _serializerOptions);
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync($"{URL}GetRequestFriends", content);
+                switch (response.StatusCode)
+                {
+                    case (HttpStatusCode.OK):
+                        {
+                            jsonContent = await response.Content.ReadAsStringAsync();
+                           ObservableCollection<User> users = JsonSerializer.Deserialize<ObservableCollection<User>>(jsonContent, _serializerOptions);
+                            await Task.Delay(2000);
+                            return new UsersDto() { Success = true, UsersList = users, Message = string.Empty };
+
+                        }
+                    case (HttpStatusCode.Unauthorized):
+                        {
+                            return new UsersDto() { Success = false, UsersList = null, Message = "there is a problem" };
+
+                        }
+
+                }
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            return new UsersDto() { Success = false, UsersList = null, Message = "was an exception" };
+        }
+        #endregion
+        //"Post"
         #region FriendRequest user1-the asker, user 2-the reciver
         public async Task<HttpStatusCode> FriendRequest(string user1, string user2)
         {
