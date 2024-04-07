@@ -12,12 +12,14 @@ namespace forreal.ViewModels
     public class MainPageViewModel: ViewModel
     {
         public static ObservableCollection<User> AllUsers { get; set; }
-        public static ObservableCollection<User>WantedUsers { get; set; }
-        public static ObservableCollection<User> RequestUsers { get; set; }
+        public static ObservableCollection<string>WantedUsers { get; set; }
+        public static ObservableCollection<string> RequestUsers { get; set; }
         public ICommand LogInCommand { get; protected set; }
         public ICommand SignUpCommand { get; protected set; }
         public MainPageViewModel()
         {
+            WantedUsers = new ObservableCollection<string>();
+            RequestUsers = new ObservableCollection<string>();
             ((App)(Application.Current)).ShowFlyouts = false;
             ((App)(Application.Current)).ShowFlyouts2 = true;
             LogInCommand = new Command(async () =>

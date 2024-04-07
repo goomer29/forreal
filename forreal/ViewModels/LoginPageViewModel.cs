@@ -123,20 +123,20 @@ namespace forreal.ViewModels
                         var allusers = await _service.GetAllUsers();
                         var userim = allusers.UsersList;
                         ObservableCollection<User> users = new ObservableCollection<User>();
-                        for (int i=0; i<userim.Count; i++) 
+                        for (int i = 0; i < userim.Count; i++)
                         {
                             if (userim[i].UserName != ((App)(Application.Current)).User.UserName)
                             {
                                 users.Add(userim[i]);
                             }
-                            
+
                         }
                         MainPageViewModel.AllUsers = users;
                         var wantedusers = await _service.GetWantedFriends(((App)(Application.Current)).User.UserName);
-                        MainPageViewModel.WantedUsers = wantedusers.UsersList;
+                        MainPageViewModel.WantedUsers = wantedusers.UsersNameList;
                         var requestusers= await _service.GetWRequestFriends(((App)(Application.Current)).User.UserName);
-                        MainPageViewModel.RequestUsers = requestusers.UsersList;
-                        #endregion
+                        MainPageViewModel.RequestUsers = requestusers.UsersNameList;
+                        #endregion                      
                         await AppShell.Current.GoToAsync("//HomePage");
                     }
                 }

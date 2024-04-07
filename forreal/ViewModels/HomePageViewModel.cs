@@ -18,6 +18,7 @@ namespace forreal.ViewModels
     {
         readonly IPopupService popupService;
         private string _userName;//שם משתמש
+        public bool _showfriend;
         public static bool _showsubmit;
         public ICommand ChallangeCommand { get; protected set; }
         public ICommand CloseChallange { get; protected set; }
@@ -29,6 +30,9 @@ namespace forreal.ViewModels
         public Challange ChallengeSubmit { get => ChallangePageViewModel.challange_select; }
         public ImageSource ImageSubmit { get => ChallangePageViewModel.image_select; }
         public FileResult FileSubmit { get=>ChallangePageViewModel.file_select; }
+        public ObservableCollection<string> UsersNameWant { get => MainPageViewModel.WantedUsers; }
+        public ObservableCollection<string> UsersNameRequest { get => MainPageViewModel.RequestUsers; }
+        public ObservableCollection<User> Users { get => MainPageViewModel.AllUsers; }
         #region Service component
         private readonly ForrealService _service;
         #endregion
@@ -42,14 +46,29 @@ namespace forreal.ViewModels
             get => _showsubmit;
             set { if (_showsubmit != value) { _showsubmit = value; OnPropertyChange(); } }
         }
+        public bool ShowFriend
+        {
+            get => _showfriend;
+            set { if (_showfriend != value) { _showfriend = value; OnPropertyChange(); } }
+        }
         public HomePageViewModel(IPopupService _popupService, ForrealService service)
         {
+            ShowFriend = false;
             ShowSubmit = false;
             Challanges = new ObservableCollection<Challange>();
             _service = service;
             popupService = _popupService;
-
             UserName = "Welcome to Homepage " + ((App)Application.Current).User.UserName;
+            foreach (User u in Users)
+            {
+                if (!UsersNameWant.Contains(u.UserName) && UsersNameRequest.Contains(u.UserName))
+                    ShowFriend = true;
+            }
+            Task.Delay(5000);
+            if(ShowFriend)
+            {
+                AppShell.Current.DisplayAlert("You've got a friend request!", "go to Search to see more info", "cancel");
+            }
             ChallangeCommand = new Command(async () =>
             {                
                 

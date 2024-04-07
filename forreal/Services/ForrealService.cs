@@ -226,7 +226,7 @@ namespace forreal.Services
         #endregion
         //"Post"
         #region Get Wanted friends
-        public async Task<UsersDto> GetWantedFriends(string username) 
+        public async Task<FriendsNameDto> GetWantedFriends(string username) 
         {
             try
             {
@@ -238,26 +238,26 @@ namespace forreal.Services
                     case (HttpStatusCode.OK):
                         {
                             jsonContent = await response.Content.ReadAsStringAsync();
-                            var users = JsonSerializer.Deserialize<ObservableCollection<User>>(jsonContent, _serializerOptions);
+                            var users = JsonSerializer.Deserialize<ObservableCollection<string>>(jsonContent, _serializerOptions);
                             await Task.Delay(2000);
-                            return new UsersDto() { Success = true, UsersList = users, Message = string.Empty };
+                            return new FriendsNameDto() { Success = true, UsersNameList = users, Message = string.Empty };
 
                         }
                     case (HttpStatusCode.Unauthorized):
                         {
-                            return new UsersDto() { Success = false, UsersList = null, Message = "there is a problem" };
+                            return new FriendsNameDto() { Success = false, UsersNameList = new ObservableCollection<string>(), Message = "there is a problem" };
 
                         }
 
                 }
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); }
-            return new UsersDto() { Success = false, UsersList = null, Message = "was an exception" };
+            return new FriendsNameDto() { Success = false, UsersNameList = new ObservableCollection<string>(), Message = "was an exception" };
         }
         #endregion
         //"Get"
         #region Get Requested freinds
-        public async Task<UsersDto> GetWRequestFriends(string username)
+        public async Task<FriendsNameDto> GetWRequestFriends(string username)
         {
             try
             {
@@ -269,21 +269,21 @@ namespace forreal.Services
                     case (HttpStatusCode.OK):
                         {
                             jsonContent = await response.Content.ReadAsStringAsync();
-                           ObservableCollection<User> users = JsonSerializer.Deserialize<ObservableCollection<User>>(jsonContent, _serializerOptions);
+                           var users = JsonSerializer.Deserialize<ObservableCollection<string>>(jsonContent, _serializerOptions);
                             await Task.Delay(2000);
-                            return new UsersDto() { Success = true, UsersList = users, Message = string.Empty };
+                            return new FriendsNameDto() { Success = true, UsersNameList = users, Message = string.Empty };
 
                         }
                     case (HttpStatusCode.Unauthorized):
                         {
-                            return new UsersDto() { Success = false, UsersList = null, Message = "there is a problem" };
+                            return new FriendsNameDto() { Success = false, UsersNameList = new ObservableCollection<string>(), Message = "there is a problem" };
 
                         }
 
                 }
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); }
-            return new UsersDto() { Success = false, UsersList = null, Message = "was an exception" };
+            return new FriendsNameDto() { Success = false, UsersNameList = new ObservableCollection<string>(), Message = "was an exception" };
         }
         #endregion
         //"Post"
@@ -301,6 +301,22 @@ namespace forreal.Services
             catch (Exception ex) { Console.WriteLine(ex.Message); }
             return HttpStatusCode.BadRequest;
         
+        }
+        #endregion
+        //"Post"
+        #region Delete friend request
+        public async Task<HttpStatusCode> EnemyRequest(string user1, string user2)
+        {
+            try
+            {
+                var friend = new FriendDto { username1 = user1, username2 = user2 };
+                var jsonContent = JsonSerializer.Serialize(friend, _serializerOptions);
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync($"{URL}EnemyRequest", content);
+                return response.StatusCode;
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            return HttpStatusCode.BadRequest;
         }
         #endregion
     }

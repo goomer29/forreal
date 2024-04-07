@@ -201,9 +201,9 @@ namespace forreal.ViewModels
                         }
                         MainPageViewModel.AllUsers = users;
                         var wantedusers = await _service.GetWantedFriends(((App)(Application.Current)).User.UserName);
-                        MainPageViewModel.WantedUsers = wantedusers.UsersList;
+                        MainPageViewModel.WantedUsers = wantedusers.UsersNameList;
                         var requestusers = await _service.GetWRequestFriends(((App)(Application.Current)).User.UserName);
-                        MainPageViewModel.RequestUsers = requestusers.UsersList;
+                        MainPageViewModel.RequestUsers = requestusers.UsersNameList;
                         #endregion
                         await AppShell.Current.GoToAsync("//HomePage");
                     }
