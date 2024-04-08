@@ -224,6 +224,33 @@ namespace forreal.Services
             return new UsersDto() { Success = false, UsersList = null, Message = "was an exception" };
         }
         #endregion
+        //"Get"
+        #region GetImages
+        public async Task<ObservableCollection<string>> GetImages()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"{URL}GetImages");
+                switch (response.StatusCode)
+                {
+                    case (HttpStatusCode.OK):
+                        {
+                            var jsonContent = await response.Content.ReadAsStringAsync();
+                            ObservableCollection<string> users = JsonSerializer.Deserialize<ObservableCollection<string>>(jsonContent, _serializerOptions);
+                            await Task.Delay(2000);
+                            return users;
+
+                        }
+                    case (HttpStatusCode.Unauthorized):
+                        {
+                            return new ObservableCollection<string>();
+                        }
+                }
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            return new ObservableCollection<string>();
+        }
+            #endregion
         //"Post"
         #region Get Wanted friends
         public async Task<FriendsNameDto> GetWantedFriends(string username) 
@@ -255,7 +282,7 @@ namespace forreal.Services
             return new FriendsNameDto() { Success = false, UsersNameList = new ObservableCollection<string>(), Message = "was an exception" };
         }
         #endregion
-        //"Get"
+        //"Post"
         #region Get Requested freinds
         public async Task<FriendsNameDto> GetWRequestFriends(string username)
         {

@@ -5,10 +5,13 @@
              x:Class="forreal.Views.ProfilePage"
              x:DataType="viewmodels:ProfilePageViewModel"
              Title="ProfilePage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
+    <ScrollView>
+        <VerticalStackLayout>
+            <Label 
+            Text="All of your challenges:"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-    </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

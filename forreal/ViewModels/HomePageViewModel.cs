@@ -59,11 +59,17 @@ namespace forreal.ViewModels
             _service = service;
             popupService = _popupService;
             UserName = "Welcome to Homepage " + ((App)Application.Current).User.UserName;
-            foreach (User u in Users)
-            {
-                if (!UsersNameWant.Contains(u.UserName) && UsersNameRequest.Contains(u.UserName))
-                    ShowFriend = true;
-            }
+
+           ShowFriend= Users.Any(u => !UsersNameWant.Contains(u.UserName) && UsersNameRequest.Contains(u.UserName));
+            //foreach (User u in Users)
+            //{
+            //    if (!UsersNameWant.Contains(u.UserName) && UsersNameRequest.Contains(u.UserName))
+            //    {
+            //        ShowFriend = true;
+            //        break;
+            //    }              
+
+            //}
             Task.Delay(5000);
             if(ShowFriend)
             {
