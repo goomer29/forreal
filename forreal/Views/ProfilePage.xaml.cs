@@ -1,5 +1,5 @@
-using forreal.ViewModels;
 
+using forreal.ViewModels;
 namespace forreal.Views;
 
 public partial class ProfilePage : ContentPage

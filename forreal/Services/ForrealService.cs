@@ -17,6 +17,7 @@ namespace forreal.Services
         readonly HttpClient _httpClient;
         readonly JsonSerializerOptions _serializerOptions;
         const string URL = @"https://82vvg3mq-7160.uks1.devtunnels.ms/ForrealApi/";
+        public const string WwwRoot = @"https://82vvg3mq-7160.uks1.devtunnels.ms";
         public ForrealService()
         {
             _httpClient = new HttpClient();
@@ -222,6 +223,34 @@ namespace forreal.Services
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); }
             return new UsersDto() { Success = false, UsersList = null, Message = "was an exception" };
+        }
+        #endregion
+        //"Post"
+        #region GetUserID
+        public async Task<int> GetUserID(string username)
+        {
+            try
+            {
+                var jsonContent = JsonSerializer.Serialize(username, _serializerOptions);
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync($"{URL}GetUserID", content);
+                switch (response.StatusCode)
+                {
+                    case (HttpStatusCode.OK):
+                        {
+                            jsonContent = await response.Content.ReadAsStringAsync();
+                            var id = JsonSerializer.Deserialize<int>(jsonContent, _serializerOptions);
+                            await Task.Delay(2000);
+                            return id;                          
+                        }
+                    case (HttpStatusCode.Unauthorized):
+                        {
+                            return -1;
+                        }
+                }
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            return -1;
         }
         #endregion
         //"Get"

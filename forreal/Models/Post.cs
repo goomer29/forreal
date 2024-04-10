@@ -11,6 +11,6 @@ namespace forreal.Models
         public string username { get; set; }
         public string challengename { get; set; }
         public string date { get; set; }
-        public Image image { get; set; }
+        public string image { get; set; }
     }
 }
