@@ -53,6 +53,7 @@ namespace forreal.ViewModels
         }
         public HomePageViewModel(IPopupService _popupService, ForrealService service)
         {
+
             ShowFriend = false;
             ShowSubmit = false;
             Challanges = new ObservableCollection<Challange>();
@@ -60,7 +61,7 @@ namespace forreal.ViewModels
             popupService = _popupService;
             UserName = "Welcome to Homepage " + ((App)Application.Current).User.UserName;
 
-           ShowFriend= Users.Any(u => !UsersNameWant.Contains(u.UserName) && UsersNameRequest.Contains(u.UserName));
+            ShowFriend = Users.Any(u => !UsersNameWant.Contains(u.UserName) && UsersNameRequest.Contains(u.UserName));
             //foreach (User u in Users)
             //{
             //    if (!UsersNameWant.Contains(u.UserName) && UsersNameRequest.Contains(u.UserName))

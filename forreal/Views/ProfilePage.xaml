@@ -30,7 +30,7 @@
                        HeightRequest="60"
                        WidthRequest="60" />
                         <Label Grid.Column="1"
-                     Text="{Binding username}"
+                     Text="{Binding challengename}"
                      FontAttributes="Bold" />
                             <Label Grid.Row="1"
                  Grid.Column="1"

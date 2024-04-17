@@ -12,7 +12,9 @@ namespace forreal.ViewModels
     public class ProfilePageViewModel:ViewModel
     {
         public User User { get; set; }
-        public int Id { get; set; }
+        public int Id { get => MainPageViewModel.UserID; }
+        public ObservableCollection<string> ImagesName { get => MainPageViewModel.Images; }
+        public ObservableCollection<ChallangeNameDto> ChallangeNames { get=>MainPageViewModel.ChallangeNames; }
         public ObservableCollection<Post> _posts { get; set; }
         #region Service component
         private readonly ForrealService _service;
@@ -32,15 +34,20 @@ namespace forreal.ViewModels
             Posts= new ObservableCollection<Post>();
             _service = service;
             User= ((App)Application.Current).User;
-            var id = _service.GetUserID(User.UserName);
-            Id = id.Result;
-            var ImagesName = (_service.GetImages()).Result;
-            foreach(var name in ImagesName)
+            foreach (var name in ImagesName)
             {
                 var infoes = name.Split('_');
+                string text = null;
                 if (infoes[0] == Id.ToString())
                 {
-                    var post = new Post { username = User.UserName, challengename = infoes[1], date = infoes[2] + "/" + infoes[3] + "/" + infoes[4], image = $"{ForrealService.WwwRoot}/Images/{name}" };
+                    foreach(var ch_name in ChallangeNames)
+                    {
+                        if (ch_name.Id == Int32.Parse(infoes[1]))
+                        {
+                           text=ch_name.Text; break;
+                        }
+                    }            
+                    var post = new Post { username = User.UserName, challengename = text, date = infoes[2] + "/" + infoes[3] + "/" + infoes[4], image = $"{ForrealService.WwwRoot}/Images/{name}" };
                     Posts.Add(post);
 
                 }

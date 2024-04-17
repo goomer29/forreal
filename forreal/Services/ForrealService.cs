@@ -225,9 +225,38 @@ namespace forreal.Services
             return new UsersDto() { Success = false, UsersList = null, Message = "was an exception" };
         }
         #endregion
+        //"Get"
+        #region GetAllChallanges
+        public async Task<ObservableCollection<ChallangeNameDto>> GetAllChallanges()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($@"{URL}GetAllChallanges");
+                switch (response.StatusCode)
+                {
+                    case (HttpStatusCode.OK):
+                        {
+                            var jsonContent = await response.Content.ReadAsStringAsync();
+                            ObservableCollection<ChallangeNameDto> ch_names = JsonSerializer.Deserialize<ObservableCollection<ChallangeNameDto>>(jsonContent, _serializerOptions);
+                            await Task.Delay(2000);
+                            return ch_names;
+
+                        }
+                    case (HttpStatusCode.Unauthorized):
+                        {
+                            return new ObservableCollection<ChallangeNameDto>();
+
+                        }
+
+                }
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            return new ObservableCollection<ChallangeNameDto>();
+        }
+        #endregion
         //"Post"
         #region GetUserID
-        public async Task<int> GetUserID(string username)
+        public async Task<IdDto> GetUserID(string username)
         {
             try
             {
@@ -240,17 +269,52 @@ namespace forreal.Services
                         {
                             jsonContent = await response.Content.ReadAsStringAsync();
                             var id = JsonSerializer.Deserialize<int>(jsonContent, _serializerOptions);
-                            await Task.Delay(2000);
-                            return id;                          
+                            return new IdDto() { Success = true, Id=id, Message = string.Empty };
                         }
                     case (HttpStatusCode.Unauthorized):
                         {
-                            return -1;
+                            return new IdDto() { Success = false, Id=-1, Message = "there is a problem" };
+                        }
+                    default:
+                        {
+                            // Handle other status codes
+                            return new IdDto() { Success = false, Id = -1, Message = "there is a problem" };
                         }
                 }
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); }
-            return -1;
+            return  new IdDto() { Success = false, Id = -1, Message = "was an exception" };
+        }
+        #endregion
+        //"Post"
+        #region GetChallangeName
+        public async Task<string> GetChallangeName(int id)
+        {
+            try
+            {
+                var jsonContent = JsonSerializer.Serialize(id, _serializerOptions);
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync($"{URL}GetChallangeName", content);
+                switch (response.StatusCode)
+                {
+                    case (HttpStatusCode.OK):
+                        {
+                            jsonContent = await response.Content.ReadAsStringAsync();
+                            return jsonContent;
+                        }
+                    case (HttpStatusCode.Unauthorized):
+                        {
+                            return null;
+                        }
+                    default:
+                        {
+                            // Handle other status codes
+                            return null;
+                        }
+                }
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            return null;
         }
         #endregion
         //"Get"
