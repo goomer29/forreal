@@ -173,20 +173,17 @@ namespace forreal.ViewModels
                     #endregion
                     var user = await _service.SignUpAsync(UserName, Password, Email);
 
-                    lvm.IsBusy = false;
-                    await Shell.Current.Navigation.PopModalAsync();
                     if (!user.Success)
                     {
+                        lvm.IsBusy = false;
+                        await Shell.Current.Navigation.PopModalAsync();
                         ShowSignUpError = true;
                         SignUpErrorMessage = user.Message;
                         UserName = null; Password = null;
                     }
                     else
                     {
-                        await AppShell.Current.DisplayAlert("You signed up!", "Click cancel to start", "cancel");
-                        await SecureStorage.Default.SetAsync("SignedUser", JsonSerializer.Serialize(user.User));
-                        ((App)(Application.Current)).ShowFlyouts = true;
-                        ((App)(Application.Current)).ShowFlyouts2 = false;
+                      
                         #region Gets all users and info for search friends
                         var allusers = await _service.GetAllUsers();
                         var userim = allusers.UsersList;
@@ -205,6 +202,19 @@ namespace forreal.ViewModels
                         var requestusers = await _service.GetWRequestFriends(((App)(Application.Current)).User.UserName);
                         MainPageViewModel.RequestUsers = requestusers.UsersNameList;
                         #endregion
+                        var user_id = await _service.GetUserID(((App)(Application.Current)).User.UserName);
+                        MainPageViewModel.UserID = user_id.Id;
+                        MainPageViewModel.Images = await _service.GetImages();
+                        MainPageViewModel.ChallangeNames = await _service.GetAllChallanges();
+
+                        lvm.IsBusy = false;
+                        await Shell.Current.Navigation.PopModalAsync();
+
+                        ((App)(Application.Current)).ShowFlyouts = true;
+                        ((App)(Application.Current)).ShowFlyouts2 = false;
+                        await AppShell.Current.DisplayAlert("You signed up!", "Click cancel to start", "cancel");
+                        await SecureStorage.Default.SetAsync("SignedUser", JsonSerializer.Serialize(user.User));
+
                         await AppShell.Current.GoToAsync("//HomePage");
                     }
                 }

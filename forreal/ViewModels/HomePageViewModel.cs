@@ -138,6 +138,14 @@ namespace forreal.ViewModels
                     var response = await _service.UploadPost(post, file);
                     if (response == System.Net.HttpStatusCode.OK)
                     {
+                        var response1 = await _service.GetChallangeID(challangename);
+                        if (response1.Success)
+                        {
+                            DateTime time = DateTime.Now;
+                            string day = time.Day.ToString(); string month = time.Month.ToString(); string year = time.Year.ToString();
+                            string date = day + "_" + month + "_" + year;
+                            MainPageViewModel.Images.Add($"{MainPageViewModel.UserID}_{response1.Id}_{date}{Path.GetExtension(file.FileName)}");
+                        }
                         await AppShell.Current.DisplayAlert("All done!", "the post has submitted", "cancel");
                     }
                     ShowSubmit = false;

@@ -287,6 +287,38 @@ namespace forreal.Services
         }
         #endregion
         //"Post"
+        #region GetChallangeID
+        public async Task<IdDto> GetChallangeID(string challangename)
+        {
+            try
+            {
+                var jsonContent = JsonSerializer.Serialize(challangename, _serializerOptions);
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync($"{URL}GetChallangeID", content);
+                switch (response.StatusCode)
+                {
+                    case (HttpStatusCode.OK):
+                        {
+                            jsonContent = await response.Content.ReadAsStringAsync();
+                            var id = JsonSerializer.Deserialize<int>(jsonContent, _serializerOptions);
+                            return new IdDto() { Success = true, Id = id, Message = string.Empty };
+                        }
+                    case (HttpStatusCode.Unauthorized):
+                        {
+                            return new IdDto() { Success = false, Id = -1, Message = "there is a problem" };
+                        }
+                    default:
+                        {
+                            // Handle other status codes
+                            return new IdDto() { Success = false, Id = -1, Message = "there is a problem" };
+                        }
+                }
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            return new IdDto() { Success = false, Id = -1, Message = "was an exception" };
+        }
+        #endregion
+        //"Post"
         #region GetChallangeName
         public async Task<string> GetChallangeName(int id)
         {

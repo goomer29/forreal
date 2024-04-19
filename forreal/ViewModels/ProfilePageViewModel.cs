@@ -37,6 +37,9 @@ namespace forreal.ViewModels
             foreach (var name in ImagesName)
             {
                 var infoes = name.Split('_');
+                string[] infofoes = null;
+                if(infoes.Length > 3)
+                    infofoes = infoes[4].Split(".");
                 string text = null;
                 if (infoes[0] == Id.ToString())
                 {
@@ -47,7 +50,7 @@ namespace forreal.ViewModels
                            text=ch_name.Text; break;
                         }
                     }            
-                    var post = new Post { username = User.UserName, challengename = text, date = infoes[2] + "/" + infoes[3] + "/" + infoes[4], image = $"{ForrealService.WwwRoot}/Images/{name}" };
+                    var post = new Post { username = User.UserName, challengename = text, date = infoes[2] + "/" + infoes[3] + "/" + infofoes[0], image = $"{ForrealService.WwwRoot}/Images/{name}" };
                     Posts.Add(post);
 
                 }
