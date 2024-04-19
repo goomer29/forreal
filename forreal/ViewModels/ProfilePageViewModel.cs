@@ -19,7 +19,7 @@ namespace forreal.ViewModels
         #region Service component
         private readonly ForrealService _service;
         #endregion
-        public ObservableCollection<Post> Posts
+        public  ObservableCollection<Post> Posts
         {
             get => _posts; set
             {
@@ -55,7 +55,7 @@ namespace forreal.ViewModels
 
                 }
             }
-            
+            OnPropertyChange(nameof(Posts));           
         }
 
     }

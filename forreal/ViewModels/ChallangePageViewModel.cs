@@ -99,7 +99,7 @@ namespace forreal.ViewModels
         }
         public Event GetEvent()
         {
-            return new Event { EventTitle = "Time Remains for TOday's challenges", BgColor = Color.FromRgb(38, 127, 0) , Date = new DateTime(DateTime.Now.Ticks + new TimeSpan(0, 24, 0, 0).Ticks) };
+            return new Event { EventTitle = "Time Remains for TOday's challenges", BgColor = Color.FromRgb(38, 127, 0) , Date = new DateTime(DateTime.Today.Ticks+ new TimeSpan(0, 24, 0, 0).Ticks) };
             
         }
         #endregion
@@ -119,8 +119,9 @@ namespace forreal.ViewModels
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     Time_Reamins = ((App)(Application.Current)).Timeleft;
-                    Evt.Timespan = Evt.Date - DateTime.Now;
-                    ((App)(Application.Current)).Timeleft = Evt.Timespan;
+                    Evt.Timespan =Evt.Date-DateTime.Now;
+                    ((App)(Application.Current)).Timeleft = Evt.Timespan; 
+                    
                     if (((App)(Application.Current)).StartTimer)
                     {
                         ((App)(Application.Current)).StartTimer = false;

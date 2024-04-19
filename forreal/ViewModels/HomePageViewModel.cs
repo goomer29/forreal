@@ -11,6 +11,7 @@ using forreal.Services;
 using forreal.Models;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Xml.Linq;
 
 namespace forreal.ViewModels
 {
@@ -144,7 +145,9 @@ namespace forreal.ViewModels
                             DateTime time = DateTime.Now;
                             string day = time.Day.ToString(); string month = time.Month.ToString(); string year = time.Year.ToString();
                             string date = day + "_" + month + "_" + year;
-                            MainPageViewModel.Images.Add($"{MainPageViewModel.UserID}_{response1.Id}_{date}{Path.GetExtension(file.FileName)}");
+                            var imagename = $"{MainPageViewModel.UserID}_{response1.Id}_{date}{Path.GetExtension(file.FileName)}";
+                            MainPageViewModel.Images.Add(imagename);
+                            OnPropertyChange(nameof(ProfilePageViewModel.Posts));
                         }
                         await AppShell.Current.DisplayAlert("All done!", "the post has submitted", "cancel");
                     }
