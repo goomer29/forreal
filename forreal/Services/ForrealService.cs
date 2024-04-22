@@ -226,6 +226,35 @@ namespace forreal.Services
         }
         #endregion
         //"Get"
+        #region GetUserNamesWithID
+        public async Task<ObservableCollection<UserNameDto>> GetUserNameWithID()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($@"{URL}GetAllUsersWithID");
+                switch (response.StatusCode)
+                {
+                    case (HttpStatusCode.OK):
+                        {
+                            var jsonContent = await response.Content.ReadAsStringAsync();
+                            ObservableCollection<UserNameDto> user_names = JsonSerializer.Deserialize<ObservableCollection<UserNameDto>>(jsonContent, _serializerOptions);
+                            await Task.Delay(2000);
+                            return user_names;
+
+                        }
+                    case (HttpStatusCode.Unauthorized):
+                        {
+                            return new ObservableCollection<UserNameDto>();
+
+                        }
+
+                }
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            return new ObservableCollection<UserNameDto>();
+        }
+        #endregion
+        //"Get"
         #region GetAllChallanges
         public async Task<ObservableCollection<ChallangeNameDto>> GetAllChallanges()
         {
