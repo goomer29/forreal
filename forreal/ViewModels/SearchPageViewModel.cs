@@ -192,6 +192,7 @@ namespace forreal.ViewModels
                         await AppShell.Current.DisplayAlert("The Friend Request Submitted!", "wait to the other user to submit your request", "cancel");
                         YellowUsers.Add(UserRedSelect);
                         RedUsers.Remove(UserRedSelect);
+                        MainPageViewModel.WantedUsers.Add(otheruser);
                     }
                 }              
                     OnPropertyChange(nameof(RedUsers));
@@ -210,6 +211,7 @@ namespace forreal.ViewModels
                         await AppShell.Current.DisplayAlert("The Friend request Deleted", "the friend request deleted successfully", "cancel");
                         RedUsers.Add(UserYellowSelect);
                         YellowUsers.Remove(UserYellowSelect);
+                        MainPageViewModel.WantedUsers.Remove(otheruser);
                     }
                 }           
                     OnPropertyChange(nameof(RedUsers));
@@ -230,6 +232,8 @@ namespace forreal.ViewModels
                         await AppShell.Current.DisplayAlert("The Friend request Deleted", "you are now no more friends", "cancel");
                         RedUsers.Add(UserGreenSelect);
                         GreenUsers.Remove(UserGreenSelect);
+                        MainPageViewModel.WantedUsers.Remove(otheruser);
+                        MainPageViewModel.RequestUsers.Remove(otheruser);
                     }
                 }            
                     OnPropertyChange(nameof(RedUsers));
@@ -248,6 +252,7 @@ namespace forreal.ViewModels
                         await AppShell.Current.DisplayAlert("The Friend Request Submitted!", "you are now friends", "cancel");
                         GreenUsers.Add(UserBlueSelect);
                         BlueUsers.Remove(UserBlueSelect);
+                        MainPageViewModel.WantedUsers.Add(otheruser);
                     }
                 }          
                     OnPropertyChange(nameof(BlueUsers));

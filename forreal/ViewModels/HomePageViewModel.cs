@@ -167,6 +167,7 @@ namespace forreal.ViewModels
             {
                 try
                 {
+                    Posts = new ObservableCollection<Post>();
                     string username = ((App)Application.Current).User.UserName;
                     string challangename = ChallengeSubmit.Text;
                     PostDto post = new PostDto();
@@ -185,41 +186,43 @@ namespace forreal.ViewModels
                         //    MainPageViewModel.Images.Add(imagename);
                         //    OnPropertyChange(nameof(ProfilePageViewModel.Posts));
                         //}
-                        await AppShell.Current.DisplayAlert("All done!", "the post has submitted", "cancel");
-                    }
-                    ShowSubmit = false;
-                    //only see friends posts in the current day
-                    foreach (var u in Users)
-                    {
-                        if (UsersNameWant.Contains(u.UserName) && UsersNameRequest.Contains(u.UserName))
-                            FriendUsers.Add(u);
-                    }
-                    UsersWithID = await _service.GetUserNameWithID();
-                    var time= DateTime.Now;
-                    string day = time.Day.ToString(); var month= time.Month.ToString(); var year= time.Year.ToString();
-                    foreach (var name in ImagesName)
-                    {
-                       var infoes = name.Split('_');
-                       string[] infofoes = null;
-                       if (infoes.Length > 3)
-                        {
-                            infofoes = infoes[4].Split(".");
-                            string text = null;
-                            int id = Int32.Parse(infoes[0]);
-                            foreach (var user in UsersWithID)
-                            {
-                                bool IsFriend = FriendUsers.Any(friend => friend.UserName == user.Text);
-                                if (IsFriend && id == user.Id && infoes[2] == day && infoes[3] == month && infofoes[0] == year)
-                                {
-                                    var ch_id = Int32.Parse(infoes[1]);
-                                    text = await _service.GetChallangeName(ch_id);
-                                    var posty = new Post { username = user.Text, challengename = text, date = infoes[2] + "/" + infoes[3] + "/" + infofoes[0], image = $"{ForrealService.WwwRoot}/Images/{name}" };
-                                    Posts.Add(posty);
-                                }
 
+                        ShowSubmit = false;
+                        //only see friends posts in the current day
+                        foreach (var u in Users)
+                        {
+                            if (UsersNameWant.Contains(u.UserName) && UsersNameRequest.Contains(u.UserName))
+                                FriendUsers.Add(u);
+                        }
+                        UsersWithID = await _service.GetUserNameWithID();
+                        var time = DateTime.Now;
+                        string day = time.Day.ToString(); var month = time.Month.ToString(); var year = time.Year.ToString();
+                        foreach (var name in ImagesName)
+                        {
+                            var infoes = name.Split('_');
+                            string[] infofoes = null;
+                            if (infoes.Length > 3)
+                            {
+                                infofoes = infoes[4].Split(".");
+                                string text = null;
+                                int id = Int32.Parse(infoes[0]);
+                                foreach (var user in UsersWithID)
+                                {
+                                    bool IsFriend = FriendUsers.Any(friend => friend.UserName == user.Text);
+                                    if (IsFriend && id == user.Id && infoes[2] == day && infoes[3] == month && infofoes[0] == year)
+                                    {
+                                        var ch_id = Int32.Parse(infoes[1]);
+                                        text = await _service.GetChallangeName(ch_id);
+                                        var posty = new Post { username = user.Text, challengename = text, date = infoes[2] + "/" + infoes[3] + "/" + infofoes[0], image = $"{ForrealService.WwwRoot}/Images/{name}" };
+                                        Posts.Add(posty);
+                                    }
+
+                                }
                             }
                         }
-                    }                    
+
+                        await AppShell.Current.DisplayAlert("All done!", "the post has submitted", "cancel");
+                    }                  
                 }
                 catch (Exception ex)
                 {
