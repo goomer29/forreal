@@ -21,6 +21,7 @@ namespace forreal.ViewModels
         private string _userName;//שם משתמש
         public bool _showfriend;
         public static bool _showsubmit;
+        public bool _showchallanges;
         public ObservableCollection<Post> _posts { get; set; }
         public ObservableCollection<User> friend_users { get; set; }
         public ObservableCollection<UserNameDto> users_with_id {get;set;}
@@ -37,6 +38,8 @@ namespace forreal.ViewModels
         public FileResult FileSubmit { get=>ChallangePageViewModel.file_select; }
         public ObservableCollection<string> UsersNameWant { get => MainPageViewModel.WantedUsers; }
         public ObservableCollection<string> UsersNameRequest { get => MainPageViewModel.RequestUsers; }
+        public ObservableCollection<ChallangeNameDto> ChallangesNames { get => MainPageViewModel.ChallangeNames; }
+        public ObservableCollection<UserNameDto> UsersNames { get => MainPageViewModel.UserWithID; }
         public ObservableCollection<User> Users { get => MainPageViewModel.AllUsers; }
         #region Service component
         private readonly ForrealService _service;
@@ -50,6 +53,11 @@ namespace forreal.ViewModels
         {
             get => _showsubmit;
             set { if (_showsubmit != value) { _showsubmit = value; OnPropertyChange(); } }
+        }
+        public bool ShowChallanges
+        {
+            get => _showchallanges;
+            set { if (_showchallanges != value) { _showchallanges = value; OnPropertyChange(); } }
         }
         public bool ShowFriend
         {
@@ -88,11 +96,15 @@ namespace forreal.ViewModels
         }
         public HomePageViewModel(IPopupService _popupService, ForrealService service)
         {
+            var time = DateTime.Now;
+            string day = time.Day.ToString(); var month = time.Month.ToString(); var year = time.Year.ToString();
+
             UsersWithID = new ObservableCollection<UserNameDto>();
             Posts= new ObservableCollection<Post>();
             FriendUsers= new ObservableCollection<User>();
             ShowFriend = false;
             ShowSubmit = false;
+            ShowChallanges = true;
             Challanges = new ObservableCollection<Challange>();
             _service = service;
             popupService = _popupService;
@@ -112,6 +124,55 @@ namespace forreal.ViewModels
             if(ShowFriend)
             {
                 AppShell.Current.DisplayAlert("You've got a friend request!", "go to Search to see more info", "cancel");
+            }
+            //if the user already did a challenge for the day
+            foreach(var name in ImagesName)
+            {
+                var infoes = name.Split('_');
+                string[] infofoes = null;
+                if (infoes.Length > 3)
+                {
+                    infofoes = infoes[4].Split(".");
+                    int id = Int32.Parse(infoes[0]);
+                    if (MainPageViewModel.UserID == id && $"{infoes[2]}/{infoes[3]}/{infofoes[0]}" == $"{day}/{month}/{year}")
+                        ShowChallanges = false;
+                }
+            }
+            if (!ShowChallanges)
+            {
+                foreach (var u in Users)
+                {
+                    if (UsersNameWant.Contains(u.UserName) && UsersNameRequest.Contains(u.UserName))
+                        FriendUsers.Add(u);
+                }
+                UsersWithID = UsersNames;
+                foreach (var name in ImagesName)
+                {
+                    var infoes = name.Split('_');
+                    string[] infofoes = null;
+                    if (infoes.Length > 3)
+                    {
+                        infofoes = infoes[4].Split(".");
+                        string text = null;
+                        int id = Int32.Parse(infoes[0]);
+                        foreach (var user in UsersWithID)
+                        {
+                            bool IsFriend = FriendUsers.Any(friend => friend.UserName == user.Text);
+                            if (IsFriend && id == user.Id && infoes[2] == day && infoes[3] == month && infofoes[0] == year)
+                            {
+                                var ch_id = Int32.Parse(infoes[1]);
+                                foreach(var ch_name in ChallangesNames)
+                                {
+                                    if(ch_name.Id == ch_id)
+                                        text=ch_name.Text;
+                                }                              
+                                var posty = new Post { username = user.Text, challengename = text, date = infoes[2] + "/" + infoes[3] + "/" + infofoes[0], image = $"{ForrealService.WwwRoot}/Images/{name}" };
+                                Posts.Add(posty);
+                            }
+
+                        }
+                    }
+                }
             }
             ChallangeCommand = new Command(async () =>
             {                
@@ -194,9 +255,10 @@ namespace forreal.ViewModels
                             if (UsersNameWant.Contains(u.UserName) && UsersNameRequest.Contains(u.UserName))
                                 FriendUsers.Add(u);
                         }
-                        UsersWithID = await _service.GetUserNameWithID();
+                        UsersWithID = UsersNames;
                         var time = DateTime.Now;
                         string day = time.Day.ToString(); var month = time.Month.ToString(); var year = time.Year.ToString();
+                        ShowChallanges = false;
                         foreach (var name in ImagesName)
                         {
                             var infoes = name.Split('_');

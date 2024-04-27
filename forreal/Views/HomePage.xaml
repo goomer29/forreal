@@ -73,6 +73,7 @@
                   VerticalOptions="Center" />
                 </Grid>
             </Border>
+            <Label IsVisible="{Binding ShowChallanges}" Text="To see friends posts do a Challange!" FontSize="Medium" TextColor="Red"></Label>
             <CollectionView ItemsSource="{Binding Posts}" SelectionMode="Single" BackgroundColor="LightBlue" ItemsLayout="VerticalList">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:Post">

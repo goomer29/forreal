@@ -139,6 +139,7 @@ namespace forreal.ViewModels
                         MainPageViewModel.UserID = user_id.Id;
                         MainPageViewModel.Images=await _service.GetImages();
                         MainPageViewModel.ChallangeNames = await _service.GetAllChallanges();
+                        MainPageViewModel.UserWithID = await _service.GetUserNameWithID();
 
                         lvm.IsBusy = false;
                         await Shell.Current.Navigation.PopModalAsync();

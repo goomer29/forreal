@@ -17,6 +17,7 @@ namespace forreal.ViewModels
         public static int UserID { get; set; }
         public static ObservableCollection<string> Images { get; set; }
         public static ObservableCollection<ChallangeNameDto> ChallangeNames { get; set; }
+        public static ObservableCollection<UserNameDto> UserWithID { get; set; }
         public ICommand LogInCommand { get; protected set; }
         public ICommand SignUpCommand { get; protected set; }
         public MainPageViewModel()
