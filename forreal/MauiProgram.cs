@@ -15,6 +15,7 @@ namespace forreal
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkitMediaElement()
                 .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
@@ -40,6 +41,8 @@ namespace forreal
             builder.Services.AddSingleton<ProfilePage>();
             builder.Services.AddSingleton<ProfilePageViewModel>();
             builder.Services.AddSingleton<ChallangePageViewModel>();
+            builder.Services.AddTransient<ChatPage>();
+            builder.Services.AddTransient<ChatPageViewModel>();
 
             builder.Services.AddTransientPopup<ChallangePage, ChallangePageViewModel>();
 

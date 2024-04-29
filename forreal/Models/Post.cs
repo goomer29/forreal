@@ -12,5 +12,8 @@ namespace forreal.Models
         public string challengename { get; set; }
         public string date { get; set; }
         public string image { get; set; }
+        public string video { get; set; }
+        public bool is_image { get; set; }
+        public bool is_video { get; set;}
     }
 }

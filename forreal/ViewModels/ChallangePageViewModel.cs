@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Maui.Core;
+﻿
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Views;
 using forreal.Models;
 using forreal.Services;
 using System;
@@ -22,6 +24,7 @@ namespace forreal.ViewModels
         private string title;
         public static Challange challange_select;
         public static ImageSource image_select;
+        public static MediaSource video_select;
         public static FileResult file_select;
         public ObservableCollection<Challange> Challanges{ get =>HomePageViewModel.statChallanges; }
         public event EventHandler SelectedImage;
@@ -106,6 +109,7 @@ namespace forreal.ViewModels
         #region Commands
         public ICommand ChallangesCommand { get; protected set; }
         public ICommand PickFileCommand { get; protected set; }
+        public ICommand PickVideoCommand { get; protected set; }
         #endregion
         [Obsolete]
         public ChallangePageViewModel()
@@ -141,7 +145,7 @@ namespace forreal.ViewModels
                         FileResult result = await FilePicker.Default.PickAsync(new PickOptions
                         {
                              FileTypes = FilePickerFileType.Images,
-                            PickerTitle = "please select an image/video"
+                            PickerTitle = "please select an image"
                         });
                    
                 try
@@ -161,9 +165,32 @@ namespace forreal.ViewModels
                     }
                 }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
+                    });
             });
-                });
+            PickVideoCommand = new Command(async () =>
+            {
+                challange_select = ChallangeSelect;
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    FileResult result = await FilePicker.Default.PickAsync(new PickOptions
+                    {
+                        FileTypes = FilePickerFileType.Videos,
+                        PickerTitle = "please select a video"
+                    });
 
+                    try
+                    {
+                            HomePageViewModel._showvideosubmit = true;
+                            var stream = await result.OpenReadAsync();
+                        var video = MediaSource.FromFile(result.FullPath);
+                        video_select = video;
+                            file_select = result;
+                            OnSelectedImage();
+                    }
+                    catch (Exception ex) { Console.WriteLine(ex.Message); }
+                });
+            });
+           
         }
     }
     public class Event

@@ -49,8 +49,14 @@ namespace forreal.ViewModels
                         {
                            text=ch_name.Text; break;
                         }
-                    }            
-                    var post = new Post { username = User.UserName, challengename = text, date = infoes[2] + "/" + infoes[3] + "/" + infofoes[0], image = $"{ForrealService.WwwRoot}/Images/{name}" };
+                    }
+                    var post = new Post();
+                    post.is_image = false; post.is_video = false;
+                    if (infofoes[1] == "jpg" || infofoes[1] == "jpeg" || infofoes[1]=="png")
+                    post = new Post { username = User.UserName, challengename = text, date = infoes[2] + "/" + infoes[3] + "/" + infofoes[0], image = $"{ForrealService.WwwRoot}/Images/{name}", is_image=true , is_video=false};
+                    else if (infofoes[1] == "mp4" || infofoes[1]=="mp3")
+                      post = new Post { username = User.UserName, challengename = text, date = infoes[2] + "/" + infoes[3] + "/" + infofoes[0], video = $"{ForrealService.WwwRoot}/Images/{name}",is_image=false, is_video = true};
+                    if(post.is_image||post.is_video)
                     Posts.Add(post);
 
                 }

@@ -114,9 +114,17 @@
         </Picker>
         <Button BackgroundColor="Black"
 HorizontalOptions="EndAndExpand"
-Text="Upload the Challange"   
+Text="Upload an Imgage"   
  TextColor="White"
   Command="{Binding PickFileCommand}"
+  VerticalOptions="EndAndExpand">
+        </Button>
+        
+        <Button BackgroundColor="Black"
+HorizontalOptions="StartAndExpand"
+Text="Upload a Video"   
+ TextColor="White"
+  Command="{Binding PickVideoCommand}"
   VerticalOptions="EndAndExpand">
 
         </Button>
