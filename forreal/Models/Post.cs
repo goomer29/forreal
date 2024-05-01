@@ -10,6 +10,9 @@ namespace forreal.Models
     {
         public string username { get; set; }
         public string challengename { get; set; }
+
+        //Tal
+        public DateTime TaskDate { get; set; }
         public string date { get; set; }
         public string image { get; set; }
         public string video { get; set; }

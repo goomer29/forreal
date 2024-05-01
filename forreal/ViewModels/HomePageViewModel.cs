@@ -13,6 +13,8 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Xml.Linq;
 
+
+
 namespace forreal.ViewModels
 {
     public class HomePageViewModel : ViewModel
@@ -25,19 +27,19 @@ namespace forreal.ViewModels
         public bool _showchallanges;
         public ObservableCollection<Post> _posts { get; set; }
         public ObservableCollection<User> friend_users { get; set; }
-        public ObservableCollection<UserNameDto> users_with_id {get;set;}
+        public ObservableCollection<UserNameDto> users_with_id { get; set; }
         public ICommand ChallangeCommand { get; protected set; }
         public ICommand CloseChallange { get; protected set; }
         public ICommand PostCommand { get; protected set; }
         public ICommand YesCommand { get; protected set; }
         public ICommand NoCommand { get; protected set; }
         public static ObservableCollection<Challange> statChallanges { get; set; }
-        public ObservableCollection<Challange> Challanges { get; set;  }
+        public ObservableCollection<Challange> Challanges { get; set; }
         public ObservableCollection<string> ImagesName { get => MainPageViewModel.Images; }
         public Challange ChallengeSubmit { get => ChallangePageViewModel.challange_select; }
         public ImageSource ImageSubmit { get => ChallangePageViewModel.image_select; }
-        public MediaSource VideoSubmit { get=>ChallangePageViewModel.video_select; }
-        public FileResult FileSubmit { get=>ChallangePageViewModel.file_select; }
+        public MediaSource VideoSubmit { get => ChallangePageViewModel.video_select; }
+        public FileResult FileSubmit { get => ChallangePageViewModel.file_select; }
         public ObservableCollection<string> UsersNameWant { get => MainPageViewModel.WantedUsers; }
         public ObservableCollection<string> UsersNameRequest { get => MainPageViewModel.RequestUsers; }
         public ObservableCollection<ChallangeNameDto> ChallangesNames { get => MainPageViewModel.ChallangeNames; }
@@ -107,8 +109,8 @@ namespace forreal.ViewModels
             string day = time.Day.ToString(); var month = time.Month.ToString(); var year = time.Year.ToString();
 
             UsersWithID = new ObservableCollection<UserNameDto>();
-            Posts= new ObservableCollection<Post>();
-            FriendUsers= new ObservableCollection<User>();
+            Posts = new ObservableCollection<Post>();
+            FriendUsers = new ObservableCollection<User>();
             ShowFriend = false;
             ShowSubmit = false;
             ShowVideoSubmit = false;
@@ -129,12 +131,12 @@ namespace forreal.ViewModels
 
             //}
             Task.Delay(5000);
-            if(ShowFriend)
+            if (ShowFriend)
             {
                 AppShell.Current.DisplayAlert("You've got a friend request!", "go to Search to see more info", "cancel");
             }
             //if the user already did a challenge for the day
-            foreach(var name in ImagesName)
+            foreach (var name in ImagesName)
             {
                 var infoes = name.Split('_');
                 string[] infofoes = null;
@@ -143,7 +145,33 @@ namespace forreal.ViewModels
                     infofoes = infoes[4].Split(".");
                     int id = Int32.Parse(infoes[0]);
                     if (MainPageViewModel.UserID == id && $"{infoes[2]}/{infoes[3]}/{infofoes[0]}" == $"{day}/{month}/{year}")
+                    {
                         ShowChallanges = false;
+                        int ch_id = Int32.Parse(infoes[1]);
+                        var posty = new Post();
+                        posty.is_image = false; posty.is_video = false;
+                        if (infofoes[1] == "jpg" || infofoes[1] == "jpeg" || infofoes[1] == "png")
+                        {
+                            foreach (var ch in ChallangesNames)
+                            {
+                                if (ch.Id == ch_id)
+                                    posty = new Post { username = ((App)(Application.Current)).User.UserName, challengename = ch.Text, date = infoes[2] + "/" + infoes[3] + "/" + infofoes[0], image = $"{ForrealService.WwwRoot}/Images/{name}", is_image = true, is_video = false };
+                            }
+
+                        }
+
+                        else if (infofoes[1] == "mp4" || infofoes[1] == "mp3")
+                        {
+                            foreach (var ch in ChallangesNames)
+                            {
+                                if (ch.Id == ch_id)
+                                    posty = new Post { username = ((App)(Application.Current)).User.UserName, challengename = ch.Text, date = infoes[2] + "/" + infoes[3] + "/" + infofoes[0], video = $"{ForrealService.WwwRoot}/Images/{name}", is_image = false, is_video = true };
+                            }
+
+                        }
+                        if (posty.is_image || posty.is_video)
+                            Posts.Add(posty);
+                    }
                 }
             }
             if (!ShowChallanges)
@@ -169,19 +197,19 @@ namespace forreal.ViewModels
                             if (IsFriend && id == user.Id && infoes[2] == day && infoes[3] == month && infofoes[0] == year)
                             {
                                 var ch_id = Int32.Parse(infoes[1]);
-                                foreach(var ch_name in ChallangesNames)
+                                foreach (var ch_name in ChallangesNames)
                                 {
-                                    if(ch_name.Id == ch_id)
-                                        text=ch_name.Text;
+                                    if (ch_name.Id == ch_id)
+                                        text = ch_name.Text;
                                 }
                                 var posty = new Post();
                                 posty.is_image = false; posty.is_video = false;
                                 if (infofoes[1] == "jpg" || infofoes[1] == "jpeg" || infofoes[1] == "png")
                                     posty = new Post { username = user.Text, challengename = text, date = infoes[2] + "/" + infoes[3] + "/" + infofoes[0], image = $"{ForrealService.WwwRoot}/Images/{name}", is_image = true, is_video = false };
-                                else if(infofoes[1] == "mp4" || infofoes[1] == "mp3")
+                                else if (infofoes[1] == "mp4" || infofoes[1] == "mp3")
                                     posty = new Post { username = user.Text, challengename = text, date = infoes[2] + "/" + infoes[3] + "/" + infofoes[0], video = $"{ForrealService.WwwRoot}/Images/{name}", is_image = false, is_video = true };
-                                if(posty.is_image||posty.is_video)
-                                   Posts.Add(posty);
+                                if (posty.is_image || posty.is_video)
+                                    Posts.Add(posty);
                             }
 
                         }
@@ -189,11 +217,11 @@ namespace forreal.ViewModels
                 }
             }
             ChallangeCommand = new Command(async () =>
-            {                
-                
+            {
+
                 try
                 {
-                    if(Challanges.Count == 0)
+                    if (Challanges.Count == 0)
                     {
                         var ch = await _service.GetChallange();
                         if (ch.Success)
@@ -203,7 +231,7 @@ namespace forreal.ViewModels
                                 Challanges.Add(ch.ChallangesList[i]);
                             }
                         }
-                    }                   
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -212,7 +240,8 @@ namespace forreal.ViewModels
                 }
                 OnPropertyChange();
                 statChallanges = Challanges;
-                await popupService.ShowPopupAsync<ChallangePageViewModel>(onPresenting: vm => vm.SelectedImage += (s, e) => {
+                await popupService.ShowPopupAsync<ChallangePageViewModel>(onPresenting: vm => vm.SelectedImage += (s, e) =>
+                {
                     OnPropertyChange(nameof(ShowSubmit));
                     OnPropertyChange(nameof(ShowVideoSubmit));
                     OnPropertyChange(nameof(ChallengeSubmit));
@@ -240,86 +269,158 @@ namespace forreal.ViewModels
                 OnPropertyChange(nameof(VideoSubmit));
                 OnPropertyChange(nameof(FileSubmit));
             });
-            NoCommand = new Command(async () => 
+            NoCommand = new Command(async () =>
             {
                 ShowSubmit = false;
                 ShowVideoSubmit = false;
             });
-            YesCommand = new Command(async () =>
-            {
-                try
-                {
-                    Posts = new ObservableCollection<Post>();
-                    string username = ((App)Application.Current).User.UserName;
-                    string challangename = ChallengeSubmit.Text;
-                    PostDto post = new PostDto();
-                    post.username = username; post.challengename = challangename;
-                    var file = FileSubmit;
-                    var response = await _service.UploadPost(post, file);
-                    if (response == System.Net.HttpStatusCode.OK)
-                    {
-                        //var response1 = await _service.GetChallangeID(challangename); if i want updated posts in ProfilePage
-                        //if (response1.Success)
-                        //{
-                        //    DateTime time = DateTime.Now;
-                        //    string day = time.Day.ToString(); string month = time.Month.ToString(); string year = time.Year.ToString();
-                        //    string date = day + "_" + month + "_" + year;
-                        //    var imagename = $"{MainPageViewModel.UserID}_{response1.Id}_{date}{Path.GetExtension(file.FileName)}";
-                        //    MainPageViewModel.Images.Add(imagename);
-                        //    OnPropertyChange(nameof(ProfilePageViewModel.Posts));
-                        //}
+            YesCommand = new Command(async () => await DisplayPosts());
+        }
 
-                        ShowSubmit = false;
-                        ShowVideoSubmit= false;
-                        //only see friends posts in the current day
-                        foreach (var u in Users)
+        private async Task DisplayPosts()
+        {
+            try
+            {
+                Posts = new ObservableCollection<Post>();
+                string username = ((App)(Application.Current)).User.UserName;
+                string challangename = ChallengeSubmit.Text;
+                PostDto post = new PostDto();
+                post.username = username; post.challengename = challangename;
+                var file = FileSubmit;
+                var response = await _service.UploadPost(post, file);
+                if (response == System.Net.HttpStatusCode.OK)
+                {
+                    //var response1 = await _service.GetChallangeID(challangename); if i want updated posts in ProfilePage
+                    //if (response1.Success)
+                    //{
+                    //    DateTime time = DateTime.Now;
+                    //    string day = time.Day.ToString(); string month = time.Month.ToString(); string year = time.Year.ToString();
+                    //    string date = day + "_" + month + "_" + year;
+                    //    var imagename = $"{MainPageViewModel.UserID}_{response1.Id}_{date}{Path.GetExtension(file.FileName)}";
+                    //    MainPageViewModel.Images.Add(imagename);
+                    //    OnPropertyChange(nameof(ProfilePageViewModel.Posts));
+                    //}
+
+                    ShowSubmit = false;
+                    ShowVideoSubmit = false;
+                    var time = DateTime.Now;
+                    string day = time.Day.ToString(); var month = time.Month.ToString(); var year = time.Year.ToString();
+
+                    foreach (var name in ImagesName)
+                    {
+                        var infoes = name.Split('_');
+                        string[] infofoes = null;
+                        if (infoes.Length > 3)
                         {
-                            if (UsersNameWant.Contains(u.UserName) && UsersNameRequest.Contains(u.UserName))
-                                FriendUsers.Add(u);
-                        }
-                        UsersWithID = UsersNames;
-                        var time = DateTime.Now;
-                        string day = time.Day.ToString(); var month = time.Month.ToString(); var year = time.Year.ToString();
-                        ShowChallanges = false;
-                        foreach (var name in ImagesName)
-                        {
-                            var infoes = name.Split('_');
-                            string[] infofoes = null;
-                            if (infoes.Length > 3)
+                            infofoes = infoes[4].Split(".");
+                            int id = Int32.Parse(infoes[0]);
+                            if (MainPageViewModel.UserID == id && $"{infoes[2]}/{infoes[3]}/{infofoes[0]}" == $"{day}/{month}/{year}")
                             {
-                                infofoes = infoes[4].Split(".");
-                                string text = null;
-                                int id = Int32.Parse(infoes[0]);
-                                foreach (var user in UsersWithID)
+                                ShowChallanges = false;
+                                int ch_id = Int32.Parse(infoes[1]);
+                                var posty = new Post();
+                                posty.is_image = false; posty.is_video = false;
+                                if (infofoes[1] == "jpg" || infofoes[1] == "jpeg" || infofoes[1] == "png")
                                 {
-                                    bool IsFriend = FriendUsers.Any(friend => friend.UserName == user.Text);
-                                    if (IsFriend && id == user.Id && infoes[2] == day && infoes[3] == month && infofoes[0] == year)
+                                    foreach (var ch in ChallangesNames)
                                     {
-                                        var ch_id = Int32.Parse(infoes[1]);
-                                        text = await _service.GetChallangeName(ch_id);
-                                        var posty = new Post();
-                                        posty.is_image = false; posty.is_video = false;
-                                        if (infofoes[1] == "jpg" || infofoes[1] == "jpeg" || infofoes[1] == "png")
-                                            posty = new Post { username = user.Text, challengename = text, date = infoes[2] + "/" + infoes[3] + "/" + infofoes[0], image = $"{ForrealService.WwwRoot}/Images/{name}", is_image = true, is_video = false };
-                                        else if (infofoes[1] == "mp4" || infofoes[1] == "mp3")
-                                            posty = new Post { username = user.Text, challengename = text, date = infoes[2] + "/" + infoes[3] + "/" + infofoes[0], video = $"{ForrealService.WwwRoot}/Images/{name}", is_image = false, is_video = true };
-                                        if (posty.is_image || posty.is_video)
-                                            Posts.Add(posty);
+                                        if (ch.Id == ch_id)
+                                            posty = new Post { username = ((App)(Application.Current)).User.UserName, challengename = ch.Text, date = infoes[2] + "/" + infoes[3] + "/" + infofoes[0], image = $"{ForrealService.WwwRoot}/Images/{name}", is_image = true, is_video = false };
                                     }
 
                                 }
+
+                                else if (infofoes[1] == "mp4" || infofoes[1] == "mp3")
+                                {
+                                    foreach (var ch in ChallangesNames)
+                                    {
+                                        if (ch.Id == ch_id)
+                                            posty = new Post { username = ((App)(Application.Current)).User.UserName, challengename = ch.Text, date = infoes[2] + "/" + infoes[3] + "/" + infofoes[0], video = $"{ForrealService.WwwRoot}/Images/{name}", is_image = false, is_video = true };
+                                    }
+
+                                }
+                                if (posty.is_image || posty.is_video)
+                                    Posts.Add(posty);
                             }
                         }
+                    }
+                    //adds the challange which submitted right now
+                    var postt = new Post();
+                    string namee = file.FileName;
+                    string[] infoess = null;
+                    infoess = namee.Split(".");
+                    if (infoess[1] == "jpg" || infoess[1] == "jpeg" || infoess[1] == "png")
+                        postt = new Post { username = post.username, challengename = post.challengename, date = $"{day}/{month}/{year}", image = file.FullPath, is_image = true, is_video = false };
+                    else if (infoess[1] == "mp4" || infoess[1] == "mp3")
+                        postt = new Post { username = post.username, challengename = post.challengename, date = $"{day}/{month}/{year}", image = file.FullPath, is_image = false, is_video = true };
+                    if (postt.is_image || postt.is_video)
+                        Posts.Add(postt);
 
-                        await AppShell.Current.DisplayAlert("All done!", "the post has submitted", "cancel");
-                    }                  
+
+                    //only see friends posts in the current day
+                    foreach (var u in Users)
+                    {
+                        if (UsersNameWant.Contains(u.UserName) && UsersNameRequest.Contains(u.UserName))
+                            FriendUsers.Add(u);
+                    }
+                    UsersWithID = UsersNames;
+                    ShowChallanges = false;
+                    foreach (var name in ImagesName)
+                    {
+                        PostData data = CreatePostData(name);
+
+                        foreach (var user in UsersWithID)
+                        {
+                            bool IsFriend = FriendUsers.Any(friend => friend.UserName == user.Text);
+                            if (IsFriend && id == user.Id && data.Date == DateTime.Now.Date)
+                            {
+
+                                text = await _service.GetChallangeName(data.ChallengeId);
+                                if (data.FileType == "jpg" || data.FileType == "jpeg" || data.FileType == "png")
+                                    posty = new Post { username = user.Text, challengename = text, TaskDate = data.Date, image = $"{ForrealService.WwwRoot}/Images/{name}", is_image = true, is_video = false };
+                                else if (data.FileType == "mp4" || data.FileType == "mp3")
+                                    posty = new Post { username = user.Text, challengename = text, TaskDate = data.Date, video = $"{ForrealService.WwwRoot}/Images/{name}", is_image = false, is_video = true };
+                                else
+                                    posty = new Post { is_video = false, is_image = false };
+                                if (posty.is_image || posty.is_video)
+                                    Posts.Add(posty);
+                            }
+
+                        }
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    await AppShell.Current.Navigation.PopModalAsync();
-                }
-            });
-        }     
+
+                await AppShell.Current.DisplayAlert("All done!", "the post has submitted", "cancel");
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                await AppShell.Current.Navigation.PopModalAsync();
+
+            }
+        }
+
+
+
+
+        private PostData CreatePostData(string name)
+        {
+            PostData postData = new PostData();
+            var infoes = name.Split('_');
+            string[] infofoes = null;
+            if (infoes.Length > 3)
+            {
+                infofoes = infoes[4].Split(".");
+
+                postData.UserId = Int32.Parse(infoes[0]);
+                postData.Date = new DateTime(Int32.Parse(infofoes[0]), Int32.Parse(infoes[3]), Int32.Parse(infoes[2]));
+                postData.ChallengeId = infoes[1];
+                postData.FileType = infofoes[1];
+
+            }
+            return postData;
+        }
+
     }
 }
