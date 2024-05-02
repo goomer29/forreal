@@ -162,7 +162,7 @@ Source="{Binding video}"
                 FontAttributes="Bold" />    
                             <Label Grid.Row="2"
         Grid.Column="1"
-        Text="{Binding date}"
+        Text="{Binding TaskDate.Date}"
         FontAttributes="Italic"
          VerticalOptions="End" />
                         </Grid>
