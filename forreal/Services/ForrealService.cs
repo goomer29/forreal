@@ -500,5 +500,12 @@ namespace forreal.Services
             return HttpStatusCode.BadRequest;
         }
         #endregion
+        //Post
+        //#region Add message in post
+        //public async Task<HttpStatusCode> AddMessage()
+        //{
+            
+        //}
+        #endregion
     }
 }

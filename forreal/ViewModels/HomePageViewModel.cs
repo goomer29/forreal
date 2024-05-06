@@ -310,7 +310,9 @@ namespace forreal.ViewModels
                     #region adds the challange which submitted right now
                     var postt = new Post();
                     string namee = file.FileName;
-                    PostData data1 = CreatePostData(namee);
+                    string path = file.FullPath;
+                    var infoes = namee.Split('.');
+                    var data1 = new PostData { UserId = MainPageViewModel.UserID, ChallengeId = (await _service.GetChallangeID(challangename)).Id, Date = DateTime.Now, FileType = infoes[1] };
                     if (data1.FileType == "jpg" || data1.FileType == "jpeg" || data1.FileType == "png")
                         postt = new Post { username = post.username, challengename = post.challengename, TaskDate=data1.Date, image = file.FullPath, is_image = true, is_video = false };
                     else if (data1.FileType == "mp4" || data1.FileType == "mp3")
@@ -318,31 +320,33 @@ namespace forreal.ViewModels
                     if (postt.is_image || postt.is_video)
                         Posts.Add(postt);
                     #endregion
-                   #region adds friends posts in the current day
+                    #region adds friends posts in the current day
                     foreach (var u in Users)
                     {
                         if (UsersNameWant.Contains(u.UserName) && UsersNameRequest.Contains(u.UserName))
                             FriendUsers.Add(u);
                     }
                     UsersWithID = UsersNames;
-                    ShowChallanges = false;
                     foreach (var name in ImagesName)
                     {
-                        PostData data = CreatePostData(name);
 
+                        PostData data = CreatePostData(name);
                         foreach (var user in UsersWithID)
                         {
                             bool IsFriend = FriendUsers.Any(friend => friend.UserName == user.Text);
                             if (IsFriend && data.UserId == user.Id && data.Date == DateTime.Now.Date)
                             {
-
-                                var text = await _service.GetChallangeName(data.ChallengeId);
-                                Post posty = new Post { is_video = false, is_image = false };
+                                string text = null;
+                                foreach (var ch_name in ChallangesNames)
+                                {
+                                    if (ch_name.Id == data.ChallengeId)
+                                        text = ch_name.Text;
+                                }
+                                var posty = new Post() { is_image = false, is_video = false };
                                 if (data.FileType == "jpg" || data.FileType == "jpeg" || data.FileType == "png")
                                     posty = new Post { username = user.Text, challengename = text, TaskDate = data.Date, image = $"{ForrealService.WwwRoot}/Images/{name}", is_image = true, is_video = false };
                                 else if (data.FileType == "mp4" || data.FileType == "mp3")
                                     posty = new Post { username = user.Text, challengename = text, TaskDate = data.Date, video = $"{ForrealService.WwwRoot}/Images/{name}", is_image = false, is_video = true };
-                                else
                                 if (posty.is_image || posty.is_video)
                                     Posts.Add(posty);
                             }

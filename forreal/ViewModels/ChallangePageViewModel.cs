@@ -152,7 +152,8 @@ namespace forreal.ViewModels
                 {
                     if (result.FileName.EndsWith("jpg", StringComparison.OrdinalIgnoreCase) || result.FileName.EndsWith("jpeg", StringComparison.OrdinalIgnoreCase) || result.FileName.EndsWith("png", StringComparison.OrdinalIgnoreCase))
                     {
-                        HomePageViewModel._showsubmit = true; 
+                        HomePageViewModel._showsubmit = true;
+                        HomePageViewModel._showvideosubmit = false;
                         var stream = await result.OpenReadAsync();
                         var image = ImageSource.FromStream(() => stream);
                             image_select = image;
@@ -180,7 +181,8 @@ namespace forreal.ViewModels
 
                     try
                     {
-                            HomePageViewModel._showvideosubmit = true;
+                          HomePageViewModel._showvideosubmit = true;
+                           HomePageViewModel._showsubmit = false;
                             var stream = await result.OpenReadAsync();
                         var video = MediaSource.FromFile(result.FullPath);
                         video_select = video;
