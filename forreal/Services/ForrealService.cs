@@ -500,12 +500,52 @@ namespace forreal.Services
             return HttpStatusCode.BadRequest;
         }
         #endregion
-        //Post
-        //#region Add message in post
-        //public async Task<HttpStatusCode> AddMessage()
-        //{
-            
-        //}
+        //"Post"
+        #region Add message in post
+        public async Task<HttpStatusCode> AddMessage(string user, string challangename, string usersent, string text)
+        {
+            try
+            {
+                var message= new MessageDto { username = user, challangename = challangename,usernamesent=usersent, text = text };
+                var jsonContent=JsonSerializer.Serialize(message, _serializerOptions);
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync($"{URL}AddComment", content);
+                return response.StatusCode;
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            return HttpStatusCode.BadRequest;
+        }
+        #endregion
+        //"Post"
+        #region Get all Messages of a post
+        public async Task<ChatsDto> GetPostComments(string username, string challengename)
+        {
+            try
+            {
+                var post = new PostDto { username = username, challengename = challengename };
+                var jsonContent = JsonSerializer.Serialize(post, _serializerOptions);
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync($"{URL}GetPostComments", content);
+                switch (response.StatusCode) 
+                {
+                    case (HttpStatusCode.OK):
+                        {
+                            jsonContent = await response.Content.ReadAsStringAsync();
+                            var chats = JsonSerializer.Deserialize<ObservableCollection<ChatDto>>(jsonContent, _serializerOptions);
+                            await Task.Delay(2000);
+                            return new ChatsDto() { Success = true, chats = chats, Message = string.Empty };
+
+                        }
+                    case (HttpStatusCode.Unauthorized):
+                        {
+                            return new ChatsDto() { Success = false, chats = new ObservableCollection<ChatDto>(), Message = "there is a problem" };
+
+                        }
+                }
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            return new ChatsDto() { Success = false, chats = new ObservableCollection<ChatDto>(), Message = "was an exception" };
+        }
         #endregion
     }
 }

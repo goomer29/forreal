@@ -25,6 +25,8 @@ namespace forreal.ViewModels
         public static bool _showsubmit;
         public static bool _showvideosubmit;
         public bool _showchallanges;
+        public Post _postselect;
+        public static Post PostSelecting;
         public ObservableCollection<Post> _posts { get; set; }
         public ObservableCollection<User> friend_users { get; set; }
         public ObservableCollection<UserNameDto> users_with_id { get; set; }
@@ -33,6 +35,8 @@ namespace forreal.ViewModels
         public ICommand PostCommand { get; protected set; }
         public ICommand YesCommand { get; protected set; }
         public ICommand NoCommand { get; protected set; }
+        public ICommand ChatCommand { get; protected set; }
+        public ICommand CloseChat { get; protected set; }
         public static ObservableCollection<Challange> statChallanges { get; set; }
         public ObservableCollection<Challange> Challanges { get; set; }
         public ObservableCollection<string> ImagesName { get => MainPageViewModel.Images; }
@@ -72,6 +76,16 @@ namespace forreal.ViewModels
         {
             get => _showfriend;
             set { if (_showfriend != value) { _showfriend = value; OnPropertyChange(); } }
+        }
+        public Post PostSelect
+        {
+            get => _postselect; set
+            {
+                if (_postselect != value)
+                {
+                    _postselect = value; OnPropertyChange();
+                }
+            }
         }
         public ObservableCollection<Post> Posts
         {
@@ -161,7 +175,6 @@ namespace forreal.ViewModels
                                 if (ch.Id == data.ChallengeId)
                                     posty = new Post { username = ((App)(Application.Current)).User.UserName, challengename = ch.Text, TaskDate=data.Date, video = $"{ForrealService.WwwRoot}/Images/{name}", is_image = false, is_video = true };
                             }
-
                         }
                         if (posty.is_image || posty.is_video)
                             Posts.Add(posty);
@@ -247,6 +260,15 @@ namespace forreal.ViewModels
                 ShowVideoSubmit = false;
             });
             YesCommand = new Command(async () => await DisplayPosts());
+            ChatCommand = new Command(async () =>
+            {
+                PostSelecting = PostSelect;
+            await popupService.ShowPopupAsync<ChatPageViewModel>();
+            });
+            CloseChat = new Command(async () =>
+            {
+                await ChatPage.ClosePopup();
+            });
         }
 
         private async Task DisplayPosts()

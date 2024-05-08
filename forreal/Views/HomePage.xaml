@@ -125,7 +125,8 @@
                 </Grid>
             </Border>
             <Label IsVisible="{Binding ShowChallanges}" Text="To see friends posts do a Challange!" FontSize="Medium" TextColor="Red"></Label>
-            <CollectionView ItemsSource="{Binding Posts}" SelectionMode="Single" BackgroundColor="LightBlue" ItemsLayout="VerticalList">
+            <CollectionView ItemsSource="{Binding Posts}" SelectionMode="Single" BackgroundColor="LightBlue" ItemsLayout="VerticalList"
+                            SelectionChangedCommand="{Binding ChatCommand}" SelectedItem="{Binding PostSelect}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:Post">
                         <Grid Padding="15" Margin="12" ColumnSpacing="12" RowSpacing="12">
@@ -159,7 +160,7 @@ Source="{Binding video}"
                                     Grid.Column="1"
                 Text="{Binding challengename}"
                     FontSize="25"
-                FontAttributes="Bold" />    
+                FontAttributes="Bold" />
                             <Label Grid.Row="2"
         Grid.Column="1"
         Text="{Binding TaskDate.Date}"
