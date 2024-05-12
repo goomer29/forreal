@@ -38,6 +38,7 @@ namespace forreal.ViewModels
         public ICommand ChatCommand { get; protected set; }
         public ICommand CloseChat { get; protected set; }
         public static ObservableCollection<Challange> statChallanges { get; set; }
+        public static ObservableCollection<ChatDto> post_chats { get; set; }
         public ObservableCollection<Challange> Challanges { get; set; }
         public ObservableCollection<string> ImagesName { get => MainPageViewModel.Images; }
         public Challange ChallengeSubmit { get => ChallangePageViewModel.challange_select; }
@@ -121,7 +122,7 @@ namespace forreal.ViewModels
         {
             var time = DateTime.Now;
             string day = time.Day.ToString(); var month = time.Month.ToString(); var year = time.Year.ToString();
-
+            post_chats = new ObservableCollection<ChatDto>();
             UsersWithID = new ObservableCollection<UserNameDto>();
             Posts = new ObservableCollection<Post>();
             FriendUsers = new ObservableCollection<User>();
@@ -262,6 +263,8 @@ namespace forreal.ViewModels
             YesCommand = new Command(async () => await DisplayPosts());
             ChatCommand = new Command(async () =>
             {
+                var postchats = await _service.GetPostComments(PostSelect.username, PostSelect.challengename);
+                post_chats = postchats.chats;
                 PostSelecting = PostSelect;
             await popupService.ShowPopupAsync<ChatPageViewModel>();
             });

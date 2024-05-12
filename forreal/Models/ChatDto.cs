@@ -8,8 +8,8 @@ namespace forreal.Models
 {
     public class ChatDto
     {
-        public string username;
-        public string text;
-        public DateTime? time;
+        public string username { get; set; }
+        public string text { get; set; }
+        public DateTime? time { get; set; }
     }
 }

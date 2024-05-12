@@ -8,9 +8,9 @@ namespace forreal.Models
 {
     public class MessageDto
     {
-        public string username;
-        public string challangename;
-        public string usernamesent;
-        public string text;
+        public string username { get; set; }
+        public string challangename {  get; set; }
+        public string usernamesent {  get; set; }
+        public string text {  get; set; }
     }
 }

@@ -3,16 +3,45 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="forreal.Views.ChatPage"
                 xmlns:viewmodels="clr-namespace:forreal.ViewModels"
+           xmlns:model="clr-namespace:forreal.Models"
+           xmlns:Templates="clr-namespace:forreal.Resources.Templates"
            xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
              x:DataType="viewmodels:ChatPageViewModel">
     <VerticalStackLayout>
-        <Label 
-            Text="{Binding PostSelect.username}"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Label 
-     Text="{Binding PostSelect.challengename}"
-     VerticalOptions="Center" 
-     HorizontalOptions="Center" />
+        <!-- Define a grid layout to structure the page -->
+        <Grid RowDefinitions="*, Auto">
+
+            <!-- Chat history area -->
+            <CollectionView Grid.Row="0" ItemsSource="{Binding Chats}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Chat">
+                        <VerticalStackLayout Margin="10" Spacing="5">
+                            <Frame HorizontalOptions="EndAndExpand" BackgroundColor="AliceBlue">
+                                <VerticalStackLayout>
+                                    <HorizontalStackLayout>
+                                        <Label Text="{Binding Username}" TextColor="Black"/>
+                                    </HorizontalStackLayout>
+                                    <Label Text="{Binding Text}" TextColor="Black"/>
+                                </VerticalStackLayout>
+                            </Frame>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Input box for sending messages -->
+            <Grid Grid.Row="1" BackgroundColor="LightGray">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Input box -->
+                <Entry WidthRequest="300" Grid.Column="0" Placeholder="Type your message" Margin="10" Text="{Binding Message}"/>
+
+                <!-- Send button -->
+                <Button Text="Send" Grid.Column="1" Margin="10" Command="{Binding SendMessage}"/>
+            </Grid>
+        </Grid>
     </VerticalStackLayout>
 </mct:Popup>
