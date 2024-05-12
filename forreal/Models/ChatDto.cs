@@ -10,6 +10,6 @@ namespace forreal.Models
     {
         public string username { get; set; }
         public string text { get; set; }
-        public DateTime? time { get; set; }
+        public DateTime time { get; set; }
     }
 }

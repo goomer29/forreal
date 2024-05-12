@@ -9,28 +9,13 @@
              x:DataType="viewmodels:ChatPageViewModel">
     <VerticalStackLayout>
         <!-- Define a grid layout to structure the page -->
-        <Grid RowDefinitions="*, Auto">
+        <Grid RowDefinitions="*, Auto" BackgroundColor="LightGrey">
 
             <!-- Chat history area -->
-            <CollectionView Grid.Row="0" ItemsSource="{Binding Chats}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:Chat">
-                        <VerticalStackLayout Margin="10" Spacing="5">
-                            <Frame HorizontalOptions="EndAndExpand" BackgroundColor="AliceBlue">
-                                <VerticalStackLayout>
-                                    <HorizontalStackLayout>
-                                        <Label Text="{Binding Username}" TextColor="Black"/>
-                                    </HorizontalStackLayout>
-                                    <Label Text="{Binding Text}" TextColor="Black"/>
-                                </VerticalStackLayout>
-                            </Frame>
-                        </VerticalStackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+            <CollectionView Grid.Row="0" ItemsSource="{Binding Chats}" ItemTemplate="{x:StaticResource chatTemplate}"/>
 
             <!-- Input box for sending messages -->
-            <Grid Grid.Row="1" BackgroundColor="LightGray">
+            <Grid Grid.Row="1" BackgroundColor="Gray">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />

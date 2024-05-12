@@ -65,7 +65,7 @@ namespace forreal.ViewModels
                 var response = await _service.AddMessage(username,challangename,usersent,Message);
                 if (response == System.Net.HttpStatusCode.OK)
                 {
-                    Chat chat = new Chat() { Username = ((App)(Application.Current)).User.UserName, Text = PostSelect.challengename, Time = DateTime.Now, IsCurrentUser = true };
+                    Chat chat = new Chat() { Username = ((App)(Application.Current)).User.UserName, Text = Message, Time = DateTime.Now, IsCurrentUser = true };
                     Chats.Add(chat);
                 
                 }

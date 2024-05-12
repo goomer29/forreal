@@ -2,6 +2,8 @@
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:forreal"
+             xmlns:model="clr-namespace:forreal.Models"
+              xmlns:Templates="clr-namespace:forreal.Resources.Templates"
              x:Class="forreal.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -9,6 +11,36 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
+            <DataTemplate x:Key="CurrentUserTemplate" x:DataType="model:Chat">
+                <VerticalStackLayout Margin="10" Spacing="5">
+                    <Frame HorizontalOptions="StartAndExpand" BackgroundColor="LightGreen">
+                        <VerticalStackLayout>
+                            <HorizontalStackLayout>
+                                <Label Text="{Binding Username}" TextColor="Black"/>
+                            </HorizontalStackLayout>
+                            <Label Text="{Binding Text}" TextColor="Black"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                </VerticalStackLayout>
+            </DataTemplate>
+
+            <DataTemplate x:Key="OtherUserTemplate" x:DataType="model:Chat">
+                <VerticalStackLayout Margin="10" Spacing="5">
+                    <Frame HorizontalOptions="EndAndExpand" BackgroundColor="AliceBlue">
+                        <VerticalStackLayout>
+                            <HorizontalStackLayout>
+                                <Label Text="{Binding Username}" TextColor="Black"/>
+                            </HorizontalStackLayout>
+                            <Label Text="{Binding Text}" TextColor="Black"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                </VerticalStackLayout>
+            </DataTemplate>
+
+            <Templates:MessageTemplateSelector x:Key="chatTemplate" 
+                                               CurrentUserTemplate="{x:StaticResource CurrentUserTemplate}"
+                                               OtherUserTemplate="{x:StaticResource OtherUserTemplate}"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
