@@ -518,11 +518,11 @@ namespace forreal.Services
         #endregion
         //"Post"
         #region Get all Messages of a post
-        public async Task<ChatsDto> GetPostComments(string username, string challengename)
+        public async Task<ChatsDto> GetPostComments(string username, string challengename, DateTime datetime)
         {
             try
             {
-                var post = new PostDto { username = username, challengename = challengename };
+                var post = new PostDto { username = username, challengename = challengename, DateTime=datetime };
                 var jsonContent = JsonSerializer.Serialize(post, _serializerOptions);
                 var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
                 var response = await _httpClient.PostAsync($"{URL}GetPostComments", content);

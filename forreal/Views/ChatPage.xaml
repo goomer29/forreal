@@ -7,7 +7,7 @@
            xmlns:Templates="clr-namespace:forreal.Resources.Templates"
            xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
              x:DataType="viewmodels:ChatPageViewModel">
-    <VerticalStackLayout>
+    <VerticalStackLayout Padding="10,0,10,0">
         <!-- Define a grid layout to structure the page -->
         <Grid RowDefinitions="*, Auto" BackgroundColor="LightGrey">
 

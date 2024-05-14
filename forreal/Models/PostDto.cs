@@ -10,5 +10,6 @@ namespace forreal.Models
     {
         public string username { get; set; }
         public string challengename { get; set; }
+        public DateTime DateTime { get; set; }
     }
 }

@@ -17,6 +17,7 @@ namespace forreal.ViewModels
         private ObservableCollection<Chat> _chats;
         public Post PostSelect { get => HomePageViewModel.PostSelecting; }
         public ObservableCollection<ChatDto> ChatsDto { get=>HomePageViewModel.post_chats; }
+        public ObservableCollection<string> UsersName { get; set; }
         public ICommand SendMessage { get;protected set; }
         #region Service component
         private readonly ForrealService _service;
@@ -43,8 +44,10 @@ namespace forreal.ViewModels
         }
         public ChatPageViewModel(ForrealService service)
         {
+            Random rnd=new Random();
             _service = service;
             Chats = new ObservableCollection<Chat>();
+            UsersName=new ObservableCollection<string>();
             foreach (var chatdto in ChatsDto)
             {
                 Chat chat = new Chat() { Username = chatdto.username, Text = chatdto.text, Time = chatdto.time };
@@ -54,6 +57,17 @@ namespace forreal.ViewModels
                 }
                 else
                     chat.IsCurrentUser = false;
+
+                //if (!(UsersName.Any((u) => u == chat.Username)))
+                //{
+                //    int red=rnd.Next(0, 256);
+                //    int green=rnd.Next(0, 256);
+                //    int blue=rnd.Next(0, 256);
+                //    Color random_color=Color.FromRgb(red, green, blue);
+                //    chat.UserColor = random_color;
+                //    UsersName.Add(chat.Username);
+                //}
+
                 Chats.Add(chat);
             }
             SendMessage = new Command(async () =>

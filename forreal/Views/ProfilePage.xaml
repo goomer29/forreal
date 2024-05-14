@@ -13,7 +13,8 @@
             Text="All of your challenges:"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-            <CollectionView ItemsSource="{Binding Posts}" SelectionMode="Single" BackgroundColor="LightBlue" ItemsLayout="VerticalList">
+            <CollectionView ItemsSource="{Binding Posts}" SelectionMode="Single" BackgroundColor="LightBlue" ItemsLayout="VerticalList"
+                             SelectionChangedCommand="{Binding ChatCommand}" SelectedItem="{Binding PostSelect}">
                 <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Post">
                         <Grid Padding="15" Margin="12" ColumnSpacing="12" RowSpacing="12">
@@ -45,7 +46,7 @@
                      FontAttributes="Bold" />
                             <Label Grid.Row="1"
                  Grid.Column="1"
-                 Text="{Binding date}"
+                 Text="{Binding TaskDate.Date}"
                  FontAttributes="Italic"
                   VerticalOptions="End" />
                         </Grid>

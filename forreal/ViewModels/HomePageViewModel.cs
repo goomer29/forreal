@@ -19,7 +19,6 @@ namespace forreal.ViewModels
 {
     public class HomePageViewModel : ViewModel
     {
-        readonly IPopupService popupService;
         private string _userName;//שם משתמש
         public bool _showfriend;
         public static bool _showsubmit;
@@ -52,6 +51,7 @@ namespace forreal.ViewModels
         public ObservableCollection<User> Users { get => MainPageViewModel.AllUsers; }
         #region Service component
         private readonly ForrealService _service;
+        readonly IPopupService popupService;
         #endregion
         public string UserName
         {
@@ -263,7 +263,7 @@ namespace forreal.ViewModels
             YesCommand = new Command(async () => await DisplayPosts());
             ChatCommand = new Command(async () =>
             {
-                var postchats = await _service.GetPostComments(PostSelect.username, PostSelect.challengename);
+                var postchats = await _service.GetPostComments(PostSelect.username, PostSelect.challengename,PostSelect.TaskDate);
                 post_chats = postchats.chats;
                 PostSelecting = PostSelect;
             await popupService.ShowPopupAsync<ChatPageViewModel>();
