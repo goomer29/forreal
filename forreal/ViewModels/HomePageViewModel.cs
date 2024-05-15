@@ -24,6 +24,8 @@ namespace forreal.ViewModels
         public static bool _showsubmit;
         public static bool _showvideosubmit;
         public bool _showchallanges;
+        public string _showChallangeText;
+        public bool _ishomepagelogin;
         public Post _postselect;
         public static Post PostSelecting;
         public ObservableCollection<Post> _posts { get; set; }
@@ -36,6 +38,9 @@ namespace forreal.ViewModels
         public ICommand NoCommand { get; protected set; }
         public ICommand ChatCommand { get; protected set; }
         public ICommand CloseChat { get; protected set; }
+
+        // Command to handle the page appearing
+        public ICommand PageAppearingCommand { get; private set; }
         public static ObservableCollection<Challange> statChallanges { get; set; }
         public static ObservableCollection<ChatDto> post_chats { get; set; }
         public ObservableCollection<Challange> Challanges { get; set; }
@@ -49,6 +54,7 @@ namespace forreal.ViewModels
         public ObservableCollection<ChallangeNameDto> ChallangesNames { get => MainPageViewModel.ChallangeNames; }
         public ObservableCollection<UserNameDto> UsersNames { get => MainPageViewModel.UserWithID; }
         public ObservableCollection<User> Users { get => MainPageViewModel.AllUsers; }
+        
         #region Service component
         private readonly ForrealService _service;
         readonly IPopupService popupService;
@@ -77,6 +83,11 @@ namespace forreal.ViewModels
         {
             get => _showfriend;
             set { if (_showfriend != value) { _showfriend = value; OnPropertyChange(); } }
+        }
+        public string ShowChallangeText
+        {
+            get => _showChallangeText;
+            set { if (_showChallangeText != value) { _showChallangeText = value; OnPropertyChange(); } }
         }
         public Post PostSelect
         {
@@ -118,6 +129,16 @@ namespace forreal.ViewModels
                 }
             }
         }
+        public bool IsHomePageLogIn
+        {
+            get => _ishomepagelogin; set
+            {
+                if (_ishomepagelogin != value)
+                {
+                    _ishomepagelogin = value; OnPropertyChange();
+                }
+            }
+        }
         public HomePageViewModel(IPopupService _popupService, ForrealService service)
         {
             var time = DateTime.Now;
@@ -126,6 +147,7 @@ namespace forreal.ViewModels
             UsersWithID = new ObservableCollection<UserNameDto>();
             Posts = new ObservableCollection<Post>();
             FriendUsers = new ObservableCollection<User>();
+            IsHomePageLogIn = true;
             ShowFriend = false;
             ShowSubmit = false;
             ShowVideoSubmit = false;
@@ -134,6 +156,8 @@ namespace forreal.ViewModels
             _service = service;
             popupService = _popupService;
             UserName = "Welcome to Homepage " + ((App)Application.Current).User.UserName;
+            ShowChallangeText = "To see friends posts do a Challange!";
+            PageAppearingCommand = new Command(OnPageAppearing);
 
             ShowFriend = Users.Any(u => !UsersNameWant.Contains(u.UserName) && UsersNameRequest.Contains(u.UserName));
             //foreach (User u in Users)
@@ -181,6 +205,7 @@ namespace forreal.ViewModels
                             Posts.Add(posty);
                     }
             }
+            bool have_no_friends = true;
             //now adds friends posts
             if (!ShowChallanges)
             {
@@ -210,11 +235,20 @@ namespace forreal.ViewModels
                                     posty = new Post { username = user.Text, challengename = text, TaskDate = data.Date, image = $"{ForrealService.WwwRoot}/Images/{name}", is_image = true, is_video = false };
                                 else if (data.FileType == "mp4" || data.FileType == "mp3")
                                     posty = new Post { username = user.Text, challengename = text, TaskDate = data.Date, video = $"{ForrealService.WwwRoot}/Images/{name}", is_image = false, is_video = true };
-                                if (posty.is_image || posty.is_video)
-                                    Posts.Add(posty);
+                                    if (posty.is_image || posty.is_video)
+                                    {
+                                        Posts.Add(posty);
+                                        have_no_friends = false;
+
+                                    }  
                             }
 
                         }                   
+                }
+                if (have_no_friends)
+                {
+                    ShowChallanges=true;
+                    ShowChallangeText = "It's very quiet here... add som friends!";
                 }
             }
             ChallangeCommand = new Command(async () =>
@@ -273,7 +307,14 @@ namespace forreal.ViewModels
                 await ChatPage.ClosePopup();
             });
         }
-
+        // Method to handle the page appearing
+        private void OnPageAppearing()
+        {
+            if(((App)Application.Current).IsLogIn == false)
+            {
+                IsHomePageLogIn = false;
+            }
+        }
         private async Task DisplayPosts()
         {
             try
@@ -297,7 +338,7 @@ namespace forreal.ViewModels
                     //    MainPageViewModel.Images.Add(imagename);
                     //    OnPropertyChange(nameof(ProfilePageViewModel.Posts));
                     //}
-
+                    ShowChallanges = false;
                     ShowSubmit = false;
                     ShowVideoSubmit = false;
                     #region adds challanges the user did today
@@ -346,6 +387,7 @@ namespace forreal.ViewModels
                         Posts.Add(postt);
                     #endregion
                     #region adds friends posts in the current day
+                    bool have_no_friends = true;
                     foreach (var u in Users)
                     {
                         if (UsersNameWant.Contains(u.UserName) && UsersNameRequest.Contains(u.UserName))
@@ -373,11 +415,20 @@ namespace forreal.ViewModels
                                 else if (data.FileType == "mp4" || data.FileType == "mp3")
                                     posty = new Post { username = user.Text, challengename = text, TaskDate = data.Date, video = $"{ForrealService.WwwRoot}/Images/{name}", is_image = false, is_video = true };
                                 if (posty.is_image || posty.is_video)
+                                {
                                     Posts.Add(posty);
+                                    have_no_friends = false;
+                                }
+                                   
                             }
 
                         }
                     }
+                    if (have_no_friends)
+                    {
+                        ShowChallanges = true;
+                        ShowChallangeText = "It's very quiet here... add som friends! ";
+                    }                    
                     #endregion
                 }
 

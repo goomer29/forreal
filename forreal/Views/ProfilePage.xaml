@@ -1,23 +1,33 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewmodels="clr-namespace:forreal.ViewModels"
-               xmlns:model="clr-namespace:forreal.Models"
-               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="forreal.Views.ProfilePage"
-             x:DataType="viewmodels:ProfilePageViewModel"
-             Title="ProfilePage">
+<ContentPage
+        x:Class="forreal.Views.ProfilePage"
+        xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:model="clr-namespace:forreal.Models"
+        xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+        xmlns:viewmodels="clr-namespace:forreal.ViewModels"
+        Title="ProfilePage"
+        x:DataType="viewmodels:ProfilePageViewModel">
     <ScrollView>
         <VerticalStackLayout HorizontalOptions="Center">
-            <Label 
-            Text="All of your challenges:"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-            <CollectionView ItemsSource="{Binding Posts}" SelectionMode="Single" BackgroundColor="LightBlue" ItemsLayout="VerticalList"
-                             SelectionChangedCommand="{Binding ChatCommand}" SelectedItem="{Binding PostSelect}">
+            <Label
+                    HorizontalOptions="Center"
+                    Text="All of your challenges:"
+                    VerticalOptions="Center" />
+            <CollectionView
+                    BackgroundColor="LightBlue"
+                    ItemsLayout="VerticalList"
+                    ItemsSource="{Binding Posts}"
+                    SelectedItem="{Binding PostSelect}"
+                    SelectionChangedCommand="{Binding ChatCommand}"
+                    SelectionMode="Single">
                 <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:Post">
-                        <Grid Padding="15" Margin="12" ColumnSpacing="12" RowSpacing="12">
+                    <DataTemplate x:DataType="model:Post">
+                        <Grid
+                                Margin="12"
+                                Padding="15"
+                                ColumnSpacing="12"
+                                RowSpacing="12">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*" />
                                 <RowDefinition Height="2*" />
@@ -26,29 +36,38 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                        <Image Grid.RowSpan="2"
-                       Source="{Binding image}"
-                       IsVisible="{Binding is_image}"
-                       Aspect="AspectFill"
-                       HeightRequest="300"
-                       WidthRequest="400" />
-                        <toolkit:MediaElement Grid.RowSpan="2"
-               
-                HorizontalOptions="Center"
-                Source="{Binding video}"               
-                 IsVisible="{Binding is_video}"                
-                 Aspect="AspectFill"
-                    HeightRequest="300"
-                    WidthRequest="400"/>
-                            <Label Grid.Column="1" 
-                     Text="{Binding challengename}"
-                         FontSize="25"
-                     FontAttributes="Bold" />
-                            <Label Grid.Row="1"
-                 Grid.Column="1"
-                 Text="{Binding TaskDate.Date}"
-                 FontAttributes="Italic"
-                  VerticalOptions="End" />
+                            <Image
+                                    Grid.RowSpan="2"
+                                    Aspect="AspectFill"
+                                    HeightRequest="300"
+                                    IsVisible="{Binding is_image}"
+                                    Source="{Binding image}"
+                                    WidthRequest="400" />
+                            <toolkit:MediaElement
+                                    Grid.RowSpan="2"
+                                    Aspect="AspectFill"
+                                    HeightRequest="300"
+                                    HorizontalOptions="Center"
+                                    IsVisible="{Binding is_video}"
+                                    Source="{Binding video}"
+                                    WidthRequest="400" />
+                            <Label
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2"
+                                    FontAttributes="Bold"
+                                    FontSize="30"
+                                    HorizontalOptions="Center"
+                                    Text="{Binding challengename}"
+                                    VerticalOptions="Start" />
+                            <Label
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Margin="0,0,0,-15"
+                                    FontAttributes="Italic"
+                                    HorizontalOptions="Center"
+                                    Text="{Binding TaskDate.Date, StringFormat='{0:MM/dd/yyyy}'}"
+                                    VerticalOptions="End" />
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

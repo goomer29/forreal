@@ -9,7 +9,7 @@
     Title="HomePage"
     x:DataType="viewmodels:HomePageViewModel">
     <ScrollView>
-        <VerticalStackLayout Margin="40,20,20,100">
+        <VerticalStackLayout Margin="40,20,20,100" IsVisible="{Binding IsHomePageLogIn}">
             <Label
           HorizontalOptions="Center"
           Text="{Binding UserName}"
@@ -124,7 +124,7 @@
       VerticalOptions="Center" />
                 </Grid>
             </Border>
-            <Label IsVisible="{Binding ShowChallanges}" Text="To see friends posts do a Challange!" FontSize="Medium" TextColor="Red"></Label>
+            <Label IsVisible="{Binding ShowChallanges}" Text="{Binding ShowChallangeText}" FontSize="Medium" TextColor="Red"></Label>
             <CollectionView ItemsSource="{Binding Posts}" SelectionMode="Single" BackgroundColor="LightBlue" ItemsLayout="VerticalList"
                             SelectionChangedCommand="{Binding ChatCommand}" SelectedItem="{Binding PostSelect}">
                 <CollectionView.ItemTemplate>
@@ -163,7 +163,7 @@ Source="{Binding video}"
                 FontAttributes="Bold" />
                             <Label Grid.Row="2"
         Grid.Column="1"
-        Text="{Binding TaskDate.Date}"
+        Text="{Binding TaskDate.Date, StringFormat='{0:MM/dd/yyyy}'}"
         FontAttributes="Italic"
          VerticalOptions="End" />
                         </Grid>

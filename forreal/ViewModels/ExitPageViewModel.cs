@@ -17,7 +17,9 @@ namespace forreal.ViewModels
         {       
             ExitCommand = new Command(async () =>
             {
+                ((App)Application.Current).IsLogIn = false;               
                 await AppShell.Current.GoToAsync("MainPage");
+                
             });
         }
     }
