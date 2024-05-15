@@ -10,8 +10,9 @@ using System.Windows.Input;
 
 namespace forreal.ViewModels
 {
-    public class SearchPageViewModel: ViewModel
+    public class SearchPageViewModel : ViewModel
     {
+        public bool _issearchpagelogin;
         private int red_count { get; set; }//the remove makes the function to go agian so to not enter it again
         private int yellow_count { get; set; }//""
         private int green_count { get; set; }//""
@@ -25,14 +26,26 @@ namespace forreal.ViewModels
         private ObservableCollection<User> green_users { get; set; }
         private ObservableCollection<User> blue_users { get; set; }
         private ObservableCollection<User> wanted_users { get; set; }
-        private ObservableCollection<User> request_users {  get; set; }
+        private ObservableCollection<User> request_users { get; set; }
         public ObservableCollection<User> Users { get => MainPageViewModel.AllUsers; }
         public ObservableCollection<string> UsersNameWant { get => MainPageViewModel.WantedUsers; }
         public ObservableCollection<string> UsersNameRequest { get => MainPageViewModel.RequestUsers; }
         public ICommand SelectRedCommand { get; protected set; }//making a friend request
         public ICommand SelectYellowCommand { get; protected set; }//deleting a friend request
         public ICommand SelectGreenCommand { get; protected set; }//deleting friend request which lead to no more being friends
-        public ICommand SelectBlueCommand { get; protected set; }//making a friend request which leads to friends
+        public ICommand SelectBlueCommand { get; protected set; }//making a friend request which leads to friends                                                             
+        public ICommand PageAppearingCommand { get; private set; } // Command to handle the page appearing
+        public static bool SearchPageLogOut {get;set;}
+        public bool IsSearchPageLogIn
+        {
+            get => _issearchpagelogin; set
+            {
+                if (_issearchpagelogin != value)
+                {
+                    _issearchpagelogin = value; OnPropertyChange();
+                }
+            }
+        }
         public User UserRedSelect
         {
             get => user_red_select; set
@@ -148,6 +161,9 @@ namespace forreal.ViewModels
             YellowUsers = new ObservableCollection<User>();
             GreenUsers = new ObservableCollection<User>();
             BlueUsers = new ObservableCollection<User>();
+            IsSearchPageLogIn = true;
+            SearchPageLogOut = false;
+            PageAppearingCommand = new Command(OnPageAppearing);
             foreach (User u in Users)
             {
                 if (UsersNameWant.Contains(u.UserName))
@@ -258,6 +274,62 @@ namespace forreal.ViewModels
                     OnPropertyChange(nameof(BlueUsers));
                     OnPropertyChange(nameof(GreenUsers));              
             });
+        }
+        // Method to handle the page appearing
+        private void OnPageAppearing()
+        {
+            if (((App)Application.Current).IsLogIn == false)
+            {
+                IsSearchPageLogIn = false;
+            }
+            if(((App)Application.Current).User != null&& SearchPageLogOut)
+            {
+                #region run the constructor
+                red_count = 1;
+                yellow_count = 1;
+                green_count = 1;
+                blue_count = 1;
+                WantedUsers = new ObservableCollection<User>();
+                RequestUsers = new ObservableCollection<User>();
+                RedUsers = new ObservableCollection<User>();
+                YellowUsers = new ObservableCollection<User>();
+                GreenUsers = new ObservableCollection<User>();
+                BlueUsers = new ObservableCollection<User>();
+                IsSearchPageLogIn = true;
+                PageAppearingCommand = new Command(OnPageAppearing);
+                foreach (User u in Users)
+                {
+                    if (UsersNameWant.Contains(u.UserName))
+                        WantedUsers.Add(u);
+                    if (UsersNameRequest.Contains(u.UserName))
+                        RequestUsers.Add(u);
+                }
+                try
+                {
+                    foreach (User u in Users)
+                    {
+                        if (!(WantedUsers.Contains(u) || RequestUsers.Contains(u)))
+                            RedUsers.Add(u);
+                        else if (WantedUsers.Contains(u) && !RequestUsers.Contains(u))
+                            YellowUsers.Add(u);
+                        else if (WantedUsers.Contains(u) && RequestUsers.Contains(u))
+                            GreenUsers.Add(u);
+                        else
+                            BlueUsers.Add(u);
+                    }
+                    OnPropertyChange(nameof(RedUsers));
+                    OnPropertyChange(nameof(YellowUsers));
+                    OnPropertyChange(nameof(GreenUsers));
+                    OnPropertyChange(nameof(BlueUsers));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    AppShell.Current.Navigation.PopModalAsync();
+                }
+                #endregion
+               SearchPageLogOut = false;
+            }
         }
     }
 }

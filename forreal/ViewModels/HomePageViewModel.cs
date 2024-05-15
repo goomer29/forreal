@@ -314,6 +314,121 @@ namespace forreal.ViewModels
             {
                 IsHomePageLogIn = false;
             }
+            if(((App)Application.Current).User != null && ((App)Application.Current).IsLogIn == false)
+            {
+                #region the constructor rans again
+                var time = DateTime.Now;
+                string day = time.Day.ToString(); var month = time.Month.ToString(); var year = time.Year.ToString();
+                post_chats = new ObservableCollection<ChatDto>();
+                UsersWithID = new ObservableCollection<UserNameDto>();
+                Posts = new ObservableCollection<Post>();
+                FriendUsers = new ObservableCollection<User>();
+                IsHomePageLogIn = true;
+                ShowFriend = false;
+                ShowSubmit = false;
+                ShowVideoSubmit = false;
+                ShowChallanges = true;
+                Challanges = new ObservableCollection<Challange>();
+                UserName = "Welcome to Homepage " + ((App)Application.Current).User.UserName;
+                ShowChallangeText = "To see friends posts do a Challange!";
+                PageAppearingCommand = new Command(OnPageAppearing);
+
+                ShowFriend = Users.Any(u => !UsersNameWant.Contains(u.UserName) && UsersNameRequest.Contains(u.UserName));
+                //foreach (User u in Users)
+                //{
+                //    if (!UsersNameWant.Contains(u.UserName) && UsersNameRequest.Contains(u.UserName))
+                //    {
+                //        ShowFriend = true;
+                //        break;
+                //    }              
+
+                //}
+                Task.Delay(5000);
+                if (ShowFriend)
+                {
+                    AppShell.Current.DisplayAlert("You've got a friend request!", "go to Search to see more info", "cancel");
+                }
+                // checks if the user already did a challenge for the day, if so adds the posts
+                foreach (var name in ImagesName)
+                {
+                    PostData data = CreatePostData(name);
+
+                    if (MainPageViewModel.UserID == data.UserId && data.Date == DateTime.Now.Date)
+                    {
+                        ShowChallanges = false;
+                        var posty = new Post() { is_image = false, is_video = false };
+                        if (data.FileType == "jpg" || data.FileType == "jpeg" || data.FileType == "png")
+                        {
+                            foreach (var ch in ChallangesNames)
+                            {
+                                if (ch.Id == data.ChallengeId)
+                                    posty = new Post { username = ((App)(Application.Current)).User.UserName, challengename = ch.Text, TaskDate = data.Date, image = $"{ForrealService.WwwRoot}/Images/{name}", is_image = true, is_video = false };
+                            }
+
+                        }
+
+                        else if (data.FileType == "mp4" || data.FileType == "mp3")
+                        {
+                            foreach (var ch in ChallangesNames)
+                            {
+                                if (ch.Id == data.ChallengeId)
+                                    posty = new Post { username = ((App)(Application.Current)).User.UserName, challengename = ch.Text, TaskDate = data.Date, video = $"{ForrealService.WwwRoot}/Images/{name}", is_image = false, is_video = true };
+                            }
+                        }
+                        if (posty.is_image || posty.is_video)
+                            Posts.Add(posty);
+                    }
+                }
+                bool have_no_friends = true;
+                //now adds friends posts
+                if (!ShowChallanges)
+                {
+                    foreach (var u in Users)
+                    {
+                        if (UsersNameWant.Contains(u.UserName) && UsersNameRequest.Contains(u.UserName))
+                            FriendUsers.Add(u);
+                    }
+                    UsersWithID = UsersNames;
+                    foreach (var name in ImagesName)
+                    {
+
+                        PostData data = CreatePostData(name);
+                        foreach (var user in UsersWithID)
+                        {
+                            bool IsFriend = FriendUsers.Any(friend => friend.UserName == user.Text);
+                            if (IsFriend && data.UserId == user.Id && data.Date == DateTime.Now.Date)
+                            {
+                                string text = null;
+                                foreach (var ch_name in ChallangesNames)
+                                {
+                                    if (ch_name.Id == data.ChallengeId)
+                                        text = ch_name.Text;
+                                }
+                                var posty = new Post() { is_image = false, is_video = false };
+                                if (data.FileType == "jpg" || data.FileType == "jpeg" || data.FileType == "png")
+                                    posty = new Post { username = user.Text, challengename = text, TaskDate = data.Date, image = $"{ForrealService.WwwRoot}/Images/{name}", is_image = true, is_video = false };
+                                else if (data.FileType == "mp4" || data.FileType == "mp3")
+                                    posty = new Post { username = user.Text, challengename = text, TaskDate = data.Date, video = $"{ForrealService.WwwRoot}/Images/{name}", is_image = false, is_video = true };
+                                if (posty.is_image || posty.is_video)
+                                {
+                                    Posts.Add(posty);
+                                    have_no_friends = false;
+
+                                }
+                            }
+
+                        }
+                    }
+                    if (have_no_friends)
+                    {
+                        ShowChallanges = true;
+                        ShowChallangeText = "It's very quiet here... add som friends!";
+                    }
+                }
+                #endregion
+                ((App)Application.Current).IsLogIn = true;
+                IsHomePageLogIn = true;
+            }
         }
         private async Task DisplayPosts()
         {

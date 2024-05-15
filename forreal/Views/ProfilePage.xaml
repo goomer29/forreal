@@ -9,11 +9,12 @@
         Title="ProfilePage"
         x:DataType="viewmodels:ProfilePageViewModel">
     <ScrollView>
-        <VerticalStackLayout HorizontalOptions="Center">
+        <VerticalStackLayout HorizontalOptions="Center" IsVisible="{Binding IsProfilePageLogIn}">
             <Label
                     HorizontalOptions="Center"
                     Text="All of your challenges:"
-                    VerticalOptions="Center" />
+                    VerticalOptions="Center"
+                FontSize="25"/>
             <CollectionView
                     BackgroundColor="LightBlue"
                     ItemsLayout="VerticalList"
@@ -61,11 +62,11 @@
                                     Text="{Binding challengename}"
                                     VerticalOptions="Start" />
                             <Label
-                                    Grid.Row="1"
-                                    Grid.Column="0"
-                                    Margin="0,0,0,-15"
+                                    Grid.Row="2"
+                                    Grid.Column="1"                               
+                                FontSize="15"
                                     FontAttributes="Italic"
-                                    HorizontalOptions="Center"
+                                    HorizontalOptions="Start"
                                     Text="{Binding TaskDate.Date, StringFormat='{0:MM/dd/yyyy}'}"
                                     VerticalOptions="End" />
                         </Grid>

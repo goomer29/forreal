@@ -49,7 +49,21 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\blue_user.webp" />
 	  <None Remove="Resources\Images\challenge_button.png" />
+	  <None Remove="Resources\Images\exit2_icon.png" />
+	  <None Remove="Resources\Images\exitpage_icon.png" />
+	  <None Remove="Resources\Images\Forreal_logo.jpg" />
+	  <None Remove="Resources\Images\green_user.png" />
+	  <None Remove="Resources\Images\home2_icon.png" />
+	  <None Remove="Resources\Images\home_icon.jpeg" />
+	  <None Remove="Resources\Images\login_button.png" />
+	  <None Remove="Resources\Images\profile_icon.webp" />
+	  <None Remove="Resources\Images\red_user.webp" />
+	  <None Remove="Resources\Images\search2_icon.png" />
+	  <None Remove="Resources\Images\searching_icon.png" />
+	  <None Remove="Resources\Images\signup_button.png" />
+	  <None Remove="Resources\Images\yellow_user.png" />
 	</ItemGroup>
 
 	<ItemGroup>

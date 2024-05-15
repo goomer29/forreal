@@ -14,9 +14,9 @@
     VerticalOptions="Center">
 
                 <Image
-        Source="dotnet_bot.png"
+        Source="forreal_logo.jpg"
         SemanticProperties.Description="Cute dot net bot waving hi to you!"
-        HeightRequest="200"
+        HeightRequest="400"
         HorizontalOptions="Center" />
 
                 <Label
@@ -35,14 +35,18 @@
           Text="{Binding LoginErrorMessage}" />-->
             </StackLayout>
             <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand">
-                <Button
+                <ImageButton
                     HorizontalOptions="StartAndExpand"
-                    Text="Login"
+                   Source="login_button.png"
+                      WidthRequest="150"
+                      HeightRequest="150"
                     Command="{Binding LogInCommand}"
                      VerticalOptions="EndAndExpand" />
-                <Button
+                <ImageButton
                     HorizontalOptions="EndAndExpand"
-                    Text="SingUp"
+                    Source="signup_button.png"
+                      WidthRequest="150"
+                     HeightRequest="150"
                     Command="{Binding SignUpCommand}"
                      VerticalOptions="EndAndExpand" />
 

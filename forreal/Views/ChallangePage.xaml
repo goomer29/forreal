@@ -106,27 +106,32 @@
                 </Frame>
             </Grid>
         </Grid>
+        <Label Text="Challange Select:"/>
+        <Label Text="First Challange: the easiest" TextColor="Green"/>
         <Picker
             ItemsSource="{Binding Challanges}"
             ItemDisplayBinding="{Binding Text}"
             SelectedItem="{Binding ChallangeSelect}"
             TextColor="Black">
         </Picker>
+        <Label Text="Last challange: the hardest" TextColor="DarkRed"/>
         <Button BackgroundColor="Black"
 HorizontalOptions="EndAndExpand"
 Text="Upload an Imgage"   
  TextColor="White"
   Command="{Binding PickFileCommand}"
+ IsEnabled="{Binding IsButtonEnabled}"
   VerticalOptions="EndAndExpand">
         </Button>
-        
+
         <Button BackgroundColor="Black"
 HorizontalOptions="StartAndExpand"
 Text="Upload a Video"   
  TextColor="White"
   Command="{Binding PickVideoCommand}"
+   IsEnabled="{Binding IsButtonEnabled}"
   VerticalOptions="EndAndExpand">
-
         </Button>
+        <Label Text="you must select a challange to upload" TextColor="Red" IsVisible="{Binding ShowChallangeError}"/>
     </VerticalStackLayout>
 </mct:Popup>

@@ -6,7 +6,8 @@
              x:Class="forreal.Views.SearchPage"
              x:DataType="viewmodels:SearchPageViewModel"
              Title="SearchPage">
-    <VerticalStackLayout Spacing="10">
+    <ScrollView>
+    <VerticalStackLayout Spacing="10" IsVisible="{Binding IsSearchPageLogIn}">
         <!--<Label 
             Text="You dont have friends LOLLLLLL"
             VerticalOptions="Center" 
@@ -115,5 +116,34 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        <HorizontalStackLayout>
+            <Image HorizontalOptions="EndAndExpand"
+   Source="blue_user.webp"
+WidthRequest="100"
+HeightRequest="100"/>
+            <Label Text="Blue users- Users that sent to you a friend request" TextColor="LightBlue" FontSize="25"/>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout>
+            <Image HorizontalOptions="EndAndExpand"
+   Source="green_user.png"
+WidthRequest="100"
+HeightRequest="100"/>
+            <Label Text="Green users- Users that are friends with you" TextColor="LightGreen" FontSize="25"/>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout>
+            <Image HorizontalOptions="EndAndExpand"
+   Source="yellow_user.png"
+WidthRequest="100"
+HeightRequest="100"/>
+            <Label Text="Yellow users- Users that you sent to them a friend request" TextColor="Gold" FontSize="25"/>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout>
+            <Image HorizontalOptions="EndAndExpand"
+            Source="red_user.webp"
+         WidthRequest="100"
+         HeightRequest="100"/>
+            <Label Text="Red users- Users with no connection to you" TextColor="IndianRed" FontSize="25"/>
+        </HorizontalStackLayout>
     </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

@@ -70,7 +70,7 @@
             </StackLayout>
             <StackLayout Grid.Row="3" Orientation="Horizontal" VerticalOptions="FillAndExpand">
 
-                <Label
+                <!--<Label
         FontFamily="OpenSansRegular"
         FontSize="16"
         HorizontalOptions="StartAndExpand"
@@ -88,7 +88,7 @@
                             </Span>
                         </FormattedString>
                        </Label.FormattedText>
-                </Label>
+                </Label>-->
                 <!--<Label
         FontFamily="OpenSansRegular"
         FontSize="16"
@@ -109,14 +109,15 @@
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>-->
-            <Button BackgroundColor="White"
+            <ImageButton BackgroundColor="White"
        HorizontalOptions="EndAndExpand"
-       Text="SingUp"   
-        TextColor="Blue"
+       Source="signup_button.png"
+           WidthRequest="150"
+        HeightRequest="150"
          Command="{Binding SignUpCommand}"
          VerticalOptions="EndAndExpand">
                
-            </Button>
+            </ImageButton>
         </StackLayout>
         </Grid>
     

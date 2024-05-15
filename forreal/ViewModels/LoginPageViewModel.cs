@@ -135,6 +135,7 @@ namespace forreal.ViewModels
                         var requestusers = await _service.GetWRequestFriends(((App)(Application.Current)).User.UserName);
                         MainPageViewModel.RequestUsers = requestusers.UsersNameList;
                         #endregion                      
+                        UserName=null ; Password=null;
                        var user_id= await _service.GetUserID(((App)(Application.Current)).User.UserName);
                         MainPageViewModel.UserID = user_id.Id;
                         MainPageViewModel.Images=await _service.GetImages();

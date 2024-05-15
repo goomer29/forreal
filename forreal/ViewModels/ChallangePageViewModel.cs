@@ -22,6 +22,7 @@ namespace forreal.ViewModels
         private string seconds;
         private Color bgcolor;
         private string title;
+        private bool _showchallangeerror;
         public static Challange challange_select;
         public static ImageSource image_select;
         public static MediaSource video_select;
@@ -90,16 +91,35 @@ namespace forreal.ViewModels
                 }
             }
         }
+        public bool ShowChallangeError
+        {
+            get => _showchallangeerror; set
+            {
+                if (_showchallangeerror != value)
+                {
+                    _showchallangeerror = value; OnPropertyChange();
+                }
+            }
+        }
         public Challange ChallangeSelect
         {
             get => challange_select; set
             {
                 if (challange_select != value)
                 {
-                    challange_select = value; OnPropertyChange();
-                }
+                    challange_select = value; if (!ValidateChallange())
+                    {
+                        ShowChallangeError = true;
+                    }
+                    else
+                        ShowChallangeError = false;
+                    OnPropertyChange();
+                    OnPropertyChange(nameof(IsButtonEnabled));
+                }           
+                
             }
         }
+        public bool IsButtonEnabled { get { return ValidateChallange(); } }
         public Event GetEvent()
         {
             return new Event { EventTitle = "Time Remains for TOday's challenges", BgColor = Color.FromRgb(38, 127, 0) , Date = new DateTime(DateTime.Today.Ticks+ new TimeSpan(0, 24, 0, 0).Ticks) };
@@ -114,6 +134,7 @@ namespace forreal.ViewModels
         [Obsolete]
         public ChallangePageViewModel()
         {
+            ShowChallangeError = true;
             ChallangeSelect = null;
             Evt = GetEvent();
             BgColor = Color.FromRgb(38, 127, 0);
@@ -193,6 +214,12 @@ namespace forreal.ViewModels
                 });
             });
            
+        }
+        private bool ValidateChallange()
+        {
+            if(ChallangeSelect==null)
+                return false;
+            return !(string.IsNullOrEmpty(ChallangeSelect.Text));
         }
     }
     public class Event

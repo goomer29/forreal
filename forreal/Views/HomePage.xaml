@@ -13,7 +13,8 @@
             <Label
           HorizontalOptions="Center"
           Text="{Binding UserName}"
-          VerticalOptions="Center" />
+          VerticalOptions="Center"
+                FontSize="25"/>
             <ImageButton
           Aspect="Center"
           Command="{Binding ChallangeCommand}"
@@ -132,13 +133,13 @@
                         <Grid Padding="15" Margin="12" ColumnSpacing="12" RowSpacing="12">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*" />
-                                <RowDefinition Height="3*" />
+                                <RowDefinition Height="2*" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <Image Grid.RowSpan="3"
+                            <Image Grid.RowSpan="2"
               Source="{Binding image}"
               IsVisible="{Binding is_image}"
               Aspect="AspectFill"

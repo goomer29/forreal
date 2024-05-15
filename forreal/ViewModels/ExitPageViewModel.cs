@@ -14,13 +14,16 @@ namespace forreal.ViewModels
     {
         public ICommand ExitCommand {  get; protected set; }
         public ExitPageViewModel()
-        {       
+        {
             ExitCommand = new Command(async () =>
             {
-                ((App)Application.Current).IsLogIn = false;               
+                ((App)Application.Current).User = null;
+                SearchPageViewModel.SearchPageLogOut = true;
+                ProfilePageViewModel.ProfilePageLogOut = true;
+               ((App)Application.Current).IsLogIn = false;               
                 await AppShell.Current.GoToAsync("MainPage");
                 
             });
         }
-    }
+   }
 }

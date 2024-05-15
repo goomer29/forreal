@@ -96,13 +96,14 @@ TextColor="{StaticResource Primary}" />
             TextColor="{StaticResource Primary}" />
         </StackLayout>
         <StackLayout Grid.Row="3" Orientation="Horizontal" VerticalOptions="FillAndExpand">
-            <Button BackgroundColor="White"
+            <ImageButton BackgroundColor="White"
     HorizontalOptions="EndAndExpand"
-    Text="Login"   
-    TextColor="Blue"
+    Source="login_button.png"
+         WidthRequest="150"
+            HeightRequest="150"
     Command="{Binding LogInCommand}"
     VerticalOptions="EndAndExpand">
-            </Button>
+            </ImageButton>
         </StackLayout>
     </Grid>
 </ContentPage>
