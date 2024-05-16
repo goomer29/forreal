@@ -53,6 +53,7 @@
 	  <None Remove="Resources\Images\challenge_button.png" />
 	  <None Remove="Resources\Images\exit2_icon.png" />
 	  <None Remove="Resources\Images\exitpage_icon.png" />
+	  <None Remove="Resources\Images\exit_image.jpg" />
 	  <None Remove="Resources\Images\Forreal_logo.jpg" />
 	  <None Remove="Resources\Images\green_user.png" />
 	  <None Remove="Resources\Images\home2_icon.png" />

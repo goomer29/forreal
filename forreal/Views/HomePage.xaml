@@ -21,8 +21,13 @@
           Source="challenge_button.png" />
 
             <Label IsVisible="{Binding ShowSubmit}"   
-       Text="Are you sure you want to post it?" >
-            </Label>
+       Text="Are you sure you want to post it?"
+                   FontSize="20"/>
+
+            <Label IsVisible="{Binding ShowVideoSubmit}"   
+       Text="Are you sure you want to post it?"
+                   FontSize="20">
+                </Label>
             <Border BackgroundColor="Blue" IsVisible="{Binding ShowSubmit}" WidthRequest="900">
                 <Grid ColumnDefinitions="*,*" RowDefinitions="*,*,*" IsVisible="{Binding ShowSubmit}">
                     <BoxView Grid.ColumnSpan="2" Color="White"   HeightRequest="30"/>

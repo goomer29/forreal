@@ -5,14 +5,16 @@
              xmlns:viewmodels="clr-namespace:forreal.ViewModels"
              x:DataType="viewmodels:ExitPageViewModel"
              Title="ExitPage">
-    <VerticalStackLayout>
+    <VerticalStackLayout Spacing="30">
         <Label 
             Text="Are you sure you want to exit?"
             VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Button
-     HorizontalOptions="StartAndExpand"
-     Text="Exit"
+            HorizontalOptions="Center"
+            FontSize="25"/>
+        <ImageButton
+     HorizontalOptions="Center"
+     Source="exit_image.jpg"
+            WidthRequest="200"
      Command="{Binding ExitCommand}"
       VerticalOptions="EndAndExpand" />
     </VerticalStackLayout>

@@ -497,7 +497,7 @@ namespace forreal.ViewModels
                     if (data1.FileType == "jpg" || data1.FileType == "jpeg" || data1.FileType == "png")
                         postt = new Post { username = post.username, challengename = post.challengename, TaskDate=data1.Date, image = file.FullPath, is_image = true, is_video = false };
                     else if (data1.FileType == "mp4" || data1.FileType == "mp3")
-                        postt = new Post { username = post.username, challengename = post.challengename, TaskDate = data1.Date, image = file.FullPath, is_image = false, is_video = true };
+                        postt = new Post { username = post.username, challengename = post.challengename, TaskDate = data1.Date, video = file.FullPath, is_image = false, is_video = true };
                     if (postt.is_image || postt.is_video)
                         Posts.Add(postt);
                     #endregion
