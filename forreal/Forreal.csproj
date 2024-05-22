@@ -58,7 +58,7 @@
 	  <None Remove="Resources\Images\green_user.png" />
 	  <None Remove="Resources\Images\home2_icon.png" />
 	  <None Remove="Resources\Images\home_icon.jpeg" />
-	  <None Remove="Resources\Images\login_button.png" />
+	  <None Remove="Resources\Images\login_button.jpg" />
 	  <None Remove="Resources\Images\profile_icon.webp" />
 	  <None Remove="Resources\Images\red_user.webp" />
 	  <None Remove="Resources\Images\search2_icon.png" />

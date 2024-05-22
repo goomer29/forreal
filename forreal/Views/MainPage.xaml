@@ -37,7 +37,7 @@
             <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand">
                 <ImageButton
                     HorizontalOptions="StartAndExpand"
-                   Source="login_button.png"
+                   Source="login_button.jpg"
                       WidthRequest="150"
                       HeightRequest="150"
                     Command="{Binding LogInCommand}"
