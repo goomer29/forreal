@@ -33,7 +33,6 @@ namespace forreal.ViewModels
         private string _email;//אימייל
         private bool _showEmailError;//האם להציג שגיאת אימייל
         private string _emailErrorMessage;//תאור שגיאת אימייל
-        private IServiceProvider service;
         #endregion
         #region Service component
         private readonly ForrealService _service;
@@ -156,7 +155,7 @@ namespace forreal.ViewModels
         public string EmailErrorMessage { get => _emailErrorMessage; set { if (_emailErrorMessage != value) { _emailErrorMessage = value; OnPropertyChange(); } } }
         public bool IsButtonEnabled { get { return ValidatePage(); } }
         #endregion
-        public SignUpPageViewModel(ForrealService service, IServiceProvider provider)
+        public SignUpPageViewModel(ForrealService service)
         {
             _service=service;
             UserName = string.Empty;
@@ -170,14 +169,14 @@ namespace forreal.ViewModels
                 {
                     #region טעינת מסך ביניים
                     var lvm = new LoadingPageViewModel() { IsBusy = true };
-                    await App.Current.MainPage.Navigation.PushModalAsync(new LoadingPage(lvm));
+                    await Shell.Current.Navigation.PushModalAsync(new LoadingPage(lvm));
                     #endregion
                     var user = await _service.SignUpAsync(UserName, Password, Email);
 
                     if (!user.Success)
                     {
                         lvm.IsBusy = false;
-                        await App.Current.MainPage.Navigation.PopModalAsync();
+                        await Shell.Current.Navigation.PopModalAsync();
                         ShowSignUpError = true;
                         SignUpErrorMessage = user.Message;
                         UserName = null; Password = null;
@@ -203,22 +202,28 @@ namespace forreal.ViewModels
                         var requestusers = await _service.GetWRequestFriends(((App)(Application.Current)).User.UserName);
                         MainPageViewModel.RequestUsers = requestusers.UsersNameList;
                         #endregion
+                        MainPageViewModel.UserWithID = await _service.GetUserNameWithID();
                         var user_id = await _service.GetUserID(((App)(Application.Current)).User.UserName);
-                        MainPageViewModel.UserID = user_id.Id;
+                        var usersWithID = MainPageViewModel.UserWithID;
+                        int Id = 0;
+                        foreach (var user_with_id in usersWithID)
+                        {
+                            if (user_with_id.Text == ((App)(Application.Current)).User.UserName)
+                                Id = user_with_id.Id;
+                        }
+                        MainPageViewModel.UserID = Id;
                         MainPageViewModel.Images = await _service.GetImages();
                         MainPageViewModel.ChallangeNames = await _service.GetAllChallanges();
-                        MainPageViewModel.UserWithID = await _service.GetUserNameWithID();
-
+                       
                         lvm.IsBusy = false;
-                        await App.Current.MainPage.Navigation.PopModalAsync();
+                        await Shell.Current.Navigation.PopModalAsync();
 
                         ((App)(Application.Current)).ShowFlyouts = true;
                         ((App)(Application.Current)).ShowFlyouts2 = false;
                         await AppShell.Current.DisplayAlert("You signed up!", "Click cancel to start", "cancel");
                         await SecureStorage.Default.SetAsync("SignedUser", JsonSerializer.Serialize(user.User));
 
-                        //await AppShell.Current.GoToAsync("//HomePage");
-                        App.Current.MainPage = new AppShell();
+                        await AppShell.Current.GoToAsync("//HomePage");
                     }
                 }
                 catch (Exception ex)
@@ -231,8 +236,7 @@ namespace forreal.ViewModels
 
             LogInCommand = new Command(async () =>
             {
-                //await AppShell.Current.GoToAsync("Login");
-                App.Current.MainPage=provider.GetService<LoginPage>();  
+                await AppShell.Current.GoToAsync("Login");
             });
         }
         #region פעולות עזר

@@ -98,7 +98,7 @@ TextColor="{StaticResource Primary}" />
         <StackLayout Grid.Row="3" Orientation="Horizontal" VerticalOptions="FillAndExpand">
             <ImageButton BackgroundColor="White"
     HorizontalOptions="EndAndExpand"
-    Source="login_button.png"
+    Source="login_button.jpg"
          WidthRequest="150"
             HeightRequest="150"
     Command="{Binding LogInCommand}"

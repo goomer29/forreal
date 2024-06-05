@@ -12,28 +12,32 @@
 
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
 
-        <!--<ShellContent
+        <ShellContent
     Title="MainPage"
     IsVisible="{Binding AntiVisible}"
     ContentTemplate="{DataTemplate views:MainPage}"
-    Route="MainPage" />-->
+    Route="MainPage" />
         <ShellContent
             Title="Exit"
+            IsVisible="{Binding Visible}"
             ContentTemplate="{DataTemplate views:ExitPage}"
             Icon="exit2_icon.png"
             Route="ExitPage" />
         <ShellContent
             Title="HomePage"
+            IsVisible="{Binding Visible}"
             ContentTemplate="{DataTemplate views:HomePage}"
             Icon="home2_icon.png"
             Route="HomePage" />
         <ShellContent
             Title="Search"
+            IsVisible="{Binding Visible}"
             ContentTemplate="{DataTemplate views:SearchPage}"
             Icon="search2_icon.png"
             Route="SearchPage" />
         <ShellContent
             Title="ProfilePage"
+            IsVisible="{Binding Visible}"
             ContentTemplate="{DataTemplate views:ProfilePage}"
             Icon="profile_icon.webp"
             Route="ProfilePage" />

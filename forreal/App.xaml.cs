@@ -15,22 +15,22 @@ namespace forreal
         public bool IsLogIn { get; set; }
         public TimeSpan Timeleft { get; set; }
         public bool ShowFlyouts2 { get { if (showFlyout)return false; return true; } set { shellViewModel.AntiVisible = value; } }
-        
-        
-        public App(IServiceProvider serviceProvider)
-        {
-            InitializeComponent();
-            MainPage =serviceProvider.GetService<LoginPage>();   
-        }
-        //public App(AppShellViewModel vm)
+
+
+        //public App(IServiceProvider serviceProvider)
         //{
         //    InitializeComponent();
-        //    shellViewModel = vm;
-        //    User = null;
-        //    IsLogIn =true;
-        //    StartTimer = true;
-        //    Timeleft=TimeSpan.Zero;
-        //    MainPage = new AppShell(vm);
+        //    MainPage =serviceProvider.GetService<LoginPage>();   
         //}
+        public App(AppShellViewModel vm)
+        {
+            InitializeComponent();
+            shellViewModel = vm;
+            User = null;
+            IsLogIn = true;
+            StartTimer = true;
+            Timeleft = TimeSpan.Zero;
+            MainPage = new AppShell(vm);
+        }
     }
 }

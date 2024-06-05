@@ -88,9 +88,8 @@ namespace forreal.ViewModels
         public ICommand ForgotPasswordCommand { get; protected set; }
         public ICommand SignUpCommand { get; protected set; }
         #endregion
-        public LoginPageViewModel(ForrealService service, IServiceProvider provider)
+        public LoginPageViewModel(ForrealService service)
         {
-            this.provider = provider;
             _service = service;
             UserName = string.Empty;
             Password = string.Empty;
@@ -102,7 +101,7 @@ namespace forreal.ViewModels
             {
                 #region טעינת מסך ביניים
                 var lvm = new LoadingPageViewModel() { IsBusy = true };
-                await App.Current.MainPage.Navigation.PushModalAsync(new LoadingPage(lvm));
+                await AppShell.Current.Navigation.PushModalAsync(new LoadingPage(lvm));
                 #endregion
                 var user = await _service.LogInAsync(UserName, Password);
 
@@ -110,7 +109,7 @@ namespace forreal.ViewModels
                     if (!user.Success)
                     {
                         lvm.IsBusy = false;
-                        await App.Current.MainPage.Navigation.PopModalAsync();
+                        await Shell.Current.Navigation.PopModalAsync();
 
                         ShowLoginError = true;
                         LoginErrorMessage = user.Message;
@@ -138,22 +137,28 @@ namespace forreal.ViewModels
                         MainPageViewModel.RequestUsers = requestusers.UsersNameList;
                         #endregion                      
                         UserName=null ; Password=null;
-                       var user_id= await _service.GetUserID(((App)(Application.Current)).User.UserName);
-                        MainPageViewModel.UserID = user_id.Id;
+                        MainPageViewModel.UserWithID = await _service.GetUserNameWithID();
+                        var usersWithID = MainPageViewModel.UserWithID;
+                        int Id = 0;
+                        foreach(var user_with_id in usersWithID)
+                        {
+                            if (user_with_id.Text == ((App)(Application.Current)).User.UserName)
+                                Id = user_with_id.Id;
+                        }
+                        MainPageViewModel.UserID = Id;
                         MainPageViewModel.Images=await _service.GetImages();
                         MainPageViewModel.ChallangeNames = await _service.GetAllChallanges();
-                        MainPageViewModel.UserWithID = await _service.GetUserNameWithID();
+                        
 
                         lvm.IsBusy = false;
-                        await App.Current.MainPage.Navigation.PopModalAsync();
+                        await Shell.Current.Navigation.PopModalAsync();
 
-                        //((App)(Application.Current)).ShowFlyouts = true;
-                        //((App)(Application.Current)).ShowFlyouts2 = false;
-                        await App.Current.MainPage.DisplayAlert("Succceful logged in!", "Enter cancel to start", "cancel");
+                        ((App)(Application.Current)).ShowFlyouts = true;
+                        ((App)(Application.Current)).ShowFlyouts2 = false;
+                        await AppShell.Current.DisplayAlert("Succceful logged in!", "Enter cancel to start", "cancel");
                         await SecureStorage.Default.SetAsync("LoggedUser", JsonSerializer.Serialize(user.User));
 
-                        // await AppShell.Current.GoToAsync("//HomePage");
-                        ((App)App.Current).MainPage = provider.GetService<AppShell>();
+                        await AppShell.Current.GoToAsync("//HomePage");
                     }
                 }
                 catch (Exception ex)
@@ -161,7 +166,7 @@ namespace forreal.ViewModels
 
                     Console.WriteLine(ex.Message);
 
-                    await App.Current.MainPage.Navigation.PopModalAsync();
+                    await AppShell.Current.Navigation.PopModalAsync();
                 }
 
 
@@ -169,7 +174,7 @@ namespace forreal.ViewModels
            
             SignUpCommand= new Command(async () =>
             {
-                ((App)App.Current).MainPage= provider.GetService<SignUpPage>(); 
+                await AppShell.Current.GoToAsync("SignUp");
 
             });
         }//work on it brb
