@@ -20,6 +20,7 @@ namespace forreal.ViewModels
         private bool _showUserNameError;//האם להציג שדה שגיאת שם משתמש
         private string _userErrorMessage;//תאור שגיאת שם משתמש
         private string _password;//סיסמה
+        private IServiceProvider provider;
 
         private bool _showPasswordError;//האם להציג שגיאת סיסמה
         private string _passwordErrorMessage;//תאור שגיאת סיסמה
@@ -87,8 +88,9 @@ namespace forreal.ViewModels
         public ICommand ForgotPasswordCommand { get; protected set; }
         public ICommand SignUpCommand { get; protected set; }
         #endregion
-        public LoginPageViewModel(ForrealService service)
+        public LoginPageViewModel(ForrealService service, IServiceProvider provider)
         {
+            this.provider = provider;
             _service = service;
             UserName = string.Empty;
             Password = string.Empty;
@@ -100,7 +102,7 @@ namespace forreal.ViewModels
             {
                 #region טעינת מסך ביניים
                 var lvm = new LoadingPageViewModel() { IsBusy = true };
-                await AppShell.Current.Navigation.PushModalAsync(new LoadingPage(lvm));
+                await App.Current.MainPage.Navigation.PushModalAsync(new LoadingPage(lvm));
                 #endregion
                 var user = await _service.LogInAsync(UserName, Password);
 
@@ -108,7 +110,7 @@ namespace forreal.ViewModels
                     if (!user.Success)
                     {
                         lvm.IsBusy = false;
-                        await Shell.Current.Navigation.PopModalAsync();
+                        await App.Current.MainPage.Navigation.PopModalAsync();
 
                         ShowLoginError = true;
                         LoginErrorMessage = user.Message;
@@ -143,14 +145,15 @@ namespace forreal.ViewModels
                         MainPageViewModel.UserWithID = await _service.GetUserNameWithID();
 
                         lvm.IsBusy = false;
-                        await Shell.Current.Navigation.PopModalAsync();
+                        await App.Current.MainPage.Navigation.PopModalAsync();
 
-                        ((App)(Application.Current)).ShowFlyouts = true;
-                        ((App)(Application.Current)).ShowFlyouts2 = false;
-                        await AppShell.Current.DisplayAlert("Succceful logged in!", "Enter cancel to start", "cancel");
+                        //((App)(Application.Current)).ShowFlyouts = true;
+                        //((App)(Application.Current)).ShowFlyouts2 = false;
+                        await App.Current.MainPage.DisplayAlert("Succceful logged in!", "Enter cancel to start", "cancel");
                         await SecureStorage.Default.SetAsync("LoggedUser", JsonSerializer.Serialize(user.User));
-   
-                        await AppShell.Current.GoToAsync("//HomePage");
+
+                        // await AppShell.Current.GoToAsync("//HomePage");
+                        ((App)App.Current).MainPage = provider.GetService<AppShell>();
                     }
                 }
                 catch (Exception ex)
@@ -158,18 +161,16 @@ namespace forreal.ViewModels
 
                     Console.WriteLine(ex.Message);
 
-                    await AppShell.Current.Navigation.PopModalAsync();
+                    await App.Current.MainPage.Navigation.PopModalAsync();
                 }
 
 
             });
-            ForgotPasswordCommand = new Command(async () =>
-            {
-                await AppShell.Current.GoToAsync("ForgotPassword");
-            });
+           
             SignUpCommand= new Command(async () =>
             {
-                await AppShell.Current.GoToAsync("SignUp");
+                ((App)App.Current).MainPage= provider.GetService<SignUpPage>(); 
+
             });
         }//work on it brb
         #region פעולות עזר

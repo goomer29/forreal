@@ -33,6 +33,7 @@ namespace forreal.ViewModels
         private string _email;//אימייל
         private bool _showEmailError;//האם להציג שגיאת אימייל
         private string _emailErrorMessage;//תאור שגיאת אימייל
+        private IServiceProvider service;
         #endregion
         #region Service component
         private readonly ForrealService _service;
@@ -155,7 +156,7 @@ namespace forreal.ViewModels
         public string EmailErrorMessage { get => _emailErrorMessage; set { if (_emailErrorMessage != value) { _emailErrorMessage = value; OnPropertyChange(); } } }
         public bool IsButtonEnabled { get { return ValidatePage(); } }
         #endregion
-        public SignUpPageViewModel(ForrealService service)
+        public SignUpPageViewModel(ForrealService service, IServiceProvider provider)
         {
             _service=service;
             UserName = string.Empty;
@@ -169,14 +170,14 @@ namespace forreal.ViewModels
                 {
                     #region טעינת מסך ביניים
                     var lvm = new LoadingPageViewModel() { IsBusy = true };
-                    await AppShell.Current.Navigation.PushModalAsync(new LoadingPage(lvm));
+                    await App.Current.MainPage.Navigation.PushModalAsync(new LoadingPage(lvm));
                     #endregion
                     var user = await _service.SignUpAsync(UserName, Password, Email);
 
                     if (!user.Success)
                     {
                         lvm.IsBusy = false;
-                        await Shell.Current.Navigation.PopModalAsync();
+                        await App.Current.MainPage.Navigation.PopModalAsync();
                         ShowSignUpError = true;
                         SignUpErrorMessage = user.Message;
                         UserName = null; Password = null;
@@ -209,14 +210,15 @@ namespace forreal.ViewModels
                         MainPageViewModel.UserWithID = await _service.GetUserNameWithID();
 
                         lvm.IsBusy = false;
-                        await Shell.Current.Navigation.PopModalAsync();
+                        await App.Current.MainPage.Navigation.PopModalAsync();
 
                         ((App)(Application.Current)).ShowFlyouts = true;
                         ((App)(Application.Current)).ShowFlyouts2 = false;
                         await AppShell.Current.DisplayAlert("You signed up!", "Click cancel to start", "cancel");
                         await SecureStorage.Default.SetAsync("SignedUser", JsonSerializer.Serialize(user.User));
 
-                        await AppShell.Current.GoToAsync("//HomePage");
+                        //await AppShell.Current.GoToAsync("//HomePage");
+                        App.Current.MainPage = new AppShell();
                     }
                 }
                 catch (Exception ex)
@@ -229,7 +231,8 @@ namespace forreal.ViewModels
 
             LogInCommand = new Command(async () =>
             {
-                await AppShell.Current.GoToAsync("Login");
+                //await AppShell.Current.GoToAsync("Login");
+                App.Current.MainPage=provider.GetService<LoginPage>();  
             });
         }
         #region פעולות עזר

@@ -5,9 +5,9 @@ namespace forreal
 {
     public partial class AppShell : Shell
     {
-        public AppShell(AppShellViewModel vm)
+        public AppShell()
         {
-            this.BindingContext =vm;
+            //this.BindingContext =vm;
 
             InitializeComponent();
            

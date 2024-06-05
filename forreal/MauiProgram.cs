@@ -46,6 +46,7 @@ namespace forreal
 
             builder.Services.AddTransientPopup<ChallangePage, ChallangePageViewModel>();
             builder.Services.AddTransientPopup<ChatPage, ChatPageViewModel>();
+            builder.Services.AddSingleton<AppShell>();
 
 
 

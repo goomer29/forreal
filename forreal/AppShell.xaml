@@ -6,38 +6,38 @@
     xmlns:local="clr-namespace:forreal"
     xmlns:viewmodels="clr-namespace:forreal.ViewModels"
     xmlns:views="clr-namespace:forreal.Views"
-     x:DataType="viewmodels:AppShellViewModel"
+    x:DataType="viewmodels:AppShellViewModel"
     Shell.FlyoutBehavior="Flyout">
 
-    
-    <FlyoutItem  FlyoutDisplayOptions="AsMultipleItems" >
 
-        <ShellContent
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
+
+        <!--<ShellContent
     Title="MainPage"
     IsVisible="{Binding AntiVisible}"
     ContentTemplate="{DataTemplate views:MainPage}"
-    Route="MainPage" />
-        <ShellContent Icon="exit2_icon.png"
- IsVisible="{Binding Visible}"
-Title="Exit"
-ContentTemplate="{DataTemplate views:ExitPage}"
-Route="ExitPage"/>
-        <ShellContent  Icon="home2_icon.png"
-            IsVisible="{Binding Visible}"
+    Route="MainPage" />-->
+        <ShellContent
+            Title="Exit"
+            ContentTemplate="{DataTemplate views:ExitPage}"
+            Icon="exit2_icon.png"
+            Route="ExitPage" />
+        <ShellContent
             Title="HomePage"
             ContentTemplate="{DataTemplate views:HomePage}"
-            Route="HomePage"/>
-        <ShellContent Icon="search2_icon.png"
-IsVisible="{Binding Visible}"
-Title="Search"
-ContentTemplate="{DataTemplate views:SearchPage}"
-Route="SearchPage"/>
-        <ShellContent Icon="profile_icon.webp"
-    IsVisible="{Binding Visible}"
-    Title="ProfilePage"
-    ContentTemplate="{DataTemplate views:ProfilePage}"
-    Route="ProfilePage"/>
-        
+            Icon="home2_icon.png"
+            Route="HomePage" />
+        <ShellContent
+            Title="Search"
+            ContentTemplate="{DataTemplate views:SearchPage}"
+            Icon="search2_icon.png"
+            Route="SearchPage" />
+        <ShellContent
+            Title="ProfilePage"
+            ContentTemplate="{DataTemplate views:ProfilePage}"
+            Icon="profile_icon.webp"
+            Route="ProfilePage" />
+
     </FlyoutItem>
 
 

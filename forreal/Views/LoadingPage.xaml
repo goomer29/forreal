@@ -14,7 +14,7 @@
             ZIndex="-1" />
         <Label
             HorizontalOptions="Center"
-            Text="did you know? ילד כותב בתוך דלי is a polindrom!"
+            Text="{Binding Fact}"
             VerticalOptions="Center" />
     </VerticalStackLayout>
 </ContentPage>
