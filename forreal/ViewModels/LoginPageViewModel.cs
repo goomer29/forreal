@@ -119,26 +119,17 @@ namespace forreal.ViewModels
                     {
 
                         #region Gets all users for search friends
-                        var allusers = await _service.GetAllUsers();
-                        var userim = allusers.UsersList;
-                        ObservableCollection<User> users = new ObservableCollection<User>();
-                        for (int i = 0; i < userim.Count; i++)
-                        {
-                            if (userim[i].UserName != ((App)(Application.Current)).User.UserName)
-                            {
-                                users.Add(userim[i]);
-                            }
+                        MainPageViewModel.UserWithID = await _service.GetUserNameWithID();
+                        var usersWithID = MainPageViewModel.UserWithID;
+                        MainPageViewModel.AllUsers = CreateUsersCollection(usersWithID, ((App)(Application.Current)).User.UserName);
 
-                        }
-                        MainPageViewModel.AllUsers = users;
                         var wantedusers = await _service.GetWantedFriends(((App)(Application.Current)).User.UserName);
                         MainPageViewModel.WantedUsers = wantedusers.UsersNameList;
+
                         var requestusers = await _service.GetWRequestFriends(((App)(Application.Current)).User.UserName);
                         MainPageViewModel.RequestUsers = requestusers.UsersNameList;
                         #endregion                      
                         UserName=null ; Password=null;
-                        MainPageViewModel.UserWithID = await _service.GetUserNameWithID();
-                        var usersWithID = MainPageViewModel.UserWithID;
                         int Id = 0;
                         foreach(var user_with_id in usersWithID)
                         {
@@ -192,6 +183,25 @@ namespace forreal.ViewModels
         private bool ValidatePage()
         {
             return ValidateUser() && ValidatePassWord();
+        }
+
+        private ObservableCollection<User> CreateUsersCollection(ObservableCollection<UserNameDto> userNames, string current_user)
+        {
+            ObservableCollection<User> userim= new ObservableCollection<User>();
+            foreach (UserNameDto username in userNames)
+            {
+                User u=new User() { UserName=username.Text, Email=username.Email };
+                userim.Add(u);
+            }
+            ObservableCollection<User> users = new ObservableCollection<User>();
+            for (int i = 0; i < userim.Count; i++)
+            {
+                if (userim[i].UserName != current_user)
+                {
+                    users.Add(userim[i]);
+                }
+            }
+            return users;
         }
         #endregion
 
