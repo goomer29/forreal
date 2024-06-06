@@ -16,8 +16,8 @@ namespace forreal.Services
     {
         readonly HttpClient _httpClient;
         readonly JsonSerializerOptions _serializerOptions;
-        const string URL = @"https://82vvg3mq-7160.uks1.devtunnels.ms/ForrealApi/";
-        public const string WwwRoot = @"https://82vvg3mq-7160.uks1.devtunnels.ms";
+        const string URL = @"https://xkpf3w0d-7160.euw.devtunnels.ms/ForrealApi/";
+        public const string WwwRoot = @"https://xkpf3w0d-7160.euw.devtunnels.ms";
         public ForrealService()
         {
             _httpClient = new HttpClient();
